@@ -2,13 +2,13 @@
   <div>
     <Loading v-if='loading' />
     <Header />
-    <div class='Container' v-if='!loading'>
+    <div class='Container'>
       <el-row :gutter='0'>
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
         <el-col :xl='16'>
           <el-row :gutter='20'>
             <el-col :xl='19'>
-              <el-button type='info' size='small'>목록</el-button>
+              <el-button type='info' size='small' @click='list'>목록</el-button>
               <el-button class='Right' type='danger' size='small' @click='write'>
                 <font-awesome-icon icon='pencil-alt' />
                 글 작성
@@ -19,7 +19,7 @@
                   <div class='grade'>
                     <font-awesome-icon icon='arrow-up' />
                     {{ topic.likes }}
-                    <el-button type='danger' size='mini' v-if='false' round><font-awesome-icon icon='seedling' /></el-button>
+                    <el-button type='danger' size='mini' round @click='votes(true)'><font-awesome-icon icon='seedling' /></el-button>
                   </div>
                   <div class='image'>
                     <img :src='topic.profile ? "https://hawawa.co.kr/img/" + topic.profile : "/default.png"'>
@@ -44,11 +44,11 @@
                 <span v-html='topic.content' />
                 <div class='ArticleMenu'>
                   <el-button-group>
-                    <el-button type='danger' size='small' round>
+                    <el-button type='danger' size='small' round @click='votes(true)'>
                       <img src='/up.png'>
                       데뷔 {{ topic.likes }}
                     </el-button>
-                    <el-button type='info' size='small' round>
+                    <el-button type='info' size='small' round @click='votes(false)'>
                       탈락 {{ topic.hates }}
                       <img src='/down.png'>
                     </el-button>
@@ -92,8 +92,8 @@
               </div>
               <div class='Blank' />
               <el-button-group>
-                <el-button type='info' size='small'>목록</el-button>
-                <el-button type='info' size='small'>삭제</el-button>
+                <el-button type='info' size='small' @click='list'>목록</el-button>
+                <el-button type='info' size='small' @click='remove'>삭제</el-button>
               </el-button-group>
               <el-button class='Right' type='danger' size='small' @click='write'>
                 <font-awesome-icon icon='pencil-alt' />
@@ -195,6 +195,46 @@
       currentChange: function(page) {
         this.postsPage = page
         this.getPosts()
+      },
+      votes: async function(flag) {
+        if (this.loading || this.id < 1) return
+        const token = localStorage.token
+        if (!token) return this.$message.error('로그인하세요.')
+        this.loading = true
+        const { data } = await axios.post(
+          '/api/topic/vote',
+          { id: this.id, likes: flag },
+          { headers: { 'x-access-token': token } }
+        )
+        if (data.status === 'fail') {
+          this.loading = false
+          return this.$message.error(data.message)
+        }
+        if (data.move === 'BEST') this.$message.success('베스트로 보냈습니다.')
+        this.$message('투표했습니다.')
+        this.loading = false
+      },
+      list() {
+        location.href = `/b/${this.domain}`
+      },
+      remove: async function() {
+        if (this.loading || this.id < 1) return
+        const token = localStorage.token
+        if (!token) return this.$message.error('로그인하세요.')
+        this.loading = true
+        const { data } = await axios.delete(
+          '/api/topic/delete',
+          {
+            data: { id: this.id },
+            headers: { 'x-access-token': token }
+          }
+        )
+        if (data.status === 'fail') {
+          this.loading = false
+          return this.$message.error(data.message)
+        }
+        this.loading = false
+        this.$router.go(-1)
       },
       write() {
         location.href = `/b/${this.domain}/write`

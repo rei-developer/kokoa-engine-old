@@ -33,7 +33,7 @@
                   <div class='grade'>
                     <font-awesome-icon icon='arrow-up' />
                     {{ item.likes }}
-                    <el-button type='danger' size='mini' v-if='false' round><font-awesome-icon icon='seedling' /></el-button>
+                    <el-button type='danger' size='mini' round @click='votes(item.id)'><font-awesome-icon icon='seedling' /></el-button>
                   </div>
                   <a :href='"/b/" + domain + "/" + item.id'>
                     <div class='image'>
@@ -140,6 +140,24 @@
           return bottomOfPage || pageHeight < visible
         }
       },
+      votes: async function(id) {
+        if (this.loading || id < 1) return
+        const token = localStorage.token
+        if (!token) return this.$message.error('로그인하세요.')
+        this.loading = true
+        const { data } = await axios.post(
+          '/api/topic/vote',
+          { id, likes: true },
+          { headers: { 'x-access-token': token } }
+        )
+        if (data.status === 'fail') {
+          this.loading = false
+          return this.$message.error(data.message)
+        }
+        if (data.move === 'BEST') this.$message.success('베스트로 보냈습니다.')
+        this.$message('투표했습니다.')
+        this.loading = false
+      }
     },
     watch: {
       bottom: function(bottom) {

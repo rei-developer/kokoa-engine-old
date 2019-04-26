@@ -10,7 +10,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: '하와와 커뮤니티' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ]
   },
   /*

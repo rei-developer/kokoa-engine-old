@@ -71,6 +71,7 @@
     created() {
       if (process.browser) {
         this.save = (localStorage.save === 'true') || false
+        if (this.save) this.username = localStorage.username || ''
       }
     },
     updated() {

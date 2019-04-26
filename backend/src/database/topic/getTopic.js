@@ -115,7 +115,7 @@ module.exports.topicsToWidget = async limit => {
     (SELECT imageUrl FROM TopicImages WHERE topicId = A.id LIMIT 1) imageUrl,
     (SELECT COUNT(*) FROM Posts WHERE topicId = A.id) postsCount
     FROM Topics A
-    WHERE isAllowed = 1
+    WHERE isBest > 1 AND isAllowed = 1
     ORDER BY id DESC
     LIMIT ?`,
     [limit]

@@ -24,7 +24,7 @@ const BEST_LIMIT = 4
 const DELETE_LIMIT = 10
 
 module.exports.getListToWidget = async ctx => {
-  const topics = await getTopic.topicsToWidget(20)
+  const topics = await getTopic.topicsToWidget(10)
   ctx.body = topics
 }
 
