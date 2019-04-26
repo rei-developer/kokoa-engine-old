@@ -9,7 +9,7 @@
           mode='horizontal'
           @select='handleSelect'
           active-text-color='#f78989'>
-          <el-menu-item index='1' class='Logo'><a href='/?a=1'><img src='~/assets/HeaderLogo.png'></a></el-menu-item>
+          <el-menu-item index='1' class='Logo'><a href='/'><img src='~/assets/HeaderLogo.png'></a></el-menu-item>
           <el-menu-item index='2'>
             <font-awesome-icon icon='comment-dots' />
             <a href='/b/all'>전체글</a>
