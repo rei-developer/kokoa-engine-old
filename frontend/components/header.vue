@@ -39,7 +39,7 @@
             <font-awesome-icon icon='sign-in-alt' />
             로그인
           </el-menu-item>
-          <el-menu-item index='9' route='/notice' class='rightMenu'>
+          <el-menu-item index='9' route='/notice' class='rightMenu' v-if='$store.state.user.isLogged'>
             <font-awesome-icon icon='bell' />
             <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
           </el-menu-item>
