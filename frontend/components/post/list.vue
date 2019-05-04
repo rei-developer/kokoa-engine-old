@@ -3,7 +3,8 @@
     <div v-if='postsCount > 0'>
       <div class='post-list'>
         <div
-          :class='item.tagUserId ? "item reply" : "item"'
+          :class='"item" + (item.tagUserId ? " reply" : "") + (item.id == viewPostId ? " view" : "")'
+          :ref='`post${item.id}`'
           v-for='(item, index) in posts' :key='index'>
           <div class='reply' v-if='item.tagUserId'>
             <font-awesome-icon icon='chevron-right' />
@@ -86,6 +87,7 @@
         postsCount: 0,
         postsPage: 1,
         newPostsCount: 0,
+        viewPostId: 0,
         tempPostReplyId: 0,
         loading: false
       }
@@ -107,6 +109,7 @@
             return i
           })
         }
+        if (this.viewPostId > 0) this.scrollTo()
         this.playSound(sound)
         this.loading = false
       },
@@ -140,6 +143,16 @@
         this.$message.success('댓글 삭제 성공!')
         this.$store.commit('setLoading')
       },
+      scrollTo() {
+        const el = this.posts.find(p => p.id == this.viewPostId)
+        if (!el) return
+        this.$nextTick(() => {
+          window.scrollTo({
+            top: this.$refs[`post${this.viewPostId}`][0].offsetTop,
+            behavior: 'smooth'
+          })
+        })
+      },
       currentChange(page) {
         this.postsPage = page
         this.getPosts()
@@ -155,6 +168,9 @@
     },
     beforeMount() {
       this.$socket.on('newPost', () => this.newPostsCount++)
+    },
+    mounted() {
+      this.viewPostId = this.$route.query.postId
     },
     components: {
       PostWrite
@@ -199,6 +215,9 @@
   .post-list .item.reply {
     background: #FAFAFA;
     padding-left: 1rem;
+  }
+  .post-list .item.view {
+    border-left: 5px solid #f78989;
   }
   .post-list .item .reply {
     position: absolute;

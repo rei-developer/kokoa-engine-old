@@ -29,9 +29,9 @@ module.exports.notices = async (userId, page, limit) => {
     LEFT JOIN Posts tp ON tp.id = p.postParentId
     LEFT JOIN Users u ON u.id = p.userId
     WHERE n.userId = ?
-    ORDER BY n.id DESC`,
-    //LIMIt ?, ?`,
-    [userId]//, page * limit, limit]
+    ORDER BY n.id DESC
+    LIMIt ?, ?`,
+    [userId, page * limit, limit]
   )
   if (result.length < 1) return false
   return result

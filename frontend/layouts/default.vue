@@ -90,6 +90,10 @@
       this.getNotices()
       this.updateNotices()
     },
+    beforeDestroy() {
+      this.$socket.removeAllListeners()
+      this.$socket.clear()
+    },
     components: {
       Loading,
       Header,

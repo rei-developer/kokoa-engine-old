@@ -13,7 +13,7 @@ module.exports.getCount = async ctx => {
 module.exports.getNotices = async ctx => {
   const { ...body } = ctx.request.body
   const page = body.page || 0
-  const limit = body.limit || 20
+  const limit = body.limit || 10
   if (page < 0 || limit < 10 || limit > 50) return
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return

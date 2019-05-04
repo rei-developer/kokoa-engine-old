@@ -48,8 +48,8 @@
     props: ['id'],
     data() {
       return {
-        domain: 'all',
-        boardName: '전체',
+        domain: '',
+        boardName: '',
         topics: [],
         topicsCount: 0,
         page: 0,
@@ -57,13 +57,6 @@
       }
     },
     methods: {
-      open() {
-        this.$notify({
-          title: '나코나코땅땅!',
-          message: '새로운 글이 베스트로 등극되었습니다!',
-          position: 'bottom-right'
-        })
-      },
       getBoardName(domain) {
         let boardName = ''
         switch (domain) {
@@ -88,15 +81,9 @@
         }
         return boardName
       },
-      getData: async function(domain = this.domain) {
+      getData: async function() {
         this.$store.commit('setLoading', true)
-        if (this.domain != domain) {
-          this.domain = domain
-          this.boardName = this.getBoardName(domain)
-          this.topics = []
-          this.page = 0
-        }
-        const { data } = await axios.post('/api/topic/list', { domain, page: this.page++ })
+        const { data } = await axios.post('/api/topic/list', { domain: this.domain, page: this.page++ })
         this.topics = data.topics.map(i => {
           i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
           i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
@@ -109,18 +96,13 @@
       currentChange: function(page) {
         this.page = page - 1
         this.getData()
-      },
-      getToken() {
-        this.token = localStorage.token
       }
     },
     created() {
       this.domain = this.$nuxt._route.params.domain
+      this.boardName = this.getBoardName(this.domain)
       this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
       this.getData()
-    },
-    mounted() {
-      this.getToken()
     }
   }
 </script>

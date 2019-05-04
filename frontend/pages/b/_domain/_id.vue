@@ -60,7 +60,13 @@
               <nuxt-link :to='`/b/${domain}`'>
                 <el-button type='info' size='small'>목록</el-button>
               </nuxt-link>
-              <el-button type='info' size='small' @click='remove'>삭제</el-button>
+              <el-button
+                type='info'
+                size='small'
+                @click='remove'
+                v-if='$store.state.user.isLogged && ($store.state.user.isAdmin > 0 || topic.userId === $store.state.user.id)'>
+                삭제
+              </el-button>
               <nuxt-link :to='`/b/${domain}/write`'>
                 <el-button class='Right' type='danger' size='small'>
                   <font-awesome-icon icon='pencil-alt' />
@@ -295,6 +301,7 @@
   }
   .article iframe {
     max-width: calc(100vw - 1rem);
+    height: 40vh;
     border: 0;
   }
 
