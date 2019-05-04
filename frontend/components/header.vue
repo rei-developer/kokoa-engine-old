@@ -8,7 +8,13 @@
           mode='horizontal'
           :router='true'
           active-text-color='#f78989'>
-          <el-menu-item index='1' route='/' class='Logo hidden-mobile'><img src='~/assets/HeaderLogo.png'></el-menu-item>
+          <el-menu-item index='1' route='/' class='Logo'>
+            <span class='hidden-desktop'>
+              <font-awesome-icon icon='home' />
+              HAWAWA.CO.KR
+            </span>
+            <img src='~/assets/HeaderLogo.png' class='hidden-mobile'>
+          </el-menu-item>
           <el-menu-item index='2' route='/b/all' class='hidden-mobile'>
             <font-awesome-icon icon='comment-dots' />
             전체글
