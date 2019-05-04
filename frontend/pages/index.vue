@@ -100,6 +100,12 @@
           case 'social':
             boardName = '정치'
             break
+          case 'feedback':
+            boardName = '건의'
+            break
+          case 'notice':
+            boardName = '공지'
+            break
         }
         return boardName
       },
