@@ -15,7 +15,7 @@ module.exports.createImage = type => async ctx => {
           execFile(giflossy, ['-O3', '--lossy=80', '-o', `./img/${filename}`, `./img/${filename}`], err => {
             if (err) return ctx.body = { message: err, status: 'fail' }
           })
-        } else {*/
+        } else {
           const image = sharp(data)
           if (type === 'topic') {
             image.metadata()
