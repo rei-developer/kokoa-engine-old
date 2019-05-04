@@ -1,6 +1,42 @@
-.page-enter-active, .page-leave-active {
-  transition: opacity .5s;
+.el-header,
+.el-main,
+.el-footer {
+  padding: 0 !important;
 }
+.el-header {
+  margin-bottom: 1rem !important;
+}
+.el-menu-item,
+.el-submenu__title {
+  border-bottom: 0 !important;
+}
+.el-menu-item svg {
+  margin-bottom: 5px !important;
+}
+.el-aside {
+  position: fixed;
+  height: 100%;
+  background: #FFF;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
+  z-index: 10000;
+}
+
+.page-enter-active, .page-leave-active {
+  transition: opacity .1s;
+}
+
 .page-enter, .page-leave-to {
   opacity: 0;
+}
+
+@media (max-width: 1023px) {
+  .hidden-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hidden-desktop {
+    display: none;
+  }
 }

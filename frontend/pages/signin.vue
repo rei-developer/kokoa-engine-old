@@ -1,71 +1,56 @@
 <template>
-  <div>
-    <Loading v-if='loading' />
-    <Header />
-    <div class='Container'>
-      <div class='logo'>
-        <img src='~/assets/Logo.png'>
-      </div>
-      <div class='article'>
-        <el-input class='Bottom' size='small' placeholder='ID' v-model='username' autofocus />
-        <el-input class='Bottom' size='small' placeholder='비밀번호' v-model='password' show-password />
-        <el-button-group>
-          <el-button type='danger' size='small' @click='signIn'>
-            <font-awesome-icon icon='pencil-alt' />
-            로그인
-          </el-button>
-          <el-button type='info' size='small' @click='signUp'>계정 생성</el-button>
-        </el-button-group>
-        <div class='Right'>
-          <el-tooltip class='item' effect='dark' content='로그인 ID를 저장합니다.' placement='top'>
-            <el-switch
-              v-model='save'
-              active-color='#f78989' />
-          </el-tooltip>
-          ID 저장
-        </div>
+  <div class='signInBox'>
+    <div class='logo'>
+      <img src='~/assets/Logo.png'>
+    </div>
+    <div class='article'>
+      <el-input class='Bottom' size='small' placeholder='ID' v-model='username' autofocus />
+      <el-input class='Bottom' size='small' placeholder='비밀번호' v-model='password' show-password />
+      <el-button-group>
+        <el-button type='danger' size='small' @click='signIn'>
+          <font-awesome-icon icon='pencil-alt' />
+          로그인
+        </el-button>
+        <el-button type='info' size='small' @click='signUp'>계정 생성</el-button>
+      </el-button-group>
+      <div class='Right'>
+        <el-tooltip class='item' effect='dark' content='로그인 ID를 저장합니다.' placement='top'>
+          <el-switch
+            v-model='save'
+            active-color='#f78989' />
+        </el-tooltip>
+        ID 저장
       </div>
     </div>
-    <Footer class='Footer' />
   </div>
 </template>
 
 <script>
-  import Header from '~/components/header.vue'
-  import Footer from '~/components/footer.vue'
-  import Loading from '~/components/loading.vue'
   import axios from 'axios'
   
   export default {
-    name: 'App',
-    extends: {},
     data() {
       return {
         username: '',
         password: '',
-        save: false,
-        loading: false
+        save: false
       }
     },
     methods: {
       signIn: async function() {
-        if (this.loading) return
         if (this.username === '') return this.$message.error('ID를 입력하세요.')
         if (this.password === '') return this.$message.error('비밀번호를 입력하세요.')
-        this.loading = true
+        this.$store.commit('setLoading', true)
         const { data } = await axios.post('/api/auth/signin', { username: this.username, password: this.password })
-        if (data.redirect === 'accept') return location.href = `/accept/${this.username}`
         if (data.status === 'fail') {
-          this.loading = false
+          this.$store.commit('setLoading')
           return this.$message.error(data.message)
         }
-        localStorage.token = data.token
-        this.$message.success('로그인 성공')
-        this.loading = false
+        localStorage.setItem('token', data.token)
         location.href = '/'
       },
       signUp() {
-        location.href = '/signup'
+        this.$router.push({ path: '/signup' })
       }
     },
     created() {
@@ -83,11 +68,6 @@
         if (localStorage.save === 'true' && localStorage.username !== this.username)
           localStorage.username = this.username
       }
-    },
-    components: {
-      Header,
-      Footer,
-      Loading
     }
   }
 </script>
@@ -101,7 +81,7 @@
     min-height: 0.02px;
   }
 
-  .Container {
+  .signInBox {
     width: 330px;
     margin: 0 auto;
   }
@@ -128,12 +108,5 @@
 
   .Bottom {
     margin-bottom: .5rem;
-  }
-
-  .Footer {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    z-index: -1;
   }
 </style>

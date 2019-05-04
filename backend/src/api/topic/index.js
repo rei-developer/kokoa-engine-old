@@ -16,4 +16,7 @@ app.post('/vote/post', topicCtrl.createPostVotes)
 app.delete('/delete', topicCtrl.deleteTopic)
 app.delete('/delete/post', topicCtrl.deletePost)
 
+// const socket = require('../../lib/socket.io')
+// socket.test(global.io)
+
 module.exports = app

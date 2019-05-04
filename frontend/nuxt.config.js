@@ -16,7 +16,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#3B8070' },
+  loading: { color: '#f78989' },
   /*
   ** Build configuration
   */
@@ -34,9 +34,10 @@ module.exports = {
         })
       }
     },
-    vendor: ['element-ui'],
+    vendor: ['vuex', 'socket.io-client', 'element-ui'],
   },
   plugins: [
+    '~plugins/socket.io.js',
     '~plugins/element-ui',
     {
       src: '~plugins/quill.js',
@@ -44,7 +45,7 @@ module.exports = {
     },
   ],
   css: [
-    'assets/main.css',
+    '~assets/main.css',
     'element-ui/lib/theme-chalk/index.css',
     'element-ui/lib/theme-chalk/display.css'
   ],
@@ -63,11 +64,11 @@ module.exports = {
       }
     ]
   },
-  axios: {
-
-  },
   proxy: {
     '/api': 'http://localhost:3000',
+  },
+  env: {
+    SOCKET_HOST_URL: process.env.SOCKET_HOST_URL || 'http://localhost:3000'
   },
   configureWebpack: {
     output: {

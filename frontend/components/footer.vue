@@ -15,7 +15,7 @@
           </el-col>
           <el-col :span='8'>
             <div class='column-head'>광고 및 제휴 문의</div>
-            <p>나코 (admin@nakonako.net)</p>
+            <p></p>
           </el-col>
         </el-row>
       </el-col>
@@ -30,7 +30,6 @@
     position: relative;
     margin: 0 auto;
     padding-bottom: 1rem;
-    min-width: 1000px;
     background-color: #ECEEF1;
     color: #9099A3;
   }

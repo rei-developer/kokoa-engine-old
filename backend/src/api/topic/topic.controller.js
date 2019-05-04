@@ -2,6 +2,7 @@ const fs = require('fs')
 const redis = require('redis')
 const moment = require('moment')
 const Filter = require('../../lib/filter')
+const socket = require('../../lib/socket.io')
 const User = require('../../lib/user')
 const createNotice = require('../../database/notice/createNotice')
 const createTopic = require('../../database/topic/createTopic')
@@ -19,8 +20,8 @@ const deletePost = require('../../database/topic/deletePost')
 
 const client = redis.createClient()
 
-const BURN_LIMIT = 2
-const BEST_LIMIT = 4
+const BURN_LIMIT = 0
+const BEST_LIMIT = 2
 const DELETE_LIMIT = 10
 
 module.exports.getListToWidget = async ctx => {
@@ -163,6 +164,7 @@ module.exports.createTopic = async ctx => {
   await createTopic.createTopicCounts(topicId)
   if (isImage) await createTopic.createTopicImages(topicId, images)
   await User.setUpExpAndPoint(user, 10, 10)
+  await socket.newTopic(global.io, title)
   ctx.body = { topicId, status: 'ok' }
 }
 
@@ -206,6 +208,7 @@ module.exports.createPost = async ctx => {
     resolve(true)
   }))
   await Promise.all(jobs)
+  await socket.newPost(global.io, topicId)
   ctx.body = { postId, postsCount, posts, status: 'ok' }
 }
 
@@ -230,6 +233,7 @@ module.exports.createTopicVotes = async ctx => {
     const created = moment(date).format('YYYY/MM/DD HH:mm:ss')
     return ctx.body = { message: `이미 투표한 게시물입니다. (${created})`, status: 'fail' }
   }
+  await createTopic.createTopicVotes(user.id, id, ip)
   let move = ''
   if (likes) {
     if (topic.isBest === 0 && topic.likes - topic.hates >= BURN_LIMIT) {
@@ -240,6 +244,7 @@ module.exports.createTopicVotes = async ctx => {
       move = 'BEST'
       await updateTopic.updateTopicByIsBest(id, 2)
       await User.setUpExpAndPoint(targetUser, 100, 100)
+      await socket.newBest(global.io, topic.title)
     } else {
       await User.setUpExpAndPoint(targetUser, 5, 5)
     }
@@ -262,8 +267,8 @@ module.exports.createTopicVotes = async ctx => {
     }
     await updateTopic.updateTopicCountsByHates(id)
   }
-  await createTopic.createTopicVotes(user.id, id, ip)
-  ctx.body = { move, status: 'ok' }
+  await socket.vote(global.io, id, likes ? ++topic.likes : topic.likes, likes ? topic.hates : ++topic.hates)
+  ctx.body = { move: '', status: 'ok' }
 }
 
 module.exports.createPostVotes = async ctx => {

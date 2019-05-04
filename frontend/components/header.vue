@@ -4,30 +4,45 @@
       <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
       <el-col :xl='16'>
         <el-menu
-          :default-active='activeIndex'
           class='el-menu'
           mode='horizontal'
-          @select='handleSelect'
+          :router='true'
           active-text-color='#f78989'>
-          <el-menu-item index='1' class='Logo'><a href='/'><img src='~/assets/HeaderLogo.png'></a></el-menu-item>
-          <el-menu-item index='2'>
+          <el-menu-item index='1' route='/' class='Logo'><img src='~/assets/HeaderLogo.png'></el-menu-item>
+          <el-menu-item index='2' route='/b/all' class='hidden-mobile'>
             <font-awesome-icon icon='comment-dots' />
-            <a href='/b/all'>전체글</a>
+            전체글
           </el-menu-item>
-          <el-menu-item index='3'>
+          <el-menu-item index='3' route='/b/best' class='hidden-mobile'>
             <font-awesome-icon icon='star' />
-            <a href='/b/best'>인기글</a>
+            인기글
           </el-menu-item>
-          <el-submenu index='4'>
-            <template slot='title'><a href='#' style='color: #909399'>커뮤니티</a></template>
-            <a href='/b/talk'><el-menu-item index='4-1'>토크</el-menu-item></a>
-            <a href='/b/social'><el-menu-item index='4-2'>정치</el-menu-item></a>
-            <a href='/b/feedback'><el-menu-item index='4-3'>건의</el-menu-item></a>
+          <el-submenu index='4' class='hidden-mobile'>
+            <template slot='title'>커뮤니티</template>
+            <el-menu-item index='4-1' route='/b/talk'>토크</el-menu-item>
+            <el-menu-item index='4-2' route='/b/social'>정치</el-menu-item>
+            <el-menu-item index='4-3' route='/b/feedback'>건의</el-menu-item>
           </el-submenu>
-          <el-menu-item index='5'><a href='/b/girl'>연예인</a></el-menu-item>
-          <el-menu-item index='6'><a href='/b/anime'>애니메이션</a></el-menu-item>
-          <el-menu-item index='7'><a href='/b/notice'>공지</a></el-menu-item>
-          <el-menu-item index='8'><a href='/signin'>로그인</a></el-menu-item>
+          <el-menu-item index='5' route='/b/girl' class='hidden-mobile'>연예</el-menu-item>
+          <el-menu-item index='6' route='/b/anime' class='hidden-mobile'>애니</el-menu-item>
+          <el-menu-item index='7' route='/b/notice' class='hidden-mobile'>공지</el-menu-item>
+          <el-submenu index='8' class='rightMenu' v-if='$store.state.user.isLogged'>
+            <template slot='title'>
+              <div class='Avatar'>
+                <img :src='$store.state.user.profileImageUrl'>
+              </div>
+              {{ $store.state.user.nickname }}
+            </template>
+            <el-menu-item @click='signOut'>로그아웃</el-menu-item>
+          </el-submenu>
+          <el-menu-item index='8' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
+            <font-awesome-icon icon='sign-in-alt' />
+            로그인
+          </el-menu-item>
+          <el-menu-item index='9' route='/notice' class='rightMenu'>
+            <font-awesome-icon icon='bell' />
+            <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
+          </el-menu-item>
         </el-menu>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
@@ -37,14 +52,10 @@
 
 <script>
   export default {
-    data() {
-      return {
-        activeIndex: '1'
-      };
-    },
     methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath)
+      signOut() {
+        if (!this.$store.state.user.isLogged) return
+        this.$store.commit('user/signOut')
       }
     }
   }
@@ -83,7 +94,36 @@
     padding-bottom: 5px;
   }
 
-  .Right {
-    float: right;
+  .Badge {
+    position: absolute;
+    margin-top: -10px;
+    margin-left: -5px;
+    font-weight: normal;
+  }
+
+  .Avatar {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 6px;
+    padding: 2px;
+    border: 1px solid #DDD;
+    border-radius: 500rem;
+    background: #FFF;
+  }
+  .Avatar img {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 50px;
+    border-radius: 500rem;
+  }
+
+  .rightMenu {
+    float: right !important;
+  }
+  .rightMenu,
+  .rightMenu .el-submenu__title {
+    padding-right: 0 !important;
+    font-weight: bold;
   }
 </style>

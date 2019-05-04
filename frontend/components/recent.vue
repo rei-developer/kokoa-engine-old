@@ -8,10 +8,13 @@
       <div
         class='item'
         v-for='(item, index) in topics' :key='index'>
-        <a :href='"/b/all/" + item.id'>
+        <nuxt-link :to='"/b/all/" + item.id'>
+          <span class='star' v-if='item.isBest > 0'>
+            <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+          </span>
           {{ item.title }}
           <span class='regdate'>{{ item.created }}</span>
-        </a>
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -45,7 +48,7 @@
 
 <style>
   .widget-list {
-    line-height: 1.8;
+    line-height: 1.2;
     text-align: justify;
     background-color: #F5F5F5;
     padding: .5em;
@@ -65,6 +68,12 @@
   }
   .widget-list .item a {
     color: #333;
+  }
+  .widget-list .item span.star img {
+    width: 14px;
+    height: 14px;
+    margin-bottom: 4px;
+    vertical-align: middle;
   }
   .widget-list .item span.regdate {
     color: #f78989;

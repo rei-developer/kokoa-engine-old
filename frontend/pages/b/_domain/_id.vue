@@ -1,18 +1,20 @@
 <template>
   <div>
-    <Loading v-if='loading' />
-    <Header />
-    <div class='Container'>
+    <div>
       <el-row :gutter='0'>
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
         <el-col :xl='16'>
           <el-row :gutter='20'>
             <el-col :xl='19'>
-              <el-button type='info' size='small' @click='list'>목록</el-button>
-              <el-button class='Right' type='danger' size='small' @click='write'>
-                <font-awesome-icon icon='pencil-alt' />
-                글 작성
-              </el-button>
+              <nuxt-link :to='`/b/${domain}`'>
+                <el-button type='info' size='small'>목록</el-button>
+              </nuxt-link>
+              <nuxt-link :to='`/b/${domain}/write`'>
+                <el-button class='Right' type='danger' size='small'>
+                  <font-awesome-icon icon='pencil-alt' />
+                  글 작성
+                </el-button>
+              </nuxt-link>
               <div class='Blank' />
               <div class='article-header'>
                 <div class='item'>
@@ -30,13 +32,12 @@
                         <img :src='topic.isBest > 1 ? "/star.svg" : "/burn.svg"'>
                       </span>
                       {{ topic.title }}
-                      <span v-if='postsCount > 0'>[{{ postsCount }}]</span>
                     </div>
                     <div class='author'>
                       <img :src='topic.admin > 0 ? "/admin.png" : "/user.png"'>
                       {{ topic.author }}
                     </div>
-                    <div class='regdate'>{{ topic.created }} | 조회 {{ topic.hits }}</div>
+                    <div class='regdate'>{{ $moment(topic.created).fromNow() }} | 조회 {{ topic.hits }}</div>
                   </div>
                 </div>
               </div>
@@ -55,53 +56,20 @@
                   </el-button-group>
                 </div>
               </div>
-              <div v-if='postsCount > 0'>
-                <div class='comment-list'>
-                  <div
-                    :class='item.tagUserId ? "item reply" : "item"'
-                    v-for='(item, index) in posts' :key='index'>
-                    <div class='reply' v-if='item.tagUserId'>
-                      <font-awesome-icon icon='chevron-right' />
-                    </div>
-                    <div class='image'>
-                      <img :src='item.profile ? "https://hawawa.co.kr/img/" + item.profile : "/default.png"'>
-                    </div>
-                    <div class='info'>
-                      <div class='content'>
-                        <span class='tagUser' v-if='item.tagUserId'>{{ item.tagAuthor }}</span>
-                        <span :class='item.userId === topic.userId ? "writer" : ""' v-html='item.content' />
-                      </div>
-                      <div class='author'>
-                        <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
-                        {{ item.author }}
-                        <span class='regdate'>
-                          <font-awesome-icon icon='clock' />
-                          {{ item.created }}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class='Blank' />
-                <el-pagination
-                  layout='prev, pager, next'
-                  :page-size='20'
-                  :total='postsCount'
-                  :current-page='postsPage'
-                  @current-change='currentChange' />
-              </div>
-              <div class='Blank' />
-              <el-button-group>
-                <el-button type='info' size='small' @click='list'>목록</el-button>
-                <el-button type='info' size='small' @click='remove'>삭제</el-button>
-              </el-button-group>
-              <el-button class='Right' type='danger' size='small' @click='write'>
-                <font-awesome-icon icon='pencil-alt' />
-                글 작성
-              </el-button>
-              <div class='Blank' />
+              <PostList :id='id' :topic='topic' />
+              <nuxt-link :to='`/b/${domain}`'>
+                <el-button type='info' size='small'>목록</el-button>
+              </nuxt-link>
+              <el-button type='info' size='small' @click='remove'>삭제</el-button>
+              <nuxt-link :to='`/b/${domain}/write`'>
+                <el-button class='Right' type='danger' size='small'>
+                  <font-awesome-icon icon='pencil-alt' />
+                  글 작성
+                </el-button>
+              </nuxt-link>
+              <TopicList :id='id' />
             </el-col>
-            <el-col :xl='5' hidden-xl-only>
+            <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
               <Recent />
             </el-col>
           </el-row>
@@ -109,20 +77,16 @@
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
       </el-row>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
-  import Header from '~/components/header.vue'
+  import TopicList from '~/components/topic/list.vue'
+  import PostList from '~/components/post/list.vue'
   import Recent from '~/components/recent.vue'
-  import Footer from '~/components/footer.vue'
-  import Loading from '~/components/loading.vue'
   import axios from 'axios'
   
   export default {
-    name: 'App',
-    extends: {},
     data() {
       return {
         domain: '',
@@ -148,117 +112,90 @@
           profile: '',
           admin: 0
         },
-        posts: [],
-        postsCount: 0,
-        postsPage: 1,
-        loading: false
+        loading: true
       }
     },
+    async asyncData ({ app, params, store }) {
+      const domain = params.domain
+      const id = params.id
+      const token = store.state.user.isLogged ? store.state.user.token : ''
+      const { data } = await axios.get(
+        `/api/topic/read/${id}`,
+        {
+          headers: { 'x-access-token': token }
+        }
+      )
+      if (data.status === 'fail') return alert(data.message)
+      return { domain, id, topic: data.topic }
+    },
     methods: {
-      getTopic: async function() {
-        if (this.loading) return
-        this.loading = true
-        const token = localStorage.token
-        const { data } = await axios.get(
-          `/api/topic/read/${this.id}`,
-          {
-            headers: { 'x-access-token': token }
-          }
-        )
-        if (data.status === 'fail') {
-          this.loading = false
-          return this.$message.error(data.message)
-        }
-        window.scrollTo(0, 0)
-        this.topic = data.topic
-        this.topic.created = this.$moment(this.topic.created).fromNow()
-        this.loading = false
-        this.getPosts()
-      },
-      getPosts: async function() {
-        if (this.loading) return
-        this.loading = true
-        const { data } = await axios.post('/api/topic/list/post', { id: this.id, page: this.postsPage - 1 })
-        if (data.status === 'fail') {
-          this.loading = false
-          return this.$message.error(data.message)
-        }
-        this.postsCount = data.count
-        if (data.posts) {
-          this.posts = data.posts.map(i => {
-            i.created = this.$moment(i.created).fromNow()
-            return i
-          })
-        }
-        this.loading = false
-      },
-      currentChange: function(page) {
-        this.postsPage = page
-        this.getPosts()
-      },
       votes: async function(flag) {
-        if (this.loading || this.id < 1) return
-        const token = localStorage.token
-        if (!token) return this.$message.error('로그인하세요.')
-        this.loading = true
+        if (this.id < 1) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
+        this.$store.commit('setLoading', true)
         const { data } = await axios.post(
           '/api/topic/vote',
           { id: this.id, likes: flag },
           { headers: { 'x-access-token': token } }
         )
         if (data.status === 'fail') {
-          this.loading = false
+          this.$store.commit('setLoading')
           return this.$message.error(data.message)
         }
         if (data.move === 'BEST') this.$message.success('베스트로 보냈습니다.')
         this.$message('투표했습니다.')
-        this.loading = false
-      },
-      list() {
-        location.href = `/b/${this.domain}`
+        this.$store.commit('setLoading')
       },
       remove: async function() {
-        if (this.loading || this.id < 1) return
-        const token = localStorage.token
-        if (!token) return this.$message.error('로그인하세요.')
-        this.loading = true
-        const { data } = await axios.delete(
-          '/api/topic/delete',
-          {
-            data: { id: this.id },
-            headers: { 'x-access-token': token }
+        if (this.id < 1) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
+        this.$confirm('정말로 삭제하시겠습니까?', '알림', {
+          confirmButtonText: '삭제',
+          cancelButtonText: '취소'
+        }).then(async function() {
+          this.$store.commit('setLoading', true)
+          const { data } = await axios.delete(
+            '/api/topic/delete',
+            {
+              data: { id: this.id },
+              headers: { 'x-access-token': token }
+            }
+          )
+          if (data.status === 'fail') {
+            this.$store.commit('setLoading')
+            return this.$message.error(data.message)
           }
-        )
-        if (data.status === 'fail') {
-          this.loading = false
-          return this.$message.error(data.message)
-        }
-        this.loading = false
-        this.$router.go(-1)
+          this.$router.go(-1)
+        })
       },
-      write() {
-        location.href = `/b/${this.domain}/write`
+      scrollToBottom() {
+        this.$nextTick(() => {
+          this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight
+        })
       }
     },
-    created() {
-      this.domain = this.$nuxt._route.params.domain
-      this.id = this.$nuxt._route.params.id
-      this.getTopic()
+    beforeMount() {
+      this.$socket.emit('join', this.id)
+      this.$socket.on('vote', data => {
+        this.topic.likes = data.likes
+        this.topic.hates = data.hates
+      })
+    },
+    beforeDestroy() {
+      this.$socket.emit('leave', this.id)
+      this.$socket.removeAllListeners()
     },
     components: {
-      Header,
-      Recent,
-      Footer,
-      Loading
+      TopicList,
+      PostList,
+      Recent
     }
   }
 </script>
 
 <style>
-  .Container {
-    
-  }
-
   .AD {
     width: 960px;
     margin: 0 auto;
@@ -304,7 +241,6 @@
     font-size: .8rem;
     font-weight: bold;
     text-align: center;
-    float: left;
   }
   .article-header .item .image {
     display: inline-block;
@@ -314,7 +250,6 @@
     padding: 2px;
     box-shadow: 1px 1px 5px rgba(247, 137, 137, 0.6);
     border-radius: 500rem;
-    float: left;
   }
   .article-header .item .image img {
     width: calc(4.5rem - 4px);
@@ -325,7 +260,7 @@
     display: inline-block;
     padding: .5rem;
     font-size: .8rem;
-    float: left;
+    vertical-align: top;
   }
   .article-header .item .info .subject {
     color: #f78989;
@@ -375,81 +310,5 @@
 
   .Right {
     float: right;
-  }
-
-  .comment-list {
-    min-height: 5rem;
-    margin: 1rem 0;
-  }
-  .comment-list .item {
-    width: 100%;
-    margin-bottom: .4rem;
-    background: #FFF;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
-    float: left;
-  }
-  .comment-list .item.reply {
-    background: #FAFAFA;
-    padding-left: 1rem;
-  }
-  .comment-list .item .reply {
-    position: absolute;
-    margin-top: 1.25rem;
-    margin-left: -.5rem;
-    color: #f78989;
-  }
-  .comment-list .item .image {
-    display: inline-block;
-    width: 3rem;
-    margin: .5rem;
-    margin-right: 0;
-    padding: 2px;
-    border: 1px solid #DDD;
-    border-radius: 500rem;
-    float: left;
-  }
-  .comment-list .item .image img {
-    width: calc(3rem - 6px);
-    height: calc(3rem - 6px);
-    border-radius: 500rem;
-  }
-  .comment-list .item .info {
-    display: inline-block;
-    padding: .5rem;
-    font-size: .8rem;
-    float: left;
-  }
-  .comment-list .item .info .content {
-    margin: 0;
-    color: #333;
-  }
-  .comment-list .item .info .content span.star img {
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
-  }
-  .comment-list .item .info .author {
-    color: #333;
-    font-size: .8rem;
-    font-weight: bold;
-  }
-  .comment-list .item .info span.regdate {
-    color: #999;
-    font-size: .7rem;
-    font-weight: normal;
-  }
-  .comment-list .item .info .content span.writer {
-    color: #f78989;
-    font-weight: bold;
-  }
-  .comment-list .item .info .content span.tagUser {
-    display: block;
-    margin-right: .25rem;
-    padding: 0 .5rem;
-    background: #f78989;
-    border-radius: 500rem;
-    color: #FFF;
-    font-size: .75rem;
-    float: left;
   }
 </style>

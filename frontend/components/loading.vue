@@ -1,11 +1,9 @@
 <template>
   <div class='Layer'>
     <div class='spinner'>
-      <div class='rect1'></div>
-      <div class='rect2'></div>
-      <div class='rect3'></div>
-      <div class='rect4'></div>
-      <div class='rect5'></div>
+      <div class='bounce1' />
+      <div class='bounce2' />
+      <div class='bounce3' />
     </div>
   </div>
 </template>
@@ -13,63 +11,54 @@
 <style>
   .Layer {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
-    width: 50px;
-    height: 40px;
-    margin: -25px 0 0 -20px;
+    width: 70px;
+    height: 18px;
+    margin: -35px 0 0 -9px;
   }
 
   .spinner {
     position: fixed;
-    width: 50px;
-    height: 40px;
+    margin: 100px auto 0;
+    width: 70px;
+    height: 18px;
     text-align: center;
-    font-size: 10px;
     z-index: 10000;
   }
 
   .spinner > div {
+    width: 18px;
+    height: 18px;
     background-color: #f78989;
-    height: 100%;
-    width: 6px;
+    border-radius: 100%;
     display: inline-block;
-    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
-    animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
   }
 
-  .spinner .rect2 {
-    -webkit-animation-delay: -1.1s;
-    animation-delay: -1.1s;
+  .spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
   }
 
-  .spinner .rect3 {
-    -webkit-animation-delay: -1.0s;
-    animation-delay: -1.0s;
+  .spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
   }
 
-  .spinner .rect4 {
-    -webkit-animation-delay: -0.9s;
-    animation-delay: -0.9s;
+  @-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0) }
+    40% { -webkit-transform: scale(1.0) }
   }
 
-  .spinner .rect5 {
-    -webkit-animation-delay: -0.8s;
-    animation-delay: -0.8s;
-  }
-
-  @-webkit-keyframes sk-stretchdelay {
-    0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
-    20% { -webkit-transform: scaleY(1.0) }
-  }
-
-  @keyframes sk-stretchdelay {
-    0%, 40%, 100% { 
-      transform: scaleY(0.4);
-      -webkit-transform: scaleY(0.4);
-    }  20% { 
-      transform: scaleY(1.0);
-      -webkit-transform: scaleY(1.0);
+  @keyframes sk-bouncedelay {
+    0%, 80%, 100% { 
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    } 40% { 
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
     }
   }
 </style>

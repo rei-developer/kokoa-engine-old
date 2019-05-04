@@ -88,7 +88,7 @@ module.exports.topics = async (columns, page, limit) => {
   })
   try {
     const result = await pool.query(
-      `SELECT id, userId, originBoardDomain, category, author, title, created, isImage, isBest, isNotice,
+      `SELECT id, userId, boardDomain, originBoardDomain, category, author, title, created, isImage, isBest, isNotice,
       (SELECT hits FROM TopicCounts WHERE topicId = A.id) hits,
       (SELECT likes FROM TopicCounts WHERE topicId = A.id) likes,
       (SELECT isAdmin FROM Users WHERE id = A.userId) admin,
@@ -115,7 +115,7 @@ module.exports.topicsToWidget = async limit => {
     (SELECT imageUrl FROM TopicImages WHERE topicId = A.id LIMIT 1) imageUrl,
     (SELECT COUNT(*) FROM Posts WHERE topicId = A.id) postsCount
     FROM Topics A
-    WHERE isBest > 1 AND isAllowed = 1
+    WHERE isBest > 0 AND isAllowed = 1
     ORDER BY id DESC
     LIMIT ?`,
     [limit]

@@ -1,10 +1,9 @@
 <template>
   <div>
     <Loading v-if='loading' />
-    <Header />
     <div class='Container'>
       <el-row :gutter='0'>
-        <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
+        <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
         <el-col :xl='16'>
           <div class='article'>
             <el-form ref='form' :model='form' label-width='50px'>
@@ -29,16 +28,13 @@
             </el-form>
           </div>
         </el-col>
-        <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
+        <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
       </el-row>
     </div>
-    <Footer class='Footer' />
   </div>
 </template>
 
 <script>
-  import Header from '~/components/header.vue'
-  import Footer from '~/components/footer.vue'
   import Loading from '~/components/loading.vue'
   import axios from 'axios'
   
@@ -57,7 +53,9 @@
         images: [],
         selectedImage: null,
         editor: null,
-        loading: false
+        loading: false,
+        aside: false,
+        token: ''
       }
     },
     methods: {
@@ -69,9 +67,7 @@
         const { data } = await axios.post(
           '/api/cloud/topic',
           formData,
-          {
-            headers: { 'content-type': 'multipart/form-data' }
-          }
+          { headers: { 'content-type': 'multipart/form-data' } }
         )
         if (data.status !== 'ok') {
           this.loading = false
@@ -95,8 +91,8 @@
         if (this.loading) return
         if (this.form.title === '') return this.$message.error('제목을 입력하세요.')
         if (this.form.content === '') return this.$message.error('본문을 입력하세요.')
-        const token = localStorage.token
-        if (!token) return this.$message.error('로그인하세요.')
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
         this.loading = true
         const { data } = await axios.post('/api/topic/write', {
           domain: this.domain,
@@ -112,18 +108,13 @@
           this.loading = false
           return this.$message.error(data.message)
         }
-        localStorage.token = data.token
-        this.$message.success('글 작성 성공')
-        this.loading = false
-        location.href = `/b/${this.domain}/${data.topicId}`
+        this.$router.push({ path: `/b/${this.domain}/${data.topicId}` })
       },
     },
     created() {
       this.domain = this.$nuxt._route.params.domain
     },
     components: {
-      Header,
-      Footer,
       Loading
     }
   }
