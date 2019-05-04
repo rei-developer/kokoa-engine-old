@@ -68,7 +68,7 @@ module.exports = {
     '/api': 'http://localhost:3000'
   },
   env: {
-    SOCKET_HOST_URL: 'https://hawawa.co.kr/socket.io/'
+    SOCKET_HOST_URL: 'https://hawawa.co.kr/socket.io'
   },
   configureWebpack: {
     output: {
