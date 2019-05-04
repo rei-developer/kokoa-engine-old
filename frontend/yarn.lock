@@ -971,6 +971,11 @@
   dependencies:
     bulma "^0.7.4"
 
+"@nuxtjs/google-adsense@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/google-adsense/-/google-adsense-1.1.3.tgz#cc8b83616e9cc19d9fb9ae77c7101137da532c16"
+  integrity sha512-29gKidhkZWr+nAbAXumjEq/ETgUM6/WLMnTodI6dA0sWLVTD59F8OWjNoFj07mYxeW6TA1L3vSuJf/cXvGfdvA==
+
 "@nuxtjs/moment@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@nuxtjs/moment/-/moment-1.2.0.tgz#f34c6e90786cff5d8906058adfb8f312a454f6ce"
