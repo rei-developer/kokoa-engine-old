@@ -76,6 +76,7 @@
                   글 작성
                 </el-button>
               </nuxt-link>
+              <div class='Blank' />
               <TopicList :id='id' />
             </el-col>
             <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
