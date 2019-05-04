@@ -30,16 +30,6 @@
 </script>
 
 <style>
-  .AD {
-    width: 960px;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-  }
-  .AD img {
-    width: 960px;
-    height: auto;
-  }
-
   .grid-content {
     min-height: 0.02px;
   }

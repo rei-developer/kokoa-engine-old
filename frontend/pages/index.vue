@@ -5,7 +5,9 @@
       <el-col :xl='16'>
         <el-row :gutter='20'>
           <el-col :xl='19'>
-            <div class='AD'><img src='~/assets/test.gif'></div>
+            <div class='AD'>
+              <adsbygoogle />
+            </div>
             <div class='header-menu'>
               <el-button-group>
                 <el-button type='info' size='small' @click='getData("all")' round>
@@ -170,13 +172,9 @@
 
 <style>
   .AD {
-    width: 960px;
+    max-width: 960px;
     margin: 0 auto;
     margin-bottom: 1rem;
-  }
-  .AD img {
-    width: 960px;
-    height: auto;
   }
 
   .header-menu {

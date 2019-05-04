@@ -2,7 +2,7 @@
   "scripts": {
     "start": "nodemon --watch src/ src/index.js",
     "start:prod": "pm2 start src --name BACKEND -i 0",
-    "start:reprod": "pm2 restart src --name BACKEND -i 0"
+    "restart:prod": "pm2 restart src --name BACKEND -i 0"
   },
   "dependencies": {
     "child_process": "^1.0.2",
