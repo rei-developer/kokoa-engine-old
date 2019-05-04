@@ -49,7 +49,6 @@
           '/api/notice',
           { headers: { 'x-access-token': token } }
         )
-        console.log(data)
         if (data.count) this.$store.commit('user/setNoticeCount', data.count)
       },
       updateNotices() {

@@ -51,7 +51,6 @@ module.exports = {
   ],
   modules: [
     '@nuxtjs/bulma',
-    '@nuxtjs/axios',
     '@nuxtjs/proxy',
     ['@nuxtjs/google-adsense', { id: 'ca-pub-5633529273423665' }],
     ['@nuxtjs/moment', ['ko']],
@@ -66,10 +65,10 @@ module.exports = {
     ]
   },
   proxy: {
-    '/api': 'http://localhost:3000',
+    '/api': 'http://localhost:3000'
   },
   env: {
-    SOCKET_HOST_URL: process.env.SOCKET_HOST_URL || 'http://localhost:3000'
+    SOCKET_HOST_URL: `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`
   },
   configureWebpack: {
     output: {

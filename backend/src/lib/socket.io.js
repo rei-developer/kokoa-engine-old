@@ -4,7 +4,7 @@ module.exports = {
       socket.on('newTopic', data => io.emit('newTopic', data))
       socket.on('join', id => socket.join(id))
       socket.on('leave', id => socket.leave(id))
-      socket.on('disconnect', () => console.log('소켓 연결 종료'))
+      // socket.on('disconnect', () => {})
     })
   },
   newBest: (io, title) => io.emit('newBest', { title }),
