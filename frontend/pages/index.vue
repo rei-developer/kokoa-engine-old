@@ -10,20 +10,20 @@
             </div>
             <div class='header-menu'>
               <el-button-group>
-                <el-button type='info' size='small' @click='getData("all")' round>
+                <el-button type='info' size='small' @click='getData("all", true)' round>
                   전체
                 </el-button>
-                <el-button type='danger' size='small' @click='getData("best")' round>
+                <el-button type='danger' size='small' @click='getData("best", true)' round>
                   인기
                 </el-button>
-                <el-button type='success' size='small' @click='getData("girl")' round>연예</el-button>
-                <el-button type='success' size='small' @click='getData("anime")' round>애니</el-button>
-                <el-button size='small' @click='getData("talk")' round>토크</el-button>
+                <el-button type='success' size='small' @click='getData("girl", true)' round>연예</el-button>
+                <el-button type='success' size='small' @click='getData("anime", true)' round>애니</el-button>
+                <el-button size='small' @click='getData("talk", true)' round>토크</el-button>
               </el-button-group>
             </div>
             <div class='widget-title'>
               <font-awesome-icon icon='pencil-alt' />
-              {{ boardName }}
+              {{ boardName }} 게시물 목록
             </div>
             <div class='board-list'>
               <div
@@ -103,21 +103,23 @@
         }
         return boardName
       },
-      getData: async function(domain = this.domain) {
+      getData: async function(domain = this.domain, forceUpdate = false) {
         this.$store.commit('setLoading', true)
         if (this.domain != domain) {
           this.domain = domain
           this.boardName = this.getBoardName(domain)
+        }
+        if (forceUpdate) {
           this.topics = []
           this.page = 0
         }
         const { data } = await axios.post('/api/topic/list', { domain, page: this.page++ })
+        if (!data.topics) return this.$store.commit('setLoading')
         data.topics.map(i => {
           i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
           i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
           this.topics.push(i)
         })
-        if (this.bottomVisible()) this.getData()
         this.$store.commit('setLoading')
         return data
       },
@@ -154,6 +156,9 @@
     watch: {
       bottom: function(bottom) {
         if (bottom) this.getData()
+      },
+      '$store.state.forceUpdate': function() {
+        this.getData('all', true)
       }
     },
     created() {

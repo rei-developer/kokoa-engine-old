@@ -55,7 +55,7 @@
       @click='getPosts("http://soundbible.com/mp3/Blop-Mark_DiAngelo-79054334.mp3")'
       round>
       <font-awesome-icon class='fa-spin' icon='sync-alt' />
-      새 댓글 불러오기 ({{ newPostsCount }})
+      새 댓글 불러오기 ({{ numberWithCommas(newPostsCount) }})
     </el-button>
     <div class='Blank' />
     <div class='post-box'>
@@ -153,6 +153,7 @@
           })
         })
       },
+      numberWithCommas: x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
       currentChange(page) {
         this.postsPage = page
         this.getPosts()

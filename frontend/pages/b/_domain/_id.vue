@@ -40,7 +40,7 @@
                       <img :src='topic.admin > 0 ? "/admin.png" : "/user.png"'>
                       {{ topic.author }}
                     </div>
-                    <div class='regdate'>{{ $moment(topic.created).fromNow() }} | 조회 {{ topic.hits }}</div>
+                    <div class='regdate'>{{ $moment(topic.created).fromNow() }} | 조회 {{ numberWithCommas(topic.hits) }}</div>
                   </div>
                 </div>
               </div>
@@ -180,6 +180,7 @@
           this.$router.go(-1)
         })
       },
+      numberWithCommas: x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
       scrollToBottom() {
         this.$nextTick(() => {
           this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight

@@ -32,6 +32,7 @@
   export default {
     methods: {
       move(path) {
+        this.$store.commit('forceUpdate')
         this.$store.commit('setAside')
         this.$router.push({ path })
       }

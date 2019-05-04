@@ -4,7 +4,7 @@
       <adsbygoogle ad-slot='1882412178' />
     </div>
     <nuxt-link :to='`/b/${domain}`'>
-      <el-button type='info' size='small'>목록</el-button>
+      <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
     </nuxt-link>
     <nuxt-link :to='`/b/${domain}/write`'>
       <el-button class='Right' type='danger' size='small'>
@@ -15,7 +15,7 @@
     <div class='Blank' />
     <div class='widget-title'>
       <font-awesome-icon icon='pencil-alt' />
-      {{ boardName }} ({{ topicsCount }})
+      {{ boardName }} ({{ numberWithCommas(topicsCount) }})
     </div>
     <div class='article-list'>
       <div
@@ -39,7 +39,7 @@
             <div class='author'>
               <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
               {{ item.author }}
-              <span class='regdate'>| {{ item.created }} | 조회 {{ item.hits }}</span>
+              <span class='regdate'>| {{ item.created }} | 조회 {{ numberWithCommas(item.hits) }}</span>
             </div>
           </div>
         </nuxt-link>
@@ -52,7 +52,7 @@
       :current-page='page'
       @current-change='currentChange' />
     <nuxt-link :to='`/b/${domain}`'>
-      <el-button type='info' size='small'>목록</el-button>
+      <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
     </nuxt-link>
     <nuxt-link :to='`/b/${domain}/write`'>
       <el-button class='Right' type='danger' size='small'>
@@ -75,8 +75,7 @@
         boardName: '',
         topics: [],
         topicsCount: 0,
-        page: 0,
-        token: ''
+        page: 0
       }
     },
     methods: {
@@ -104,8 +103,9 @@
         }
         return boardName
       },
-      getData: async function() {
+      getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
+        if (forceUpdate) this.page = 0
         const { data } = await axios.post('/api/topic/list', { domain: this.domain, page: this.page++ })
         this.topics = data.topics.map(i => {
           i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
@@ -116,9 +116,18 @@
         this.$store.commit('setLoading')
         return data
       },
+      forceUpdate() {
+        this.$store.commit('forceUpdate')
+      },
+      numberWithCommas: x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
       currentChange: function(page) {
         this.page = page - 1
         this.getData()
+      }
+    },
+    watch: {
+      '$store.state.forceUpdate': function() {
+        this.getData(true)
       }
     },
     created() {

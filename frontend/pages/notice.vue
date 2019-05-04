@@ -52,21 +52,24 @@
       }
     },
     methods: {
-      getData: async function() {
+      getData: async function(forceUpdate = false) {
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
+        if (forceUpdate) {
+          this.notices = []
+          this.page = 0
+        }
         const { data } = await axios.post(
           '/api/notice/list',
           { page: this.page++ },
           { headers: { 'x-access-token': token } }
         )
+        if (!data.notices) return this.$store.commit('setLoading')
         data.notices.map(i => {
-          //i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
           i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
           this.notices.push(i)
         })
-        if (this.bottomVisible()) this.getData()
         this.$store.commit('setLoading')
         return data
       },
@@ -83,6 +86,9 @@
     watch: {
       bottom: function(bottom) {
         if (bottom) this.getData()
+      },
+      '$store.state.forceUpdate': function() {
+        this.getData(true)
       }
     },
     mounted() {
