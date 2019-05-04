@@ -61,10 +61,10 @@
     <div class='post-box'>
       <PostWrite
         :id='id'
-        :topicUserId='0'
-        :postUserId='0'
-        :postRootId='0'
-        :postParentId='0' />
+        :topicUserId='topic.userId'
+        :postUserId='null'
+        :postRootId='null'
+        :postParentId='null' />
     </div>
     <el-pagination
       layout='prev, pager, next'
