@@ -6,6 +6,9 @@
         <el-col :xl='16'>
           <el-row :gutter='20'>
             <el-col :xl='19'>
+              <div class='AD'>
+                <adsbygoogle ad-slot='1882412178' />
+              </div>
               <nuxt-link :to='`/b/${domain}`'>
                 <el-button type='info' size='small'>목록</el-button>
               </nuxt-link>
@@ -203,13 +206,9 @@
 
 <style>
   .AD {
-    width: 960px;
+    max-width: 970px;
     margin: 0 auto;
     margin-bottom: 1rem;
-  }
-  .AD img {
-    width: 960px;
-    height: auto;
   }
 
   .header-menu {

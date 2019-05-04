@@ -1,5 +1,18 @@
 <template>
   <div>
+    <div class='AD'>
+      <adsbygoogle ad-slot='1882412178' />
+    </div>
+    <nuxt-link :to='`/b/${domain}`'>
+      <el-button type='info' size='small'>목록</el-button>
+    </nuxt-link>
+    <nuxt-link :to='`/b/${domain}/write`'>
+      <el-button class='Right' type='danger' size='small'>
+        <font-awesome-icon icon='pencil-alt' />
+        글 작성
+      </el-button>
+    </nuxt-link>
+    <div class='Blank' />
     <div class='widget-title'>
       <font-awesome-icon icon='pencil-alt' />
       {{ boardName }} ({{ topicsCount }})
@@ -38,6 +51,16 @@
       :total='topicsCount'
       :current-page='page'
       @current-change='currentChange' />
+    <nuxt-link :to='`/b/${domain}`'>
+      <el-button type='info' size='small'>목록</el-button>
+    </nuxt-link>
+    <nuxt-link :to='`/b/${domain}/write`'>
+      <el-button class='Right' type='danger' size='small'>
+        <font-awesome-icon icon='pencil-alt' />
+        글 작성
+      </el-button>
+    </nuxt-link>
+    <div class='Blank' />
   </div>
 </template>
 
@@ -109,13 +132,9 @@
 
 <style>
   .AD {
-    width: 960px;
+    max-width: 970px;
     margin: 0 auto;
     margin-bottom: 1rem;
-  }
-  .AD img {
-    width: 960px;
-    height: auto;
   }
 
   .header-menu {
