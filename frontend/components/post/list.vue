@@ -58,7 +58,7 @@
       새 댓글 불러오기 ({{ numberWithCommas(newPostsCount) }})
     </el-button>
     <div class='Blank' />
-    <div class='post-box'>
+    <div class='post-box' v-if='$store.state.user.isLogged'>
       <PostWrite
         :id='id'
         :topicUserId='topic.userId'
@@ -103,6 +103,7 @@
         }
         this.postsCount = data.count
         this.newPostsCount = 0
+        this.tempPostReplyId = 0
         if (data.posts) {
           this.posts = data.posts.map(i => {
             i.created = this.$moment(i.created).fromNow()

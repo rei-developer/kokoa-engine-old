@@ -1,7 +1,9 @@
 <template>
   <div>
-    <el-row :gutter='0'>
-      <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
+    <el-row>
+      <el-col :xl='4' hidden-lg-and-down>
+        <div class='grid-content' />
+      </el-col>
       <el-col :xl='16'>
         <el-row>
           <el-col :xl='19'>
@@ -10,45 +12,49 @@
             </div>
             <div class='header-menu'>
               <el-button-group>
-                <el-button type='info' size='small' @click='getData("all", true)' round>
-                  전체순
-                </el-button>
-                <el-button type='danger' size='small' @click='getData("best", true)' round>
-                  인기순
-                </el-button>
+                <el-button type='info' size='small' @click='getData("all", true)' round>전체순</el-button>
+                <el-button type='danger' size='small' @click='getData("best", true)' round>인기순</el-button>
                 <el-button type='success' size='small' @click='getData("girl", true)' round>연예순</el-button>
                 <el-button type='success' size='small' @click='getData("anime", true)' round>애니순</el-button>
               </el-button-group>
             </div>
-            <div class='widget-title'>
+            <div class='containerSubject'>
               <font-awesome-icon icon='folder-open' />
               {{ boardName }} 게시물 목록순
             </div>
-            <div class='board-list'>
+            <div class='topicList'>
               <div
                 class='item'
                 v-for='(item, index) in topics' :key='index'>
                 <div class='grade'>
-                  <font-awesome-icon icon='arrow-up' />
-                  {{ item.likes }}
-                  <el-button type='danger' size='mini' round @click='votes(item.id)'><font-awesome-icon icon='seedling' /></el-button>
+                  <span class='likes'>
+                    <font-awesome-icon icon='angle-up' />
+                    {{ item.likes }}
+                  </span>
+                  <el-button
+                    size='mini'
+                    plain round
+                    @click='votes(item.id)'>
+                    <font-awesome-icon icon='seedling' />
+                  </el-button>
                 </div>
-                <nuxt-link :to='"/b/" + domain + "/" + item.id'>
-                  <div class='image'>
-                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+                <div class='image' @click='move(item)'>
+                  <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+                </div>
+                <div class='info' @click='move(item)'>
+                  <div class='subject'>
+                    <span class='board'>{{ getBoardName(item.boardDomain) }}</span>
+                    <span class='star' v-if='item.isBest > 0'>
+                      <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+                    </span>
+                    {{ item.title }}
+                    <span v-if='item.postsCount > 0'>[{{ item.postsCount }}]</span>
                   </div>
-                  <div class='info'>
-                    <div class='subject'>
-                      <span class='board'>{{ getBoardName(item.boardDomain) }}</span>
-                      <span class='star' v-if='item.isBest > 0'>
-                        <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
-                      </span>
-                      {{ item.title }}
-                      <span v-if='item.postsCount > 0'>[{{ item.postsCount }}]</span>
-                    </div>
-                    <div class='regdate'>{{ item.created }}</div>
+                  <div class='regdate'>
+                    <font-awesome-icon icon='clock' />
+                    {{ item.created }}
                   </div>
-                </nuxt-link>
+                </div>
               </div>
             </div>
           </el-col>
@@ -58,7 +64,9 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
+      <el-col :xl='4' hidden-lg-and-down>
+        <div class='grid-content' />
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -68,6 +76,7 @@
   import axios from 'axios'
   
   export default {
+    components: { Recent },
     data() {
       return {
         domain: 'all',
@@ -77,6 +86,22 @@
         bottom: false,
         lading: false
       }
+    },
+    watch: {
+      '$store.state.forceUpdate': function() {
+        this.getData('all', true)
+      },
+      bottom: function(bottom) {
+        if (bottom) this.getData()
+      }
+    },
+    mounted() {
+      if (process.browser) {
+        window.addEventListener('scroll', () => {
+          this.bottom = this.bottomVisible()
+        })
+      }
+      this.getData()
     },
     methods: {
       getBoardName(domain) {
@@ -119,7 +144,10 @@
           this.topics = []
           this.page = 0
         }
-        const { data } = await axios.post('/api/topic/list', { domain, page: this.page++ })
+        const { data } = await axios.post(
+          '/api/topic/list',
+          { domain, page: this.page++ }
+        )
         if (!data.topics) return this.$store.commit('setLoading')
         data.topics.map(i => {
           i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
@@ -128,15 +156,6 @@
         })
         this.$store.commit('setLoading')
         return data
-      },
-      bottomVisible() {
-        if (process.browser) {
-          const scrollY = window.pageYOffset
-          const visible = document.documentElement.clientHeight
-          const pageHeight = document.documentElement.scrollHeight
-          const bottomOfPage = visible + scrollY >= pageHeight
-          return bottomOfPage || pageHeight < visible
-        }
       },
       votes: async function(id) {
         if (process.browser) {
@@ -153,116 +172,104 @@
             this.$store.commit('setLoading')
             return this.$message.error(data.message)
           }
-          if (data.move === 'BEST') this.$message.success('베스트로 보냈습니다.')
-          this.$message('투표했습니다.')
+          data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다!') : this.$message('추천했습니다.')
           this.$store.commit('setLoading')
         }
-      }
-    },
-    watch: {
-      bottom: function(bottom) {
-        if (bottom) this.getData()
       },
-      '$store.state.forceUpdate': function() {
-        this.getData('all', true)
+      move(item) {
+        const domain = this.domain === 'best' ? 'best' : item.boardDomain
+        this.$router.push({ path: `/b/${domain}/${item.id}` })
+      },
+      bottomVisible() {
+        if (process.browser) {
+          const scrollY = window.pageYOffset
+          const visible = document.documentElement.clientHeight
+          const pageHeight = document.documentElement.scrollHeight
+          const bottomOfPage = visible + scrollY >= pageHeight
+          return bottomOfPage || pageHeight < visible
+        }
       }
-    },
-    created() {
-      if (process.browser) {
-        window.addEventListener('scroll', () => {
-          this.bottom = this.bottomVisible()
-        })
-      }
-      this.getData()
-    },
-    components: {
-      Recent
     }
   }
 </script>
 
 <style>
-  .header-menu {
+  /* Container */
+  .containerSubject {
     margin-bottom: 1rem;
-  }
-
-  .grid-content {
-    min-height: 0.02px;
-  }
-
-  .widget-title {
-    display: block;
     color: #202020;
-    font-size: 20px;
-    line-height: 40px;
+    font-size: 1.2rem;
   }
 
-  .board-list {
-    line-height: 1.8;
-    text-align: justify;
+  /* Topic List */
+  .topicList {
+    display: flex;
+    flex-direction: column;
   }
-  .board-list .item {
+  .topicList .item {
+    display: flex;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     margin-bottom: 1rem;
-    min-height: 4.2rem;
   }
-  .board-list .item:hover {
+  .topicList .item:hover {
     background: #FAFAFA;
     cursor: pointer;
   }
-  .board-list .item .grade {
-    display: inline-block;
-    position: absolute;
+  .topicList .item .grade {
+    display: flex;
+    flex-direction: column;
     width: 4rem;
-    height: 4.2rem;
-    background: #F5F5F5;
     padding: .5rem;
+    background: #F5F5F5;
     font-size: .8rem;
     font-weight: bold;
     text-align: center;
   }
-  .board-list .item .image {
-    display: inline-block;
-    width: 3.2rem;
-    margin-top: .5rem;
-    margin-left: 4.5rem;
+  .topicList .item .grade span.likes {
+    color: #F78989;
   }
-  .board-list .item .image img {
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: .3rem;
+  .topicList .item .image {
+    display: flex;
+    flex-direction: column;
   }
-  .board-list .item .info {
-    display: inline-block;
-    padding: .5rem;
-    padding-left: .25rem;
+  .topicList .item .image img {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: .25rem;
+    padding: 2px;
+    border: 1px solid #CCC;
+    border-radius: .25rem;
+  }
+  .topicList .item .info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: .25rem;
+    padding-left: 0;
+  }
+  .topicList .item .info .subject {
+    color: #F78989;
     font-size: .8rem;
-    vertical-align: top;
-  }
-  .board-list .item .info .subject {
-    color: #f78989;
-    font-size: 1rem;
     font-weight: bold;
   }
-  .board-list .item .info .subject span.star img {
+  .topicList .item .info .subject span.star img {
     width: 16px;
     height: 16px;
-    margin-bottom: 4px;
-    vertical-align: middle;
   }
-  .board-list .item .info .subject span.board {
+  .topicList .item .info .subject span.board {
     padding: 0 .5rem;
-    background: #f78989;
+    background: #F78989;
     border-radius: 500rem;
     color: #FFF;
-    font-size: .9rem;
+    font-size: .8rem;
   }
-  .board-list .item .info .regdate {
+  .topicList .item .info .regdate {
+    margin-top: .25rem;
     padding: 0 .5rem;
-    background: hsla(0,0%,78.4%,.2);
+    background: #F5F5F5;
     border-radius: 500rem;
-    color: #35495e;
+    color: #35495E;
     font-size: .7rem;
-    float: left;
+    align-self: flex-start;
   }
 </style>
