@@ -3,7 +3,7 @@
     <el-row :gutter='0'>
       <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
       <el-col :xl='16'>
-        <el-row :gutter='20'>
+        <el-row>
           <el-col :xl='19'>
             <div class='AD'>
               <adsbygoogle ad-slot='1882412178' />
@@ -52,7 +52,7 @@
               </div>
             </div>
           </el-col>
-          <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
+          <el-col class='subMenu hidden-mobile' :xl='5' hidden-xl-only>
             <Recent />
             <adsbygoogle />
           </el-col>
@@ -204,7 +204,6 @@
   .board-list .item {
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     margin-bottom: 1rem;
-    width: 100%;
     min-height: 4.2rem;
   }
   .board-list .item:hover {

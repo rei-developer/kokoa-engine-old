@@ -4,7 +4,7 @@
       <el-row :gutter='0'>
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
         <el-col :xl='16'>
-          <el-row :gutter='20'>
+          <el-row>
             <el-col :xl='19'>
               <div class='AD'>
                 <adsbygoogle ad-slot='1882412178' />
@@ -80,7 +80,7 @@
               <div class='Blank' />
               <TopicList :id='id' />
             </el-col>
-            <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
+            <el-col class='subMenu hidden-mobile' :xl='5' hidden-xl-only>
               <Recent />
               <adsbygoogle />
             </el-col>

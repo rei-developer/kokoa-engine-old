@@ -2,7 +2,7 @@
   <div>
     <Loading v-if='loading' />
     <div class='Container'>
-      <el-row :gutter='0'>
+      <el-row>
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
         <el-col :xl='16'>
           <div class='article'>
