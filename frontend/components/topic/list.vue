@@ -19,6 +19,43 @@
     </div>
     <div class='topicList'>
       <div
+        :class='id == item.id ? "item view" : "item notice"'
+        v-for='item in notices' :key='item.id'>
+        <div class='image' @click='move(item)'>
+          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+        </div>
+        <div class='info' @click='move(item)'>
+          <div class='subject'>
+            <span class='board' v-if='domain === "all" || domain === "best"'>{{ getBoardName(item.boardDomain) }}</span>
+            <span class='star' v-if='item.isBest > 0'>
+              <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+            </span>
+            <span class='view'>
+              <span class='notice'>NOTICE</span>
+              {{ item.title }}
+              <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
+              <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+            </span>
+          </div>
+          <div class='author'>
+            <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+            {{ item.author }}
+            <span>
+              <font-awesome-icon icon='clock' />
+              {{ item.created }}
+            </span>
+            <span v-if='item.hits > 0'>
+              <font-awesome-icon icon='eye' />
+              {{ numberWithCommas(item.hits) }}
+            </span>
+            <span v-if='item.likes > 0'>
+              <font-awesome-icon icon='star' />
+              +{{ numberWithCommas(item.likes) }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
         :class='id == item.id ? "item view" : "item"'
         v-for='(item, index) in topics' :key='index'>
         <div class='image' @click='move(item)'>
@@ -84,6 +121,7 @@
       return {
         domain: '',
         boardName: '',
+        notices: [],
         topics: [],
         topicsCount: 0,
         page: 0
@@ -135,6 +173,13 @@
         this.$store.commit('setLoading', true)
         if (forceUpdate) this.page = 0
         const { data } = await axios.post('/api/topic/list', { domain: this.domain, page: this.page++ })
+        if (data.notices) {
+          this.notices = data.notices.map(i => {
+            i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
+            i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
+            return i
+          })
+        }
         this.topics = data.topics.map(i => {
           i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
           i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
@@ -175,6 +220,9 @@
     background: #FAFAFA;
     cursor: pointer;
   }
+  .topicList .item.notice {
+    background: #FAFAFA;
+  }
   .topicList .item.view {
     border-left: .25rem solid #F78989;
     background: #FAFAFA;
@@ -213,6 +261,14 @@
     width: 16px;
     height: 16px;
   }
+  .topicList .item .info .subject span.notice {
+    margin-right: .1rem;
+    padding: 0 .25rem;
+    background: #ED1C24;
+    border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+  }
   .topicList .item .info .subject span.newest {
     margin-left: .1rem;
     padding: 0 .25rem;
@@ -231,6 +287,7 @@
   }
   .topicList .item .info .subject span.view {
     color: #F78989;
+    font-weight: bold;
   }
   .topicList .item .info .author {
     color: #333;

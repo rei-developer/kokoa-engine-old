@@ -1,8 +1,10 @@
 <template>
   <div>
     <div>
-      <el-row :gutter='0'>
-        <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
+      <el-row>
+        <el-col :xl='4' hidden-lg-and-down>
+          <div class='grid-content' />
+        </el-col>
         <el-col :xl='16'>
           <el-row>
             <el-col :xl='19'>
@@ -19,13 +21,8 @@
                 </el-button>
               </nuxt-link>
               <div class='Blank' />
-              <div class='article-header'>
-                <div class='item'>
-                  <div class='grade'>
-                    <font-awesome-icon icon='arrow-up' />
-                    {{ topic.likes }}
-                    <el-button type='danger' size='mini' round @click='votes(true)'><font-awesome-icon icon='seedling' /></el-button>
-                  </div>
+              <div class='topicArticle'>
+                <div class='header'>
                   <div class='image'>
                     <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
                   </div>
@@ -34,29 +31,43 @@
                       <span class='star' v-if='topic.isBest > 0'>
                         <img :src='topic.isBest > 1 ? "/star.svg" : "/burn.svg"'>
                       </span>
+                      <span class='notice' v-if='topic.isNotice > 0'>NOTICE</span>
                       {{ topic.title }}
                     </div>
                     <div class='author'>
                       <img :src='topic.admin > 0 ? "/admin.png" : "/user.png"'>
                       {{ topic.author }}
                     </div>
-                    <div class='regdate'>{{ $moment(topic.created).fromNow() }} | 조회 {{ numberWithCommas(topic.hits) }}</div>
+                    <div class='detail'>
+                      <span>
+                        <font-awesome-icon icon='clock' />
+                        {{ $moment(topic.created).fromNow() }}
+                      </span>
+                      <span v-if='topic.hits > 0'>
+                        <font-awesome-icon icon='eye' />
+                        {{ numberWithCommas(topic.hits) }}
+                      </span>
+                      <span v-if='topic.likes > 0'>
+                        <font-awesome-icon icon='star' />
+                        +{{ numberWithCommas(topic.likes) }}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class='article'>
-                <span v-html='topic.content' />
-                <div class='ArticleMenu'>
-                  <el-button-group>
-                    <el-button type='danger' size='small' round @click='votes(true)'>
-                      <img src='/up.png'>
-                      데뷔 {{ topic.likes }}
-                    </el-button>
-                    <el-button type='info' size='small' round @click='votes(false)'>
-                      탈락 {{ topic.hates }}
-                      <img src='/down.png'>
-                    </el-button>
-                  </el-button-group>
+                <div class='content'>
+                  <span v-html='topic.content' />
+                  <div class='event'>
+                    <el-button-group>
+                      <el-button type='danger' size='small' round @click='votes(true)'>
+                        <img src='/up.png'>
+                        데뷔 {{ topic.likes }}
+                      </el-button>
+                      <el-button type='info' size='small' round @click='votes(false)'>
+                        탈락 {{ topic.hates }}
+                        <img src='/down.png'>
+                      </el-button>
+                    </el-button-group>
+                  </div>
                 </div>
               </div>
               <PostList :id='id' :topic='topic' />
@@ -76,9 +87,7 @@
                   글 작성
                 </el-button>
               </nuxt-link>
-              <div class='Blank' />
-              <div class='Blank' />
-              <TopicList :id='id' />
+              <TopicList class='marginTop' :id='id' />
             </el-col>
             <el-col class='subMenu hidden-mobile' :xl='5' hidden-xl-only>
               <Recent />
@@ -86,7 +95,9 @@
             </el-col>
           </el-row>
         </el-col>
-        <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
+        <el-col :xl='4' hidden-lg-and-down>
+          <div class='grid-content' />
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -99,6 +110,11 @@
   import axios from 'axios'
   
   export default {
+    components: {
+      TopicList,
+      PostList,
+      Recent
+    },
     data() {
       return {
         domain: '',
@@ -133,13 +149,22 @@
       const token = store.state.user.isLogged ? store.state.user.token : ''
       const { data } = await axios.get(
         `/api/topic/read/${id}`,
-        {
-          headers: { 'x-access-token': token }
-        }
+        { headers: { 'x-access-token': token } }
       )
       if (data.status === 'fail') return alert(data.message)
       if (store.state.user.isLogged) store.commit('user/setNoticeCount', data.count)
       return { domain, id, topic: data.topic }
+    },
+    beforeMount() {
+      this.$socket.emit('join', this.id)
+      this.$socket.on('vote', data => {
+        this.topic.likes = data.likes
+        this.topic.hates = data.hates
+      })
+    },
+    beforeDestroy() {
+      this.$socket.emit('leave', this.id)
+      this.$socket.removeAllListeners()
     },
     methods: {
       votes: async function(flag) {
@@ -156,8 +181,7 @@
           this.$store.commit('setLoading')
           return this.$message.error(data.message)
         }
-        if (data.move === 'BEST') this.$message.success('베스트로 보냈습니다.')
-        this.$message('투표했습니다.')
+        data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다.') : this.$message('투표했습니다.')
         this.$store.commit('setLoading')
       },
       remove: async function() {
@@ -183,137 +207,96 @@
           this.$router.go(-1)
         })
       },
-      numberWithCommas: x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
       scrollToBottom() {
         this.$nextTick(() => {
           this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight
         })
+      },
+      numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
     },
-    beforeMount() {
-      this.$socket.emit('join', this.id)
-      this.$socket.on('vote', data => {
-        this.topic.likes = data.likes
-        this.topic.hates = data.hates
-      })
-    },
-    beforeDestroy() {
-      this.$socket.emit('leave', this.id)
-      this.$socket.removeAllListeners()
-    },
-    components: {
-      TopicList,
-      PostList,
-      Recent
+    head() {
+      return {
+        title: `${this.topic.title} - 하와와`
+      }
     }
   }
 </script>
 
 <style>
-  .header-menu {
-    margin-bottom: 1rem;
-  }
-
-  .grid-content {
-    min-height: 0.02px;
-  }
-
-  .widget-title {
-    display: block;
-    color: #202020;
-    font-size: 20px;
-    line-height: 40px;
-  }
-
-  .article-header {
-    line-height: 1.8;
-  }
-  .article-header .item {
+  .topicArticle {
+    display: flex;
+    margin-top: 1rem;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
-    margin-bottom: 1rem;
-    float: left;
-    width: 100%;
-    min-height: 5rem;
+    flex-direction: column;
   }
-  .article-header .item .grade {
-    display: inline-block;
-    position: absolute;
-    width: 4rem;
-    height: 5.5rem;
-    background: #F5F5F5;
+  .topicArticle .header {
+    display: flex;
     padding: .5rem;
-    font-size: .8rem;
-    font-weight: bold;
-    text-align: center;
+    border-bottom: 1px solid #F5F5F5;
   }
-  .article-header .item .image {
-    display: inline-block;
+  .topicArticle .header .image {
+    display: flex;
+    margin-right: 1rem;
+    flex-direction: column;
+  }
+  .topicArticle .header .image img {
     width: 4.5rem;
-    margin-top: .5rem;
-    margin-left: 4.5rem;
+    height: 4.5rem;
     padding: 2px;
+    border-radius: 500rem;
     box-shadow: 1px 1px 5px rgba(247, 137, 137, 0.6);
-    border-radius: 500rem;
   }
-  .article-header .item .image img {
-    width: calc(4.5rem - 4px);
-    height: calc(4.5rem - 4px);
-    border-radius: 500rem;
+  .topicArticle .header .info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: .25rem;
+    padding-left: 0;
   }
-  .article-header .item .info {
-    display: inline-block;
-    padding: .5rem;
-    font-size: .8rem;
-    vertical-align: top;
-  }
-  .article-header .item .info .subject {
-    color: #f78989;
+  .topicArticle .header .info .subject {
+    color: #F78989;
     font-size: 1rem;
     font-weight: bold;
   }
-  .article-header .item .info .subject span.star img {
+  .topicArticle .header .info .subject span.star img {
     width: 16px;
     height: 16px;
-    vertical-align: middle;
   }
-  .article-header .item .info .author {
+  .topicArticle .header .info .subject span.notice {
+    margin-right: .1rem;
+    padding: 0 .25rem;
+    background: #ED1C24;
+    border-radius: .1rem;
+    color: #FFF;
+    font-size: .8rem;
+  }
+  .topicArticle .header .info .author {
     color: #333;
     font-size: .8rem;
     font-weight: bold;
   }
-  .article-header .item .info .regdate {
+  .topicArticle .header .info .detail span {
+    margin-right: .25rem;
     color: #999;
     font-size: .7rem;
+    font-weight: normal;
   }
-
-  .article {
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    margin-top: 6rem;
-    padding: .5rem;
-    background: #FFF;
+  .topicArticle .content {
+    padding: 1rem;
   }
-  .article img {
+  .topicArticle .content img {
     max-width: 100%;
     height: auto;
   }
-  .article iframe {
+  .topicArticle .content ifram {
     max-width: calc(100vw - 1rem);
     height: 40vh;
     border: 0;
   }
-
-  .ArticleMenu {
-    width: 180px;
+  .topicArticle .content .event {
+    width: 300px;
     margin: 2rem auto .5rem;
-  }
-
-  .Blank {
-    height: .5rem;
-    clear: both;
-  }
-
-  .Right {
-    float: right;
   }
 </style>
