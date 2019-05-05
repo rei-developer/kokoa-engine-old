@@ -135,7 +135,6 @@
   .rightMenu {
     float: right !important;
   }
-  .rightMenu,
   .rightMenu .el-submenu__title {
     padding-right: 0 !important;
     font-weight: bold;

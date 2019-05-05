@@ -20,7 +20,6 @@ module.exports.createImage = type => async ctx => {
   }
 }
 */
-
 const fs = require('fs')
 const sharp = require('sharp')
 const { execFile } = require('child_process')
@@ -52,7 +51,7 @@ module.exports.createImage = type => async ctx => {
               .then(() => image.resize(100, 100)
                 .toBuffer()
               )
-              .then(result => fs.writeFile(`./img/${filename}`, result, () => { }))
+              .then(result => fs.writeFile(`./profile/${filename}`, result, () => { }))
           }
         }
         if (type === 'topic') {
