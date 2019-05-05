@@ -7,7 +7,7 @@
           <el-row :gutter='20'>
             <el-col :xl='19'>
               <div class='AD'>
-                <adsbygoogle />
+                <adsbygoogle ad-slot='1882412178' />
               </div>
               <nuxt-link :to='`/b/${domain}`'>
                 <el-button type='info' size='small'>목록</el-button>

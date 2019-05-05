@@ -6,7 +6,7 @@
         <el-row :gutter='20'>
           <el-col :xl='19'>
             <div class='AD'>
-              <adsbygoogle />
+              <adsbygoogle ad-slot='1882412178' />
             </div>
             <div class='header-menu'>
               <el-button-group>
