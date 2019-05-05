@@ -21,7 +21,7 @@
               </el-button-group>
             </div>
             <div class='widget-title'>
-              <font-awesome-icon icon='pencil-alt' />
+              <font-awesome-icon icon='folder-open' />
               {{ boardName }} 게시물 목록순
             </div>
             <div class='board-list'>

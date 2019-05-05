@@ -4,7 +4,7 @@ export const state = () => ({
   username: '',
   nickname: '',
   email: '',
-  profileImageUrl: '',
+  profileImageUrl: null,
   registerDate: null,
   blockDate: null,
   level: 0,
@@ -22,7 +22,7 @@ export const mutations = {
     state.username = data.user.username
     state.nickname = data.user.nickname
     state.email = data.user.email
-    state.profileImageUrl = `https://hawawa.co.kr/img/${data.user.profileImageUrl}`
+    state.profileImageUrl = data.user.profileImageUrl ? `https://hawawa.co.kr/img/${data.user.profileImageUrl}` : '/profile.png'
     state.registerDate = data.user.registerDate
     state.blockDate = data.user.blockDate
     state.level = data.user.level
