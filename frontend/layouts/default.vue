@@ -55,7 +55,7 @@
         setTimeout(async () => {
           this.getNotices()
           this.updateNotices()
-        }, 30000)
+        }, 10000)
       },
       aside() {
         this.$store.commit('setAside')

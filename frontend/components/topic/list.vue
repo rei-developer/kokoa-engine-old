@@ -7,13 +7,12 @@
       <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
     </nuxt-link>
     <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-      <el-button class='Right' type='danger' size='small'>
+      <el-button class='floatRight' type='danger' size='small'>
         <font-awesome-icon icon='pencil-alt' />
         글 작성
       </el-button>
     </nuxt-link>
-    <div class='Blank' />
-    <div class='containerSubject'>
+    <div class='containerSubject marginTop'>
       <font-awesome-icon icon='pencil-alt' />
       {{ boardName }} ({{ numberWithCommas(topicsCount) }})
     </div>
@@ -99,16 +98,17 @@
       :total='topicsCount'
       :current-page='page'
       @current-change='currentChange' />
-    <nuxt-link :to='`/b/${domain}`'>
-      <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
-    </nuxt-link>
-    <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-      <el-button class='Right' type='danger' size='small'>
-        <font-awesome-icon icon='pencil-alt' />
-        글 작성
-      </el-button>
-    </nuxt-link>
-    <div class='Blank' />
+    <div class='marginBottom'>
+      <nuxt-link :to='`/b/${domain}`'>
+        <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
+      </nuxt-link>
+      <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
+        <el-button class='floatRight' type='danger' size='small'>
+          <font-awesome-icon icon='pencil-alt' />
+          글 작성
+        </el-button>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 

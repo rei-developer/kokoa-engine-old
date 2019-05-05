@@ -15,7 +15,7 @@
                 <el-button type='info' size='small'>목록</el-button>
               </nuxt-link>
               <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-                <el-button class='Right' type='danger' size='small'>
+                <el-button class='floatRight' type='danger' size='small'>
                   <font-awesome-icon icon='pencil-alt' />
                   글 작성
                 </el-button>
@@ -82,7 +82,7 @@
                 삭제
               </el-button>
               <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-                <el-button class='Right' type='danger' size='small'>
+                <el-button class='floatRight' type='danger' size='small'>
                   <font-awesome-icon icon='pencil-alt' />
                   글 작성
                 </el-button>
@@ -298,5 +298,6 @@
   .topicArticle .content .event {
     width: 300px;
     margin: 2rem auto .5rem;
+    text-align: center;
   }
 </style>

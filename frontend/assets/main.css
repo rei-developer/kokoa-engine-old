@@ -4,6 +4,9 @@
 .marginVertical { margin: 1rem 0 }
 .marginHorizon { margin: 0 1rem }
 
+/* Float */
+.floatRight { float: right }
+
 .header-menu {
   margin-bottom: 1rem;
 }
