@@ -9,10 +9,7 @@
           :router='true'
           active-text-color='#f78989'>
           <el-menu-item index='1' route='/' class='Logo' @click='forceUpdate'>
-            <span class='hidden-desktop'>
-              <font-awesome-icon icon='home' />
-              HAWAWA.CO.KR
-            </span>
+            <img src='/favicon.png' class='hidden-desktop'>
             <img src='~/assets/HeaderLogo.png' class='hidden-mobile'>
           </el-menu-item>
           <el-menu-item index='2' route='/b/all' class='hidden-mobile' @click='forceUpdate'>
@@ -101,6 +98,7 @@
     opacity: 0.8;
   }
   .Logo img {
+    height: 41px;
     padding-bottom: 5px;
   }
 

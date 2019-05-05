@@ -73,7 +73,7 @@
           message: '새로운 인기글이 나타났습니다!',
           position: 'bottom-right'
         })
-        this.playSound('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
+        this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
       })
       this.$socket.on('newTopic', data => {
         this.$notify({
@@ -81,7 +81,7 @@
           message: '새로운 글이 작성되었습니다.',
           position: 'bottom-right'
         })
-        this.playSound('http://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
+        this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
       })
     },
     mounted() {

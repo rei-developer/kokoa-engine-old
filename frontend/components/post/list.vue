@@ -173,7 +173,7 @@
     },
     beforeMount() {
       this.$socket.on('newPost', () => {
-        this.playSound("http://soundbible.com/mp3/Blop-Mark_DiAngelo-79054334.mp3")
+        this.playSound('https://soundbible.com/mp3/Blop-Mark_DiAngelo-79054334.mp3')
         this.newPostsCount++
       })
     },
