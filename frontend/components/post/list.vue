@@ -49,10 +49,10 @@
       </div>
     </div>
     <el-button
-      class='Right'
+      class='newPosts'
       type='info'
       v-if='newPostsCount > 0'
-      @click='getPosts("http://soundbible.com/mp3/Blop-Mark_DiAngelo-79054334.mp3")'
+      @click='getPosts'
       round>
       <font-awesome-icon class='fa-spin' icon='sync-alt' />
       새 댓글 불러오기 ({{ numberWithCommas(newPostsCount) }})
@@ -93,7 +93,7 @@
       }
     },
     methods: {
-      getPosts: async function(sound = null) {
+      getPosts: async function() {
         if (this.loading) return
         this.loading = true
         const { data } = await axios.post('/api/topic/list/post', { id: this.id, page: this.postsPage - 1 })
@@ -110,7 +110,6 @@
           })
         }
         if (this.viewPostId > 0) this.scrollTo()
-        this.playSound(sound)
         this.loading = false
       },
       handleCommand(command) {
@@ -164,11 +163,19 @@
         audio.play()
       }
     },
+    watch: {
+      '$store.state.forceUpdate': function() {
+        this.getPosts()
+      }
+    },
     created() {
       this.getPosts()
     },
     beforeMount() {
-      this.$socket.on('newPost', () => this.newPostsCount++)
+      this.$socket.on('newPost', () => {
+        this.playSound("http://soundbible.com/mp3/Blop-Mark_DiAngelo-79054334.mp3")
+        this.newPostsCount++
+      })
     },
     mounted() {
       this.viewPostId = this.$route.query.postId
@@ -181,12 +188,8 @@
 
 <style>
   .newPosts {
-    padding: .5rem;
-    border-radius: 500rem;
-    background: black;
-    color: #FFF;
-    font-size: .8rem;
-    font-weight: bold;
+    margin: 1rem 0;
+    float: right;
   }
 
   .post-box {

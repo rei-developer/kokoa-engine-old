@@ -17,7 +17,7 @@
       </el-container>
     </el-container>
     <div class='popupMenu hidden-desktop' @click='aside' round>
-      <font-awesome-icon icon='align-justify' />
+      <font-awesome-icon icon='bars' />
     </div>
   </div>
 </template>

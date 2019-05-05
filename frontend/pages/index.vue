@@ -11,19 +11,18 @@
             <div class='header-menu'>
               <el-button-group>
                 <el-button type='info' size='small' @click='getData("all", true)' round>
-                  전체
+                  전체순
                 </el-button>
                 <el-button type='danger' size='small' @click='getData("best", true)' round>
-                  인기
+                  인기순
                 </el-button>
-                <el-button type='success' size='small' @click='getData("girl", true)' round>연예</el-button>
-                <el-button type='success' size='small' @click='getData("anime", true)' round>애니</el-button>
-                <el-button size='small' @click='getData("talk", true)' round>토크</el-button>
+                <el-button type='success' size='small' @click='getData("girl", true)' round>연예순</el-button>
+                <el-button type='success' size='small' @click='getData("anime", true)' round>애니순</el-button>
               </el-button-group>
             </div>
             <div class='widget-title'>
               <font-awesome-icon icon='pencil-alt' />
-              {{ boardName }} 게시물 목록
+              {{ boardName }} 게시물 목록순
             </div>
             <div class='board-list'>
               <div
@@ -182,12 +181,6 @@
 </script>
 
 <style>
-  .AD {
-    max-width: 970px;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-  }
-
   .header-menu {
     margin-bottom: 1rem;
   }

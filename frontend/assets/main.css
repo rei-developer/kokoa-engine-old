@@ -29,14 +29,34 @@
   opacity: 0;
 }
 
+/*
+ * Mobile
+ */
+
 @media (max-width: 1023px) {
   .hidden-mobile {
     display: none;
   }
+
+  .AD {
+    width: 100vw;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
 }
+
+/*
+ * PC
+ */
 
 @media (min-width: 1024px) {
   .hidden-desktop {
     display: none;
+  }
+  
+  .AD {
+    width: 970px;
+    margin: 0 auto;
+    margin-bottom: 1rem;
   }
 }

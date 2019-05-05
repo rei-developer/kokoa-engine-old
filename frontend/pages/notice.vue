@@ -22,7 +22,14 @@
                       <span class='tagUser' v-if='item.tagAuthor'>{{ item.tagAuthor }}</span>
                       <span v-html='item.content' />
                     </div>
-                    <div class='regdate'>{{ item.created }}</div>
+                    <div class='author'>
+                      <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+                      {{ item.author }}
+                      <span class='regdate'>
+                        <font-awesome-icon icon='clock' />
+                        {{ item.created }}
+                      </span>
+                    </div>
                   </div>
                 </nuxt-link>
               </div>
@@ -106,16 +113,6 @@
 </script>
 
 <style>
-  .AD {
-    width: 960px;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-  }
-  .AD img {
-    width: 960px;
-    height: auto;
-  }
-
   .header-menu {
     margin-bottom: 1rem;
   }
@@ -172,22 +169,24 @@
   .notice-list .item .info .subject {
     color: #333;
   }
+  .notice-list .item .info .author {
+    color: #333;
+    font-size: .8rem;
+    font-weight: bold;
+  }
+  .notice-list .item .info span.regdate {
+    color: #999;
+    font-size: .7rem;
+    font-weight: normal;
+  }
   .notice-list .item .info .subject span.tagUser {
+    display: block;
     margin-right: .25rem;
     padding: 0 .5rem;
     background: #f78989;
     border-radius: 500rem;
     color: #FFF;
-    font-size: .7rem;
-    font-weight: bold;
-    float: left;
-  }
-  .notice-list .item .info .regdate {
-    padding: 0 .5rem;
-    background: hsla(0,0%,78.4%,.2);
-    border-radius: 500rem;
-    color: #35495e;
-    font-size: .7rem;
+    font-size: .75rem;
     float: left;
   }
 </style>

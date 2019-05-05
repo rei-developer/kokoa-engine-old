@@ -12,7 +12,7 @@
               <nuxt-link :to='`/b/${domain}`'>
                 <el-button type='info' size='small'>목록</el-button>
               </nuxt-link>
-              <nuxt-link :to='`/b/${domain}/write`'>
+              <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
                 <el-button class='Right' type='danger' size='small'>
                   <font-awesome-icon icon='pencil-alt' />
                   글 작성
@@ -70,7 +70,7 @@
                 v-if='$store.state.user.isLogged && ($store.state.user.isAdmin > 0 || topic.userId === $store.state.user.id)'>
                 삭제
               </el-button>
-              <nuxt-link :to='`/b/${domain}/write`'>
+              <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
                 <el-button class='Right' type='danger' size='small'>
                   <font-awesome-icon icon='pencil-alt' />
                   글 작성
@@ -208,12 +208,6 @@
 </script>
 
 <style>
-  .AD {
-    max-width: 970px;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-  }
-
   .header-menu {
     margin-bottom: 1rem;
   }

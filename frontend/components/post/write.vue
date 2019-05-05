@@ -34,8 +34,8 @@
       write: async function() {
         if (this.loading) return
         if (this.content === '') return this.$message.error('내용을 입력하세요.')
-        const token = localStorage.token
-        if (!token) return this.$message.error('로그인하세요.')
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
         this.loading = true
         const { data } = await axios.post('/api/topic/write/post', {
           topicId: this.id,
@@ -51,7 +51,10 @@
           this.loading = false
           return this.$message.error(data.message)
         }
-        this.$router.go({ force: true })
+        this.$store.commit('forceUpdate')
+        // this.$router.go({ force: true })
+        this.content = ''
+        this.loading = false
       }
     }
   }
