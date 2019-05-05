@@ -51,6 +51,7 @@
     line-height: 1.2;
     text-align: justify;
     background-color: #F5F5F5;
+    margin-bottom: 1rem;
     padding: .5em;
   }
   .widget-list .item {

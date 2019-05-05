@@ -6,7 +6,7 @@
         <el-row :gutter='20'>
           <el-col :xl='19'>
             <div class='AD'>
-              <adsbygoogle ad-slot='1882412178' />
+              <adsbygoogle />
             </div>
             <div class='header-menu'>
               <el-button-group>
@@ -54,6 +54,7 @@
           </el-col>
           <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
             <Recent />
+            <adsbygoogle />
           </el-col>
         </el-row>
       </el-col>

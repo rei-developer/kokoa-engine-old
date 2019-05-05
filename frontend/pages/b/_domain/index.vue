@@ -9,6 +9,7 @@
           </el-col>
           <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
             <Recent />
+            <adsbygoogle />
           </el-col>
         </el-row>
       </el-col>

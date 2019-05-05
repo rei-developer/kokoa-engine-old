@@ -5,6 +5,9 @@
       <el-col :xl='16'>
         <el-row :gutter='20'>
           <el-col :xl='19'>
+            <div class='AD'>
+              <adsbygoogle />
+            </div>
             <div class='widget-title'>
               <font-awesome-icon icon='bell' />
               알림 목록 ({{ this.$store.state.user.noticeCount }})
@@ -15,7 +18,7 @@
                 v-for='(item, index) in notices' :key='index'>
                 <nuxt-link :to='"/b/" + item.boardDomain + "/" + item.topicId + "?postId=" + item.postId'>
                   <div class='image'>
-                    <img :src='item.profile ? "https://hawawa.co.kr/img/" + item.profile : "/default.png"'>
+                    <img :src='item.profile ? "https://hawawa.co.kr/img/" + item.profile : "/profile.png"'>
                   </div>
                   <div class='info'>
                     <div class='subject'>
@@ -37,6 +40,7 @@
           </el-col>
           <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
             <Recent />
+            <adsbygoogle />
           </el-col>
         </el-row>
       </el-col>
@@ -72,7 +76,10 @@
           { page: this.page++ },
           { headers: { 'x-access-token': token } }
         )
-        if (!data.notices) return this.$store.commit('setLoading')
+        if (!data.notices) {
+          this.$alert('알림이 없습니다.', '알림', { confirmButtonText: '확인' })
+          return this.$store.commit('setLoading')
+        }
         data.notices.map(i => {
           i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
           this.notices.push(i)

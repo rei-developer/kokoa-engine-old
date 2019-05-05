@@ -7,7 +7,7 @@
           <el-row :gutter='20'>
             <el-col :xl='19'>
               <div class='AD'>
-                <adsbygoogle ad-slot='1882412178' />
+                <adsbygoogle />
               </div>
               <nuxt-link :to='`/b/${domain}`'>
                 <el-button type='info' size='small'>목록</el-button>
@@ -27,7 +27,7 @@
                     <el-button type='danger' size='mini' round @click='votes(true)'><font-awesome-icon icon='seedling' /></el-button>
                   </div>
                   <div class='image'>
-                    <img :src='topic.profile ? "https://hawawa.co.kr/img/" + topic.profile : "/default.png"'>
+                    <img :src='topic.profile ? "https://hawawa.co.kr/img/" + topic.profile : "/profile.png"'>
                   </div>
                   <div class='info'>
                     <div class='subject'>
@@ -82,6 +82,7 @@
             </el-col>
             <el-col class='hidden-mobile' :xl='5' hidden-xl-only>
               <Recent />
+              <adsbygoogle />
             </el-col>
           </el-row>
         </el-col>

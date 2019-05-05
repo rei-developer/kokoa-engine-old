@@ -20,6 +20,7 @@ module.exports.createImage = type => async ctx => {
   }
 }
 */
+
 const fs = require('fs')
 const sharp = require('sharp')
 const { execFile } = require('child_process')
