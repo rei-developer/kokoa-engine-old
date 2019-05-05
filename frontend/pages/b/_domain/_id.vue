@@ -138,7 +138,7 @@
         }
       )
       if (data.status === 'fail') return alert(data.message)
-      if (store.state.user.isLogged) store.commit('setNoticeCount', data.count)
+      if (store.state.user.isLogged) store.commit('user/setNoticeCount', data.count)
       return { domain, id, topic: data.topic }
     },
     methods: {
