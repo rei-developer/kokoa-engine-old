@@ -1,4 +1,4 @@
-
+/*
 const fs = require('fs')
 const { execFile } = require('child_process')
 
@@ -19,7 +19,7 @@ module.exports.createImage = type => async ctx => {
     ctx.body = { message: e.message, status: 'fail' }
   }
 }
-/*
+*/
 const fs = require('fs')
 const sharp = require('sharp')
 const { execFile } = require('child_process')
@@ -72,4 +72,3 @@ module.exports.createImage = type => async ctx => {
     ctx.body = { message: e.message, status: 'fail' }
   }
 }
-*/
