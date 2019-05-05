@@ -1,3 +1,29 @@
+/* Margin */
+.marginTop { margin-top: 1rem }
+.marginBottom { margin-bottom: 1rem }
+.marginVertical { margin: 1rem 0 }
+.marginHorizon { margin: 0 1rem }
+
+.header-menu {
+  margin-bottom: 1rem;
+}
+
+.grid-content {
+  min-height: 0.02px;
+}
+
+.subMenu {
+  padding-left: 1rem;
+}
+
+/* Container */
+.containerSubject {
+  margin-bottom: 1rem;
+  color: #202020;
+  font-size: 1.2rem;
+}
+
+/* Element UI Customize */
 .el-header,
 .el-main,
 .el-footer {
@@ -21,53 +47,29 @@
   z-index: 10000;
 }
 
-.header-menu {
-  margin-bottom: 1rem;
-}
-
-.grid-content {
-  min-height: 0.02px;
-}
-
-.subMenu {
-  padding-left: 1rem;
-}
-
+/* Router Progress */
 .page-enter-active, .page-leave-active {
   transition: opacity .1s;
 }
-
 .page-enter, .page-leave-to {
   opacity: 0;
 }
 
-/*
- * Mobile
- */
-
-@media (max-width: 1023px) {
-  .hidden-mobile {
-    display: none;
-  }
-
+/* Desktop */
+@media (min-width: 1024px) {
+  .hidden-desktop { display: none }
   .AD {
-    width: 100vw;
+    width: 970px;
     margin: 0 auto;
     margin-bottom: 1rem;
   }
 }
 
-/*
- * PC
- */
-
-@media (min-width: 1024px) {
-  .hidden-desktop {
-    display: none;
-  }
-  
+/* Mobile */
+@media (max-width: 1023px) {
+  .hidden-mobile { display: none }
   .AD {
-    width: 970px;
+    width: 100vw;
     margin: 0 auto;
     margin-bottom: 1rem;
   }

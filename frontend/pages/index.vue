@@ -10,7 +10,7 @@
             <div class='AD'>
               <adsbygoogle ad-slot='1882412178' />
             </div>
-            <div class='header-menu'>
+            <div class='marginBottom'>
               <el-button-group>
                 <el-button type='info' size='small' @click='getData("all", true)' round>전체순</el-button>
                 <el-button type='danger' size='small' @click='getData("best", true)' round>인기순</el-button>
@@ -22,7 +22,7 @@
               <font-awesome-icon icon='folder-open' />
               {{ boardName }} 게시물 목록순
             </div>
-            <div class='topicList'>
+            <div class='indexTopicList'>
               <div
                 class='item'
                 v-for='(item, index) in topics' :key='index'>
@@ -48,7 +48,8 @@
                       <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
                     </span>
                     {{ item.title }}
-                    <span v-if='item.postsCount > 0'>[{{ item.postsCount }}]</span>
+                    <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
+                    <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
                   </div>
                   <div class='regdate'>
                     <font-awesome-icon icon='clock' />
@@ -194,28 +195,20 @@
 </script>
 
 <style>
-  /* Container */
-  .containerSubject {
-    margin-bottom: 1rem;
-    color: #202020;
-    font-size: 1.2rem;
-  }
-
-  /* Topic List */
-  .topicList {
+  .indexTopicList {
     display: flex;
     flex-direction: column;
   }
-  .topicList .item {
+  .indexTopicList .item {
     display: flex;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     margin-bottom: 1rem;
   }
-  .topicList .item:hover {
+  .indexTopicList .item:hover {
     background: #FAFAFA;
     cursor: pointer;
   }
-  .topicList .item .grade {
+  .indexTopicList .item .grade {
     display: flex;
     flex-direction: column;
     width: 4rem;
@@ -225,14 +218,14 @@
     font-weight: bold;
     text-align: center;
   }
-  .topicList .item .grade span.likes {
+  .indexTopicList .item .grade span.likes {
     color: #F78989;
   }
-  .topicList .item .image {
+  .indexTopicList .item .image {
     display: flex;
     flex-direction: column;
   }
-  .topicList .item .image img {
+  .indexTopicList .item .image img {
     width: 3.5rem;
     height: 3.5rem;
     margin: .25rem;
@@ -240,30 +233,47 @@
     border: 1px solid #CCC;
     border-radius: .25rem;
   }
-  .topicList .item .info {
+  .indexTopicList .item .info {
     display: flex;
     flex: 1;
     flex-direction: column;
     padding: .25rem;
     padding-left: 0;
   }
-  .topicList .item .info .subject {
+  .indexTopicList .item .info .subject {
     color: #F78989;
     font-size: .8rem;
     font-weight: bold;
   }
-  .topicList .item .info .subject span.star img {
-    width: 16px;
-    height: 16px;
-  }
-  .topicList .item .info .subject span.board {
+  .indexTopicList .item .info .subject span.board {
     padding: 0 .5rem;
     background: #F78989;
     border-radius: 500rem;
     color: #FFF;
-    font-size: .8rem;
   }
-  .topicList .item .info .regdate {
+  .indexTopicList .item .info .subject span.star img {
+    width: 16px;
+    height: 16px;
+  }
+  .indexTopicList .item .info .subject span.newest {
+    margin-left: .1rem;
+    padding: 0 .25rem;
+    background: #FF7F27;
+    border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+    font-weight: normal;
+  }
+  .indexTopicList .item .info .subject span.posts {
+    margin-left: .1rem;
+    padding: 0 .25rem;
+    background: #999;
+    border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+    font-weight: normal;
+  }
+  .indexTopicList .item .info .regdate {
     margin-top: .25rem;
     padding: 0 .5rem;
     background: #F5F5F5;

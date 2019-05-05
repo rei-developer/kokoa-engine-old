@@ -13,39 +13,50 @@
       </el-button>
     </nuxt-link>
     <div class='Blank' />
-    <div class='widget-title'>
+    <div class='containerSubject'>
       <font-awesome-icon icon='pencil-alt' />
       {{ boardName }} ({{ numberWithCommas(topicsCount) }})
     </div>
-    <div class='article-list'>
+    <div class='topicList'>
       <div
         :class='id == item.id ? "item view" : "item"'
         v-for='(item, index) in topics' :key='index'>
-        <nuxt-link :to='"/b/" + domain + "/" + item.id + "?page=" + page'>
-          <div class='image'>
-            <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+        <div class='image' @click='move(item)'>
+          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+        </div>
+        <div class='info' @click='move(item)'>
+          <div class='subject'>
+            <span class='board' v-if='domain === "all" || domain === "best"'>{{ getBoardName(item.boardDomain) }}</span>
+            <span class='star' v-if='item.isBest > 0'>
+              <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+            </span>
+            <span :class='id == item.id ? "view" : ""'>
+              {{ item.title }}
+              <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
+              <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+            </span>
           </div>
-          <div class='info'>
-            <div class='subject'>
-              <span class='board' v-if='domain === "all" || domain === "best"'>{{ getBoardName(item.boardDomain) }}</span>
-              <span class='star' v-if='item.isBest > 0'>
-                <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
-              </span>
-              <span :class='id == item.id ? "view" : ""'>
-                {{ item.title }}
-                <span v-if='item.postsCount > 0'>[{{ item.postsCount }}]</span>
-              </span>
-            </div>
-            <div class='author'>
-              <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
-              {{ item.author }}
-              <span class='regdate'>| {{ item.created }} | 조회 {{ numberWithCommas(item.hits) }}</span>
-            </div>
+          <div class='author'>
+            <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+            {{ item.author }}
+            <span>
+              <font-awesome-icon icon='clock' />
+              {{ item.created }}
+            </span>
+            <span v-if='item.hits > 0'>
+              <font-awesome-icon icon='eye' />
+              {{ numberWithCommas(item.hits) }}
+            </span>
+            <span v-if='item.likes > 0'>
+              <font-awesome-icon icon='star' />
+              +{{ numberWithCommas(item.likes) }}
+            </span>
           </div>
-        </nuxt-link>
+        </div>
       </div>
     </div>
     <el-pagination
+      class='marginVertical'
       layout='prev, pager, next'
       :page-size='20'
       :total='topicsCount'
@@ -77,6 +88,17 @@
         topicsCount: 0,
         page: 0
       }
+    },
+    watch: {
+      '$store.state.forceUpdate': function() {
+        this.getData(true)
+      }
+    },
+    mounted() {
+      this.domain = this.$nuxt._route.params.domain
+      this.boardName = this.getBoardName(this.domain)
+      this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
+      this.getData()
     },
     methods: {
       getBoardName(domain) {
@@ -122,113 +144,103 @@
         this.$store.commit('setLoading')
         return data
       },
+      move(item) {
+        this.$router.push({ path: `/b/${this.domain}/${item.id}?page=${this.page}` })
+      },
+      currentChange(page) {
+        this.page = page - 1
+        this.getData()
+      },
       forceUpdate() {
         this.$store.commit('forceUpdate')
       },
-      numberWithCommas: x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-      currentChange: function(page) {
-        this.page = page - 1
-        this.getData()
+      numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
-    },
-    watch: {
-      '$store.state.forceUpdate': function() {
-        this.getData(true)
-      }
-    },
-    created() {
-      this.domain = this.$nuxt._route.params.domain
-      this.boardName = this.getBoardName(this.domain)
-      this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
-      this.getData()
     }
   }
 </script>
 
 <style>
-  .header-menu {
-    margin-bottom: 1rem;
-  }
-
-  .grid-content {
-    min-height: 0.02px;
-  }
-
-  .widget-title {
-    display: block;
-    color: #202020;
-    font-size: 20px;
-    line-height: 40px;
-  }
-
-  .article-list {
-    line-height: 1.8;
-    text-align: justify;
-  }
-  .article-list .item {
-    background: #FFF;
+  .topicList {
+    display: flex;
+    flex-direction: column;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    min-height: 4.2rem;
   }
-  .article-list .item:hover {
+  .topicList .item {
+    display: flex;
+    border-bottom: 1px solid #F5F5F5;
+  }
+  .topicList .item:hover {
     background: #FAFAFA;
     cursor: pointer;
   }
-  .article-list .item.view {
+  .topicList .item.view {
+    border-left: .25rem solid #F78989;
     background: #FAFAFA;
   }
-  .article-list .item .image {
-    display: inline-block;
-    width: 3.2rem;
-    margin-top: .5rem;
-    margin-left: .5rem;
+  .topicList .item .image {
+    display: flex;
+    flex-direction: column;
   }
-  .article-list .item .image img {
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: .3rem;
+  .topicList .item .image img {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: .25rem;
+    padding: 2px;
+    border: 1px solid #CCC;
+    border-radius: .25rem;
   }
-  .article-list .item .info {
-    display: inline-block;
-    padding: .5rem;
-    padding-left: .25rem;
-    font-size: .8rem;
-    vertical-align: top;
+  .topicList .item .info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: .25rem;
+    padding-left: 0;
   }
-  .article-list .item .info .subject {
+  .topicList .item .info .subject {
     color: #333;
-    font-size: .9rem;
-    font-weight: bold;
+    font-size: .8rem;
   }
-  .article-list .item .info .subject span.star img {
-    width: 16px;
-    height: 16px;
-    margin-bottom: 4px;
-    vertical-align: middle;
-  }
-  .article-list .item .info .subject span.board {
+  .topicList .item .info .subject span.board {
     padding: 0 .5rem;
-    background: #f78989;
+    background: #F78989;
     border-radius: 500rem;
     color: #FFF;
-    font-size: .8rem;
+    font-weight: bold;
   }
-  .article-list .item .info .subject span.view {
-    color: #f78989;
+  .topicList .item .info .subject span.star img {
+    width: 16px;
+    height: 16px;
   }
-  .article-list .item .info .author {
+  .topicList .item .info .subject span.newest {
+    margin-left: .1rem;
+    padding: 0 .25rem;
+    background: #FF7F27;
+    border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+  }
+  .topicList .item .info .subject span.posts {
+    margin-left: .1rem;
+    padding: 0 .25rem;
+    background: #999;
+    border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+  }
+  .topicList .item .info .subject span.view {
+    color: #F78989;
+  }
+  .topicList .item .info .author {
     color: #333;
     font-size: .8rem;
     font-weight: bold;
   }
-  .article-list .item .info span.regdate {
+  .topicList .item .info .author span {
+    margin-left: .25rem;
     color: #999;
     font-size: .7rem;
     font-weight: normal;
-  }
-
-  .el-pagination {
-    margin: 1rem 0;
   }
 </style>
