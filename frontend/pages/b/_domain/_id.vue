@@ -27,7 +27,7 @@
                     <el-button type='danger' size='mini' round @click='votes(true)'><font-awesome-icon icon='seedling' /></el-button>
                   </div>
                   <div class='image'>
-                    <img :src='topic.profile ? "https://hawawa.co.kr/img/" + topic.profile : "/profile.png"'>
+                    <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
                   </div>
                   <div class='info'>
                     <div class='subject'>

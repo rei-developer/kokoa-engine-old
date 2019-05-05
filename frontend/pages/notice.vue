@@ -18,7 +18,7 @@
                 v-for='(item, index) in notices' :key='index'>
                 <nuxt-link :to='"/b/" + item.boardDomain + "/" + item.topicId + "?postId=" + item.postId'>
                   <div class='image'>
-                    <img :src='item.profile ? "https://hawawa.co.kr/img/" + item.profile : "/profile.png"'>
+                    <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
                   </div>
                   <div class='info'>
                     <div class='subject'>

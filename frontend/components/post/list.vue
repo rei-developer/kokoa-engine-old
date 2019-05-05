@@ -10,7 +10,7 @@
             <font-awesome-icon icon='chevron-right' />
           </div>
           <div class='image'>
-            <img :src='item.profile ? "https://hawawa.co.kr/img/" + item.profile : "/profile.png"'>
+            <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
           </div>
           <div class='info'>
             <div class='content'>
