@@ -6,7 +6,7 @@ module.exports = {
     title: '하와와',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no' },
       { name: 'theme-color', content: '#29313D' },
       { name: 'google-site-verification', content: 'BEmhl96CsIh9rlpvLSKMLLjHOccJrj6VnMdtMjd8Nbk' },
       { hid: 'description', name: 'description', content: '하와와 - 유머, 정보, 연예인, 애니메이션, 서브컬쳐 커뮤니티' }
