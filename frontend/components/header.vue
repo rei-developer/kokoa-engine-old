@@ -7,7 +7,7 @@
           class='el-menu'
           mode='horizontal'
           :router='true'
-          active-text-color='#f78989'>
+          active-text-color='#29313D'>
           <el-menu-item index='1' route='/' class='Logo' @click='forceUpdate'>
             <img src='/favicon.png' class='hidden-desktop'>
             <img src='~/assets/HeaderLogo.png' class='hidden-mobile'>

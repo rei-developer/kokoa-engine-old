@@ -218,7 +218,7 @@
     border-bottom: 1px solid #F5F5F5;
   }
   .postList .item.view {
-    border-left: .25rem solid #F78989;
+    border-left: .25rem solid #29313D;
   }
   .postList .item.view,
   .postList .item.reply {
@@ -277,13 +277,13 @@
     font-size: .8rem;
   }
   .postList .item .info .desciption span.writer {
-    color: #f78989;
+    color: #4183C4;
     font-weight: bold;
   }
   .postList .item .info .desciption span.tagUser {
     margin-right: .1rem;
     padding: 0 .5rem;
-    background: #f78989;
+    background: #29313D;
     border-radius: 500rem;
     color: #FFF;
     font-size: .75rem;

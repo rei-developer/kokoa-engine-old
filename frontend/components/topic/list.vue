@@ -7,7 +7,7 @@
       <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
     </nuxt-link>
     <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-      <el-button class='floatRight' type='danger' size='small'>
+      <el-button class='floatRight' type='primary' size='small'>
         <font-awesome-icon icon='pencil-alt' />
         글 작성
       </el-button>
@@ -103,7 +103,7 @@
         <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
       </nuxt-link>
       <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-        <el-button class='floatRight' type='danger' size='small'>
+        <el-button class='floatRight' type='primary' size='small'>
           <font-awesome-icon icon='pencil-alt' />
           글 작성
         </el-button>
@@ -224,7 +224,7 @@
     background: #FAFAFA;
   }
   .topicList .item.view {
-    border-left: .25rem solid #F78989;
+    border-left: .25rem solid #29313D;
     background: #FAFAFA;
   }
   .topicList .item .image {
@@ -252,7 +252,7 @@
   }
   .topicList .item .info .subject span.board {
     padding: 0 .5rem;
-    background: #F78989;
+    background: #29313D;
     border-radius: 500rem;
     color: #FFF;
     font-weight: bold;
@@ -272,7 +272,7 @@
   .topicList .item .info .subject span.newest {
     margin-left: .1rem;
     padding: 0 .25rem;
-    background: #FF7F27;
+    background: #4183C4;
     border-radius: .1rem;
     color: #FFF;
     font-size: .7rem;
@@ -286,7 +286,7 @@
     font-size: .7rem;
   }
   .topicList .item .info .subject span.view {
-    color: #F78989;
+    color: #4183C4;
     font-weight: bold;
   }
   .topicList .item .info .author {

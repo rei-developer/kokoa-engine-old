@@ -111,7 +111,7 @@
     height: 3rem;
     line-height: 3rem;
     border-radius: 500rem;
-    background: #F78989;
+    background: #29313D;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
     color: #FFF;
     text-align: center;

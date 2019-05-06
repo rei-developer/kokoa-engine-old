@@ -214,7 +214,7 @@
     cursor: pointer;
   }
   .noticeList .item.view {
-    border-left: .25rem solid #F78989;
+    border-left: .25rem solid #29313D;
   }
   .noticeList .item .image {
     display: flex;
@@ -259,14 +259,10 @@
     color: #333;
     font-size: .8rem;
   }
-  .noticeList .item .info .desciption span.writer {
-    color: #f78989;
-    font-weight: bold;
-  }
   .noticeList .item .info .desciption span.tagUser {
     margin-right: .1rem;
     padding: 0 .5rem;
-    background: #f78989;
+    background: #29313D;
     border-radius: 500rem;
     color: #FFF;
     font-size: .75rem;

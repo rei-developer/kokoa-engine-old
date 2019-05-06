@@ -7,7 +7,7 @@
       <el-input class='Bottom' size='small' placeholder='ID' v-model='username' autofocus />
       <el-input class='Bottom' size='small' placeholder='비밀번호' v-model='password' show-password />
       <el-button-group>
-        <el-button type='danger' size='small' @click='signIn'>
+        <el-button type='primary' size='small' @click='signIn'>
           <font-awesome-icon icon='pencil-alt' />
           로그인
         </el-button>
@@ -17,7 +17,7 @@
         <el-tooltip class='item' effect='dark' content='로그인 ID를 저장합니다.' placement='top'>
           <el-switch
             v-model='save'
-            active-color='#f78989' />
+            active-color='#29313D' />
         </el-tooltip>
         ID 저장
       </div>

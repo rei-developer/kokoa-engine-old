@@ -85,6 +85,6 @@
     vertical-align: middle;
   }
   .recentList .item span.regdate {
-    color: #F78989;
+    color: #29313D;
   }
 </style>

@@ -15,7 +15,7 @@
                 <el-button type='info' size='small'>목록</el-button>
               </nuxt-link>
               <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-                <el-button class='floatRight' type='danger' size='small'>
+                <el-button class='floatRight' type='primary' size='small'>
                   <font-awesome-icon icon='pencil-alt' />
                   글 작성
                 </el-button>
@@ -58,7 +58,7 @@
                   <span v-html='topic.content' />
                   <div class='event'>
                     <el-button-group>
-                      <el-button type='danger' size='small' round @click='votes(true)'>
+                      <el-button type='primary' size='small' round @click='votes(true)'>
                         <img src='/up.png'>
                         데뷔 {{ topic.likes }}
                       </el-button>
@@ -82,7 +82,7 @@
                 삭제
               </el-button>
               <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-                <el-button class='floatRight' type='danger' size='small'>
+                <el-button class='floatRight' type='primary' size='small'>
                   <font-awesome-icon icon='pencil-alt' />
                   글 작성
                 </el-button>
@@ -255,7 +255,7 @@
     padding-left: 0;
   }
   .topicArticle .header .info .subject {
-    color: #F78989;
+    color: #29313D;
     font-size: 1rem;
     font-weight: bold;
   }

@@ -36,3 +36,6 @@ yarn start:prod
   2. Profile Information 가져오기
 - post
   1. Auth JWT 토큰 인증 및 로그인/로그아웃 구현
+
+## FILE DELETE
+- find * -mtime +2 -delete

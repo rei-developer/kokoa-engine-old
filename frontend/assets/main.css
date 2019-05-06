@@ -52,6 +52,26 @@
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
   z-index: 10000;
 }
+.el-button--primary {
+  border-color: #29313D !important;
+  background-color: #29313D !important;
+}
+.el-button--warning {
+  border-color: #FFC90E !important;
+  background-color: #FFC90E !important;
+}
+.el-button--danger {
+  border-color: #ED1C24 !important;
+  background-color: #ED1C24 !important;
+}
+.el-button--primary:hover,
+.el-button--warning:hover,
+.el-button--danger:hover {
+  opacity: .8;
+}
+.el-badge__content {
+  background-color: #29313D !important;
+}
 
 /* Router Progress */
 .page-enter-active, .page-leave-active {

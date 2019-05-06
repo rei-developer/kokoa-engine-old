@@ -111,7 +111,7 @@
     flex-direction: column;
     width: 4.5rem;
     border-radius: .25rem;
-    background: #F78989;
+    background: #29313D;
     color: #FFF;
     font-size: 1.5rem;
     justify-content: center;

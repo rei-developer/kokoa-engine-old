@@ -11,7 +11,7 @@
           </div>
           <div class='topicWrite'>
             <div class='marginBottom' v-if='$store.state.user.isLogged && $store.state.user.isAdmin > 0'>
-              <el-switch v-model='form.isNotice' active-color='#f78989'></el-switch>
+              <el-switch v-model='form.isNotice' active-color='#29313D'></el-switch>
               공지사항
             </div>
             <div class='marginBottom'>
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class='marginTop'>
-            <el-button class='widthAll' type='danger' size='medium' @click='write'>작성</el-button>
+            <el-button class='widthAll' type='primary' size='medium' @click='write'>작성</el-button>
           </div>
         </el-col>
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>

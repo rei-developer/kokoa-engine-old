@@ -12,10 +12,10 @@
             </div>
             <div class='marginBottom'>
               <el-button-group>
-                <el-button type='info' size='small' @click='getData("all", true)' round>전체순</el-button>
-                <el-button type='danger' size='small' @click='getData("best", true)' round>인기순</el-button>
-                <el-button type='success' size='small' @click='getData("girl", true)' round>연예순</el-button>
-                <el-button type='success' size='small' @click='getData("anime", true)' round>애니순</el-button>
+                <el-button type='primary' size='small' @click='getData("all", true)' round>전체순</el-button>
+                <el-button type='info' size='small' @click='getData("best", true)' round>인기순</el-button>
+                <el-button type='info' size='small' @click='getData("girl", true)' round>연예순</el-button>
+                <el-button type='info' size='small' @click='getData("anime", true)' round>애니순</el-button>
               </el-button-group>
             </div>
             <div class='containerSubject'>
@@ -214,7 +214,7 @@
     text-align: center;
   }
   .indexTopicList .item .grade span.likes {
-    color: #F78989;
+    color: #29313D;
   }
   .indexTopicList .item .image {
     display: flex;
@@ -236,13 +236,13 @@
     padding-left: 0;
   }
   .indexTopicList .item .info .subject {
-    color: #F78989;
+    color: #4183C4;
     font-size: .8rem;
     font-weight: bold;
   }
   .indexTopicList .item .info .subject span.board {
     padding: 0 .5rem;
-    background: #F78989;
+    background: #29313D;
     border-radius: 500rem;
     color: #FFF;
   }
@@ -253,7 +253,7 @@
   .indexTopicList .item .info .subject span.newest {
     margin-left: .1rem;
     padding: 0 .25rem;
-    background: #FF7F27;
+    background: #4183C4;
     border-radius: .1rem;
     color: #FFF;
     font-size: .7rem;
