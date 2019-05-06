@@ -28,7 +28,7 @@
             </div>
             <div class='noticeList'>
               <div
-                :class='"item" + (item.confirm < 1 ? " view" : "")'
+                :class='"item" + (item.confirm < 1 ? " view" : (index % 2 === 0 ? "" : " odd"))'
                 v-for='(item, index) in notices' :key='index'>
                 <div class='image' @click='move(item)'>
                   <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
@@ -213,6 +213,9 @@
     background: #FAFAFA;
     cursor: pointer;
   }
+  .noticeList .item.odd {
+    background: #FAFAFA;
+  }
   .noticeList .item.view {
     border-left: .25rem solid #29313D;
   }
@@ -228,6 +231,7 @@
     padding: 2px;
     border: 1px solid #CCC;
     border-radius: 500rem;
+    background: #FFF;
   }
   .noticeList .item .info {
     display: flex;

@@ -18,7 +18,7 @@
     </div>
     <div class='topicList'>
       <div
-        :class='id == item.id ? "item view" : "item notice"'
+        :class='id == item.id ? "item view" : "item odd"'
         v-for='item in notices' :key='item.id'>
         <div class='image' @click='move(item)'>
           <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div
-        :class='id == item.id ? "item view" : "item"'
+        :class='id == item.id ? "item view" : (index % 2 === 0 ? "item" : "item odd")'
         v-for='(item, index) in topics' :key='index'>
         <div class='image' @click='move(item)'>
           <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
@@ -220,12 +220,12 @@
     background: #FAFAFA;
     cursor: pointer;
   }
-  .topicList .item.notice {
+  .topicList .item.odd,
+  .topicList .item.view {
     background: #FAFAFA;
   }
   .topicList .item.view {
     border-left: .25rem solid #29313D;
-    background: #FAFAFA;
   }
   .topicList .item .image {
     display: flex;
@@ -238,6 +238,7 @@
     padding: 2px;
     border: 1px solid #CCC;
     border-radius: .25rem;
+    background: #FFF;
   }
   .topicList .item .info {
     display: flex;
