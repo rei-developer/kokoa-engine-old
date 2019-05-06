@@ -17,6 +17,7 @@
         </nuxt-link>
       </div>
     </div>
+    <adsbygoogle v-if='domain !== "anime"' />
   </div>
 </template>
 
@@ -24,10 +25,14 @@
   import axios from 'axios'
 
   export default {
+    props: ['domain'],
     data() {
       return {
         topics: []
       }
+    },
+    mounted() {
+      this.getData()
     },
     methods: {
       getData: async function() {
@@ -39,9 +44,6 @@
         })
         return data
       },
-    },
-    created() {
-      this.getData()
     }
   }
 </script>

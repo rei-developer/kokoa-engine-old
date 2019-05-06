@@ -60,8 +60,7 @@
             </div>
           </el-col>
           <el-col class='subMenu hidden-mobile' :xl='5' hidden-xl-only>
-            <Recent />
-            <adsbygoogle />
+            <Recent :domain='""' />
           </el-col>
         </el-row>
       </el-col>
