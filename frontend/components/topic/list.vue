@@ -215,9 +215,10 @@
   .topicList .item {
     display: flex;
     border-bottom: 1px solid #F5F5F5;
+    background: rgba(255, 255, 255, .5);
   }
   .topicList .item:hover {
-    background: rgba(250, 250, 250, .5);;
+    background: rgba(250, 250, 250, .5);
     cursor: pointer;
   }
   .topicList .item.odd,

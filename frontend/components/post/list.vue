@@ -216,13 +216,14 @@
   .postList .item {
     display: flex;
     border-bottom: 1px solid #F5F5F5;
+    background: rgba(255, 255, 255, .5);
   }
   .postList .item.view {
     border-left: .25rem solid #29313D;
   }
   .postList .item.view,
   .postList .item.reply {
-    background: #FAFAFA;
+    background: rgba(250, 250, 250, .5);
   }
   .postList .item .reply {
     display: flex;
