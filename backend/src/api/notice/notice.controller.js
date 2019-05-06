@@ -21,10 +21,33 @@ module.exports.getNotices = async ctx => {
   ctx.body = { notices, status: 'ok' }
 }
 
+module.exports.deleteNotice = async ctx => {
+  const { id } = ctx.params
+  if (id < 1) return
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  await deleteNotice.id(id, user.id)
+  ctx.body = { status: 'ok' }
+}
+
 module.exports.deleteNotices = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
   await deleteNotice(user.id)
+  ctx.body = { status: 'ok' }
+}
+
+module.exports.updateNoticeByConfirm = async ctx => {
+  console.log("A")
+  const { id, flag } = ctx.params
+  console.log(ctx.params)
+  if (id < 1 || flag < 0 || flag > 1) return
+  console.log("B")
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  console.log("C")
+  await updateNotice.id(id, user.id, flag)
+  console.log("D")
   ctx.body = { status: 'ok' }
 }
 
