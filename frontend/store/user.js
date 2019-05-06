@@ -31,6 +31,8 @@ export const mutations = {
     state.isAdmin = data.user.isAdmin
     state.isLogged = true
   },
+  setNickname: (state, nickname) => state.nickname = nickname,
+  setProfileImageUrl: (state, url) => state.profileImageUrl = `https://hawawa.co.kr/profile/${url}`,
   setNoticeCount: (state, count) => state.noticeCount = count,
   signOut: state => {
     state.token = ''

@@ -110,18 +110,20 @@ exports.updateUserByProfileImage = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
   const getProfileImageUrl = await getUser.profileImageUrl(user.id)
-  if (getProfileImageUrl && getProfileImageUrl !== '') fs.unlink(`./img/${getProfileImageUrl}`, () => { })
+  if (getProfileImageUrl && getProfileImageUrl !== '') fs.unlink(`./profile/${getProfileImageUrl}`, () => { })
   await updateUser({ profileImageUrl: url }, user.id)
   ctx.body = { status: 'ok' }
 }
 
 exports.updateUser = async ctx => {
-  const { nickname } = ctx.request.body
-  if (nickname === '') return
+  let { nickname } = ctx.request.body
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
-  const getNickname = await getUser.nickname(nickname)
-  if (getNickname) return ctx.body = { message: '이미 존재하는 닉네임입니다.', status: 'fail' }
+  if (nickname === '') nickname = user.nickname
+  if (nickname !== user.nickname) {
+    const getNickname = await getUser.nickname(nickname)
+    if (getNickname) return ctx.body = { message: '이미 존재하는 닉네임입니다.', status: 'fail' }
+  }
   await updateUser({ nickname }, user.id)
   ctx.body = { status: 'ok' }
 }

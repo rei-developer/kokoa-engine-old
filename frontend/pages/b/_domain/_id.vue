@@ -3,7 +3,7 @@
     <div class='animeBackground' v-if='domain === "anime"' />
     <el-row>
       <el-col :xl='4' hidden-lg-and-down>
-        <div class='grid-content' />
+        <div class='blank' />
       </el-col>
       <el-col :xl='16'>
         <el-row>
@@ -77,7 +77,7 @@
             <el-button
               type='info'
               size='small'
-              @click='remove'
+              @click='removeHandler'
               v-if='$store.state.user.isLogged && ($store.state.user.isAdmin > 0 || topic.userId === $store.state.user.id)'>
               삭제
             </el-button>
@@ -89,13 +89,13 @@
             </nuxt-link>
             <TopicList class='marginTop' :id='id' />
           </el-col>
-          <el-col class='subMenu hidden-mobile' :xl='5' hidden-xl-only>
+          <el-col class='sidebar hidden-mobile' :xl='5' hidden-xl-only>
             <Recent :domain='domain' />
           </el-col>
         </el-row>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down>
-        <div class='grid-content' />
+        <div class='blank' />
       </el-col>
     </el-row>
   </div>
@@ -166,7 +166,7 @@
     },
     methods: {
       votes: async function(flag) {
-        if (this.id < 1) return
+        if (id < 1) return
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
@@ -182,28 +182,30 @@
         data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다.') : this.$message('투표했습니다.')
         this.$store.commit('setLoading')
       },
-      remove: async function() {
-        if (this.id < 1) return
-        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
-        const token = this.$store.state.user.token
+      removeHandler: async function() {
+        if (this.id < 1 || !this.$store.state.user.isLogged) return
         this.$confirm('정말로 삭제하시겠습니까?', '알림', {
           confirmButtonText: '삭제',
           cancelButtonText: '취소'
-        }).then(async function() {
-          this.$store.commit('setLoading', true)
-          const { data } = await axios.delete(
-            '/api/topic/delete',
-            {
-              data: { id: this.id },
-              headers: { 'x-access-token': token }
-            }
-          )
-          if (data.status === 'fail') {
-            this.$store.commit('setLoading')
-            return this.$message.error(data.message)
-          }
-          this.$router.go(-1)
+        }).then(() => {
+          this.remove()
         })
+      },
+      remove: async function() {
+        const token = this.$store.state.user.token
+        this.$store.commit('setLoading', true)
+        const { data } = await axios.delete(
+          '/api/topic/delete',
+          {
+            data: { id: this.id },
+            headers: { 'x-access-token': token }
+          }
+        )
+        if (data.status === 'fail') {
+          this.$store.commit('setLoading')
+          return this.$message.error(data.message)
+        }
+        this.$router.go(-1)
       },
       scrollToBottom() {
         this.$nextTick(() => {

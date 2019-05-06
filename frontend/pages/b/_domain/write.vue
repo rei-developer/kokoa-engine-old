@@ -3,7 +3,7 @@
     <Loading v-if='loading' />
     <div class='Container'>
       <el-row>
-        <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
+        <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
         <el-col :xl='16'>
           <div class='containerSubject'>
             <font-awesome-icon icon='pencil-alt' />
@@ -40,8 +40,7 @@
               <input
                 type='file'
                 multiple='multiple'
-                @change='imageUpload'
-              />
+                @change='imageUpload' />
               10MB
             </div>
           </div>
@@ -49,7 +48,7 @@
             <el-button class='widthAll' type='primary' size='medium' @click='write'>작성</el-button>
           </div>
         </el-col>
-        <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
+        <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
       </el-row>
     </div>
   </div>
@@ -122,7 +121,7 @@
           domain: this.domain,
           category: this.form.category,
           title: this.form.title,
-          content: this.form.content, //this.state.editor.getContent(),
+          content: this.form.content,
           isNotice: this.form.isNotice,
           images: this.images
         }, {

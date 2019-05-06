@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :xl='4' hidden-lg-and-down>
-        <div class='grid-content' />
+        <div class='blank' />
       </el-col>
       <el-col :xl='16'>
         <el-row>
@@ -56,13 +56,13 @@
               </div>
             </div>
           </el-col>
-          <el-col class='subMenu hidden-mobile' :xl='5' hidden-xl-only>
+          <el-col class='sidebar hidden-mobile' :xl='5' hidden-xl-only>
             <Recent :domain='""' />
           </el-col>
         </el-row>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down>
-        <div class='grid-content' />
+        <div class='blank' />
       </el-col>
     </el-row>
   </div>

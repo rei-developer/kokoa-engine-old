@@ -1,7 +1,9 @@
 <template>
   <div class='Header'>
     <el-row :gutter='0'>
-      <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
+      <el-col :xl='4' hidden-lg-and-down>
+        <div class='blank' />
+      </el-col>
       <el-col :xl='16'>
         <el-menu
           class='el-menu'
@@ -36,7 +38,7 @@
               </div>
               {{ $store.state.user.nickname }}
             </template>
-            <el-menu-item @click='development'>프로필 편집</el-menu-item>
+            <el-menu-item @click='edit'>프로필 편집</el-menu-item>
             <el-menu-item @click='development'>블라인드 목록</el-menu-item>
             <el-menu-item @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
@@ -50,7 +52,9 @@
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
+      <el-col :xl='4' hidden-lg-and-down>
+        <div class='blank' />
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -60,6 +64,9 @@
     methods: {
       forceUpdate() {
         this.$store.commit('forceUpdate')
+      },
+      edit() {
+        this.$router.push({ path: '/edit' })
       },
       development() {
         this.$alert('현재 개발중입니다. 이용에 불편을 드려 대단히 죄송합니다.', '알림', { confirmButtonText: '확인' })
@@ -73,23 +80,17 @@
 </script>
 
 <style>
+  /* Header */
   .Header {
     position: relative;
     margin-bottom: 1rem;
-    background-color: #FFF;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-position: #FFF;
     overflow: visible;
     z-index: 1;
   }
 
-  .el-menu {
-    border: 0 !important;
-  }
-
-  .grid-content {
-    margin: 0;
-  }
-
+  /* Logo */
   .Logo {
     padding-left: 0;
     border-bottom-color: transparent !important;
@@ -102,10 +103,7 @@
     padding-bottom: 5px;
   }
 
-  .Down {
-    padding-bottom: 5px;
-  }
-
+  /* Badge */
   .Badge {
     position: absolute;
     margin-top: -10px;
@@ -113,6 +111,7 @@
     font-weight: normal;
   }
 
+  /* Avatar */
   .Avatar {
     display: inline-block;
     width: 40px;
@@ -130,6 +129,7 @@
     border-radius: 500rem;
   }
 
+  /* Right Menu */
   .rightMenu {
     float: right !important;
   }

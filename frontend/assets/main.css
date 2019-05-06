@@ -1,3 +1,9 @@
+hr {
+  height: 1px !important;
+  margin: .5rem 0 !important;
+  border-color: #CCC !important;
+}
+
 /* Width */
 .widthAll { width: 100% }
 
@@ -10,15 +16,11 @@
 /* Float */
 .floatRight { float: right }
 
-.header-menu {
-  margin-bottom: 1rem;
-}
+/* Blank */
+.blank { min-height: 0.02px }
 
-.grid-content {
-  min-height: 0.02px;
-}
-
-.subMenu {
+/* Sidebar */
+.sidebar {
   padding-left: 1rem;
 }
 
@@ -37,6 +39,9 @@
 }
 .el-header {
   margin-bottom: 1rem !important;
+}
+.el-menu {
+  border: 0 !important;
 }
 .el-menu-item,
 .el-submenu__title {
@@ -80,7 +85,7 @@
 
 /* Router Progress */
 .page-enter-active, .page-leave-active {
-  transition: opacity .1s;
+  transition: opacity .5s;
 }
 .page-enter, .page-leave-to {
   opacity: 0;

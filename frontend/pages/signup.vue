@@ -1,23 +1,29 @@
 <template>
-  <div class='Container'>
-    <div class='logo'>
-      <img src='~/assets/Logo.png'>
+  <div>
+    <div class='accountBox'>
+      <div class='header'>
+        <nuxt-link to='/'>
+          <img src='~/assets/Logo.png'>
+        </nuxt-link>
+      </div>
+      <div class='article'>
+        <el-input class='marginBottom' size='small' placeholder='ID' v-model='username' autofocus />
+        <el-input class='marginBottom' size='small' placeholder='비밀번호' v-model='password' show-password />
+        <el-input class='marginBottom' size='small' placeholder='닉네임' v-model='nickname' />
+        <el-input class='marginBottom input-with-select' size='small' placeholder='이메일 주소' v-model='email'>
+          <el-button slot='append' @click='accept'>전송</el-button>
+        </el-input>
+        <el-input class='marginBottom' size='small' placeholder='인증 코드' v-model='authCode' />
+        <el-button class='widthAll' type='primary' size='small' @click='signUp'>
+          <font-awesome-icon icon='user-edit' />
+          계정 생성
+        </el-button>
+      </div>
     </div>
-    <div class='article'>
-      <el-input class='Bottom' size='small' placeholder='ID' v-model='username' autofocus />
-      <el-input class='Bottom' size='small' placeholder='비밀번호' v-model='password' show-password />
-      <el-input class='Bottom' size='small' placeholder='닉네임' v-model='nickname' />
-      <el-input class='Bottom input-with-select' size='small' placeholder='이메일 주소' v-model='email'>
-        <el-button slot='append' @click='accept'>전송</el-button>
-      </el-input>
-      <el-input class='Bottom' size='small' placeholder='인증 코드' v-model='authCode' />
-      <el-button type='success' size='small' @click='signUp'>
-        <font-awesome-icon icon='user-edit' />
-        계정 생성
-      </el-button>
-    </div>
-    <div class='article'>
-      <div class='signIn' @click='signIn'>계정이 있으시다면 로그인하세요</div>
+    <div class='accountBox'>
+      <div class='article'>
+        <div class='signIn' @click='signIn'>계정이 있으시다면 로그인하세요</div>
+      </div>
     </div>
   </div>
 </template>
@@ -71,32 +77,32 @@
 </script>
 
 <style>
-  .header-menu {
-    margin-bottom: 1rem;
+  /* Margin */
+  .marginBottom {
+    margin-bottom: .5rem;
   }
 
-  .grid-content {
-    min-height: 0.02px;
-  }
-
-  .Container {
+  /* Account Box */
+  .accountBox {
     width: 330px;
     margin: 0 auto;
   }
-
-  .logo {
+  .accountBox .header {
     width: 300px;
-    margin: 5rem auto 1rem;
+    margin: 5rem auto 2rem;
   }
-
-  .article {
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
+  .accountBox .article {
     width: 100%;
     padding: .5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .08);
     background: #FFF;
   }
+  .accountBox .article:last-child {
+    margin-bottom: 1rem;
+  }
 
+  /* Sign In */
   .signIn {
     width: 100%;
     padding: .5rem 0;
@@ -108,10 +114,6 @@
     cursor: pointer;
   }
   .signIn:hover {
-    background: rgba(103, 194, 58, 0.1);
-  }
-
-  .Bottom {
-    margin-bottom: .5rem;
+    background: rgba(103, 194, 58, .1);
   }
 </style>

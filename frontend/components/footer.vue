@@ -1,7 +1,7 @@
 <template>
   <div class='Footer'>
     <el-row :gutter='0'>
-      <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
+      <el-col :xl='4' hidden-lg-and-down><div class='blank' /></el-col>
       <el-col :xl='16'>
         <el-row :gutter='50'>
           <el-col :span='8'>
@@ -19,7 +19,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :xl='4' hidden-lg-and-down><div class='grid-content' /></el-col>
+      <el-col :xl='4' hidden-lg-and-down><div class='blank' /></el-col>
     </el-row>
   </div>
 </template>
@@ -47,9 +47,5 @@
     line-height: 170%;
     margin-top: 5px;
     margin-bottom: 3px;
-  }
-
-  .grid-content {
-    margin: 0;
   }
 </style>
