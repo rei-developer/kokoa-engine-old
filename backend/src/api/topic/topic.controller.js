@@ -102,7 +102,7 @@ module.exports.getContent = async ctx => {
   if (id < 1) return
   const user = await User.getUser(ctx.get('x-access-token'))
   const topic = await getTopic(id)
-  if (!topic) return ctx.body = { status: 'fail' }
+  if (!topic || topic.isAllowed < 1) return ctx.body = { status: 'fail' }
   if (client.exists(id)) {
     const hits = await new Promise(resolve => {
       client.get(id, (err, value) => {
