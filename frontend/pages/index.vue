@@ -20,7 +20,7 @@
             </div>
             <div class='containerSubject'>
               <font-awesome-icon icon='folder-open' />
-              {{ boardName }} 게시물 목록순
+              {{ getBoardName(domain) }} 게시물 목록순
             </div>
             <div class='indexTopicList'>
               <div
@@ -80,7 +80,6 @@
     data() {
       return {
         domain: 'all',
-        boardName: '전체',
         topics: [],
         page: 0,
         bottom: false,
@@ -136,10 +135,7 @@
       },
       getData: async function(domain = this.domain, forceUpdate = false) {
         this.$store.commit('setLoading', true)
-        if (this.domain != domain) {
-          this.domain = domain
-          this.boardName = this.getBoardName(domain)
-        }
+        if (this.domain != domain) this.domain = domain
         if (forceUpdate) {
           this.topics = []
           this.page = 0

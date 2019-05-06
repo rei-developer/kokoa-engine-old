@@ -5,27 +5,48 @@
       <el-row>
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
         <el-col :xl='16'>
-          <div class='article'>
-            <el-form ref='form' :model='form' label-width='50px'>
-              <el-form-item label='공지'>
-                <el-switch v-model='form.isNotice' active-color='#f78989'></el-switch>
-              </el-form-item>
-              <el-form-item label='제목'>
-                <el-input v-model='form.title'></el-input>
-              </el-form-item>
-              <el-form-item label='본문'>
-                <no-ssr placeholder='에디터를 불러오고 있습니다...'>
-                  <vue-editor
-                    id='editor'
-                    v-model='form.content'
-                    @imageAdded='handleImageAdded'
-                    useCustomImageHandler />
-                </no-ssr>
-              </el-form-item>
-              <el-form-item>
-                <el-button type='danger' size='medium' @click='write'>작성</el-button>
-              </el-form-item>
-            </el-form>
+          <div class='containerSubject'>
+            <font-awesome-icon icon='pencil-alt' />
+            {{ getBoardName(domain) }} 게시판 글 작성
+          </div>
+          <div class='topicWrite'>
+            <div class='marginBottom' v-if='$store.state.user.isLogged && $store.state.user.isAdmin > 0'>
+              <el-switch v-model='form.isNotice' active-color='#f78989'></el-switch>
+              공지사항
+            </div>
+            <div class='marginBottom'>
+              <el-input size='medium' placeholder='100자 제한' v-model='form.title' autofocus>
+                <template slot='prepend'>제목</template>
+              </el-input>
+            </div>
+            <no-ssr placeholder='에디터를 불러오고 있습니다...'>
+              <vue-editor
+                id='editor'
+                :editorToolbar='[
+                  [{ "size": ["small", false, "large", "huge"] }],
+                  ["bold", "italic", "underline", "strike"],
+                  [{ "align": "" }, { "align": "center" }, { "align": "right" }, { "align": "justify" }],
+                  ["blockquote", "code-block"],
+                  [{ "header": 1 }, { "header": 2 }],
+                  [{ "list": "ordered"}, { "list": "bullet" }, { "list": "check" }],
+                  [{ "indent": "-1"}, { "indent": "+1" }],
+                  [{ "color": [] }, { "background": [] }],
+                  ["link", "clean"]
+                ]'
+                :editorOptions='{ placeholder: "이곳에 내용을 입력하세요." }'
+                v-model='form.content' />
+            </no-ssr>
+            <div class='marginTop'>
+              <input
+                type='file'
+                multiple='multiple'
+                @change='imageUpload'
+              />
+              10MB
+            </div>
+          </div>
+          <div class='marginTop'>
+            <el-button class='widthAll' type='danger' size='medium' @click='write'>작성</el-button>
           </div>
         </el-col>
         <el-col :xl='4' hidden-lg-and-down><div class='grid-content'></div></el-col>
@@ -39,8 +60,7 @@
   import axios from 'axios'
   
   export default {
-    name: 'TopicWrite',
-    extends: {},
+    components: { Loading },
     data() {
       return {
         domain: '',
@@ -53,39 +73,43 @@
         images: [],
         selectedImage: null,
         editor: null,
-        loading: false,
-        aside: false,
-        token: ''
+        loading: false
       }
     },
+    async asyncData ({ params }) {
+      const domain = params.domain
+      return { domain }
+    },
     methods: {
-      handleImageAdded: async function(file, Editor, cursorLocation, resetUploader) {
-        const formData = new FormData()
-        formData.append('type', 'file')
-        formData.append('image', file, file.name)
-        if (!/(.gif|.png|.jpg|.jpeg|.webp)/i.test(file.name)) return this.$message.error('이미지 업로드 실패... (gif, png, jpg, jpeg, webp만 가능)')
-        const { data } = await axios.post(
-          '/api/cloud/topic',
-          formData,
-          { headers: { 'content-type': 'multipart/form-data' } }
-        )
-        if (data.status !== 'ok') {
-          this.loading = false
-          return this.$message.error(data.message)
+      getBoardName(domain) {
+        let boardName = ''
+        switch (domain) {
+          case 'all':
+            boardName = '전체'
+            break
+          case 'best':
+            boardName = '인기'
+            break
+          case 'girl':
+            boardName = '연예'
+            break
+          case 'anime':
+            boardName = '애니'
+            break
+          case 'talk':
+            boardName = '토크'
+            break
+          case 'social':
+            boardName = '정치'
+            break
+          case 'feedback':
+            boardName = '건의'
+            break
+          case 'notice':
+            boardName = '공지'
+            break
         }
-        const name = file.name
-        const filename = `https://hawawa.co.kr/img/${data.filename}`
-        this.$message.success(`이미지 ${name} 업로드 성공`)
-        this.images.push({
-          name,
-          filename: data.filename,
-          link: filename
-        })
-        this.selectedImage = filename
-        await Editor.insertText(cursorLocation, '\n\n')
-        await Editor.insertEmbed(cursorLocation, 'image', filename)
-        resetUploader()
-        this.loading = false
+        return boardName
       },
       write: async function() {
         if (this.loading) return
@@ -110,39 +134,53 @@
         }
         this.$router.push({ path: `/b/${this.domain}/${data.topicId}` })
       },
-    },
-    created() {
-      this.domain = this.$nuxt._route.params.domain
-    },
-    components: {
-      Loading
+      imageUpload: async function(e) {
+        if (this.loading || e.target.files.length < 1) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
+        this.loading = true
+        await this.imageUploadToServer(e.target.files)
+      },
+      imageUploadToServer: async function(files, index = 0) {
+        const LIMITS = 10485760
+        const formData = new FormData()
+        formData.append('type', 'file')
+        formData.append('image', files[index], files[index].name)
+        if (!/(.gif|.png|.jpg|.jpeg|.webp)/i.test(files[index].name)) this.$message.error(`${index + 1}번째 이미지 업로드 실패... (gif, png, jpg, jpeg, webp만 가능)`)
+        else if (files[index].size > LIMITS) this.$message.error(`${index + 1}번째 이미지 업로드 실패... (10MB 이하만 업로드 가능)`)
+        else {
+          const { data } = await axios.post(
+            '/api/cloud/topic',
+            formData,
+            { headers: { 'content-type': 'multipart/form-data' } }
+          )
+          if (data.status === 'ok') {
+            const name = files[index].name
+            const filename = `https://hawawa.co.kr/img/${data.filename}`
+            this.$message.success(`${index + 1}번째 이미지 (${name}) 업로드 성공!`)
+            this.images.push({
+              name,
+              filename: data.filename,
+              link: filename
+            })
+            this.selectedImage = filename
+            this.form.content += `<p><img src='${filename}'></p><p></p>`
+          } else {
+            this.$message.error(`${index + 1}번째 이미지 업로드 실패...`)
+          }
+        }
+        if (index === files.length - 1) return this.loading = false
+        await this.imageUploadToServer(files, index + 1)
+      }
     }
   }
 </script>
 
 <style>
-  .grid-content {
-    min-height: 0.02px;
-  }
-
-  .Container {
-
-  }
-
-  .article {
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
+  .topicWrite {
     padding: .5rem;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     background: #FFF;
-  }
-
-  .Bottom {
-    margin-bottom: .5rem;
-  }
-
-  .Footer {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    z-index: -1;
+    font-size: .9rem;
   }
 </style>
