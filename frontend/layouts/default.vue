@@ -4,7 +4,7 @@
       <Loading v-if='$store.state.loading' />
     </no-ssr>
     <el-container>
-      <el-aside v-if='$store.state.aside'>
+      <el-aside width='200px' v-if='$store.state.aside'>
         <SideMenu />
       </el-aside>
       <el-container>
@@ -106,12 +106,12 @@
   .popupMenu {
     position: fixed;
     right: 2rem;
-    bottom: 2rem;
+    bottom: 6rem;
     width: 3rem;
     height: 3rem;
     line-height: 3rem;
     border-radius: 500rem;
-    background: #f78989;
+    background: #F78989;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
     color: #FFF;
     text-align: center;

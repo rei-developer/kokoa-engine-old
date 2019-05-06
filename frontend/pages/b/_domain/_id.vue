@@ -8,7 +8,7 @@
         <el-col :xl='16'>
           <el-row>
             <el-col :xl='19'>
-              <div class='AD'>
+              <div class='AD' v-if='domain !== "anime"'>
                 <adsbygoogle ad-slot='1882412178' />
               </div>
               <nuxt-link :to='`/b/${domain}`'>
