@@ -52,7 +52,7 @@ module.exports.createImage = type => async ctx => {
               .then(() => image.resize(100, 100)
                 .toBuffer()
               )
-              .then(result => fs.writeFile(`./profile/${filename}`, result, () => { }))
+              .then(result => fs.writeFile(`./profile/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))
           }
         }
         if (type === 'topic') {
