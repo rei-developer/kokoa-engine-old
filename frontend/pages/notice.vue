@@ -7,7 +7,13 @@
           <el-col :xl='19'>
             <div class='AD'>
               <adsbygoogle ad-slot='1882412178' />
-              <div v-html='script' />
+              <script type="text/javascript">
+                imobile_pid = "63114"; 
+                imobile_asid = "1619629"; 
+                imobile_width = 728; 
+                imobile_height = 90;
+              </script>
+              <script type="text/javascript" src="https://spdeliver.i-mobile.co.jp/script/ads.js?20101001"></script>
             </div>
             <div class='widget-title'>
               <font-awesome-icon icon='bell' />
@@ -59,8 +65,7 @@
         notices: [],
         page: 0,
         bottom: false,
-        lading: false,
-        script: `<script type="text/javascript">imobile_pid = "63114";imobile_asid = "1619629";imobile_width = 728;imobile_height = 90;</script><script type="text/javascript" src="https://spdeliver.i-mobile.co.jp/script/ads.js?20101001"></script>`
+        lading: false
       }
     },
     methods: {
