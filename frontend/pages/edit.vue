@@ -14,13 +14,13 @@
           기본 정보
         </div>
         <el-input class='marginBottom input-with-select' size='small' :value='$store.state.user.username' readonly>
-          <el-button slot='prepend'>ID</el-button>
+          <el-button class='editPrepend' slot='prepend'>ID</el-button>
         </el-input>
         <el-input class='marginBottom input-with-select' size='small' :placeholder='$store.state.user.nickname' v-model='nickname' autofocus>
-          <el-button slot='prepend'>닉네임</el-button>
+          <el-button class='editPrepend' slot='prepend'>닉네임</el-button>
         </el-input>
         <el-input class='input-with-select' size='small' :value='$store.state.user.email' readonly>
-          <el-button slot='prepend'>이메일 주소</el-button>
+          <el-button class='editPrepend' slot='prepend'>이메일 주소</el-button>
         </el-input>
         <hr />
         <div class='title'>
@@ -28,13 +28,13 @@
           비밀번호 변경 (준비중)
         </div>
         <el-input class='marginBottom input-with-select' size='small' placeholder='현재 사용중인 암호' v-model='nowPassword' show-password>
-          <el-button slot='prepend'>현재 암호</el-button>
+          <el-button class='editPrepend' slot='prepend'>현재 암호</el-button>
         </el-input>
         <el-input class='marginBottom input-with-select' size='small' placeholder='20자 제한' v-model='newPassword' show-password>
-          <el-button slot='prepend'>새 암호</el-button>
+          <el-button class='editPrepend' slot='prepend'>새 암호</el-button>
         </el-input>
         <el-input class='input-with-select' size='small' placeholder='20자 제한' v-model='newPassword2' show-password>
-          <el-button slot='prepend'>새 암호 확인</el-button>
+          <el-button class='editPrepend' slot='prepend'>새 암호 확인</el-button>
         </el-input>
         <hr />
         <div class='title'>
@@ -46,14 +46,14 @@
           size='small'
           :value='`${$moment($store.state.user.registerDate).format("YYYY/MM/DD HH:mm:ss")} (${numberWithCommas($moment().diff($moment($store.state.user.registerDate), "days"))}일)`'
           readonly>
-          <el-button slot='prepend'>계정 생성 날짜</el-button>
+          <el-button class='editPrepend' slot='prepend'>계정 생성 날짜</el-button>
         </el-input>
         <el-input
           class='input-with-select'
           size='small'
           :value='$moment($store.state.user.blockDate).format("YYYY/MM/DD")'
           readonly>
-          <el-button slot='prepend'>이용 제한 날짜</el-button>
+          <el-button class='editPrepend' slot='prepend'>이용 제한 날짜</el-button>
         </el-input>
         <hr />
         <div class='title'>
@@ -61,10 +61,10 @@
           포인트 정보
         </div>
         <el-input class='marginBottom input-with-select' size='small' :value='$store.state.user.level' readonly>
-          <el-button slot='prepend'>레벨</el-button>
+          <el-button class='editPrepend' slot='prepend'>레벨</el-button>
         </el-input>
         <el-input class='marginBottom input-with-select' size='small' :value='numberWithCommas($store.state.user.point)' readonly>
-          <el-button slot='prepend'>포인트</el-button>
+          <el-button class='editPrepend' slot='prepend'>포인트</el-button>
         </el-input>
         <el-button class='widthAll' type='primary' size='small' @click='edit'>편집</el-button>
       </div>
@@ -122,7 +122,6 @@
         this.$store.commit('setLoading')
         if (data.status === 'fail') return this.$message.error(data.message)
         this.$message.success('프로필 사진을 업로드했습니다.')
-        alert(url)
         this.$store.commit('user/setProfileImageUrl', url)
       },
       edit: async function() {
@@ -156,10 +155,10 @@
   }
 
   /* Element UI Customize */
-  .el-button--default {
-    width: 7rem !important;
-    padding: 12px !important;
-    text-align: left !important;
+  .editPrepend {
+    width: 7rem;
+    padding: 12px;
+    text-align: left;
   }
 
   /* Account Box */
