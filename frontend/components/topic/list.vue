@@ -217,12 +217,12 @@
     border-bottom: 1px solid #F5F5F5;
   }
   .topicList .item:hover {
-    background: #FAFAFA;
+    background: rgba(250, 250, 250, .5);;
     cursor: pointer;
   }
   .topicList .item.odd,
   .topicList .item.view {
-    background: #FAFAFA;
+    background: rgba(250, 250, 250, .5);
   }
   .topicList .item.view {
     border-left: .25rem solid #29313D;
