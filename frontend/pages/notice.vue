@@ -213,7 +213,8 @@
     background: #FAFAFA;
     cursor: pointer;
   }
-  .noticeList .item.odd {
+  .noticeList .item.odd,
+  .noticeList .item.view {
     background: #FAFAFA;
   }
   .noticeList .item.view {

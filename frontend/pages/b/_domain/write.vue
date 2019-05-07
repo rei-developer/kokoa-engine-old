@@ -27,23 +27,41 @@
                 <template slot='prepend'>제목</template>
               </el-input>
             </div>
-            <no-ssr placeholder='에디터를 불러오고 있습니다...'>
-              <vue-editor
-                id='editor'
-                :editorToolbar='[
-                  [{ "size": ["small", false, "large", "huge"] }],
-                  ["bold", "italic", "underline", "strike"],
-                  [{ "align": "" }, { "align": "center" }, { "align": "right" }, { "align": "justify" }],
-                  ["blockquote", "code-block"],
-                  [{ "header": 1 }, { "header": 2 }],
-                  [{ "list": "ordered"}, { "list": "bullet" }, { "list": "check" }],
-                  [{ "indent": "-1"}, { "indent": "+1" }],
-                  [{ "color": [] }, { "background": [] }],
-                  ["link", "clean"]
-                ]'
-                :editorOptions='{ placeholder: "이곳에 내용을 입력하세요." }'
+            <div class='event' @click='htmlMode = !htmlMode'>
+              <span v-if='htmlMode'>
+                <font-awesome-icon icon='edit' />
+                에디터 모드
+              </span>
+              <span v-else>
+                <font-awesome-icon icon='code' />
+                HTML 모드
+              </span>
+            </div>
+            <div v-if='htmlMode'>
+              <textarea
+                rows='14'
+                placeholder='이곳에 내용을 입력하세요.'
                 v-model='form.content' />
-            </no-ssr>
+            </div>
+            <div v-else>
+              <no-ssr placeholder='에디터를 불러오고 있습니다...'>
+                <vue-editor
+                  id='editor'
+                  :editorToolbar='[
+                    [{ "size": ["small", false, "large", "huge"] }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ "align": "" }, { "align": "center" }, { "align": "right" }, { "align": "justify" }],
+                    ["blockquote"],
+                    [{ "header": 1 }, { "header": 2 }],
+                    [{ "list": "ordered"}, { "list": "bullet" }, { "list": "check" }],
+                    [{ "indent": "-1"}, { "indent": "+1" }],
+                    [{ "color": [] }, { "background": [] }],
+                    ["link", "clean"]
+                  ]'
+                  :editorOptions='{ placeholder: "이곳에 내용을 입력하세요." }'
+                  v-model='form.content' />
+              </no-ssr>
+            </div>
             <div class='marginTop'>
               <input
                 type='file'
@@ -81,6 +99,7 @@
         images: [],
         selectedImage: null,
         editor: null,
+        htmlMode: false,
         loading: false
       }
     },
@@ -191,5 +210,29 @@
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     background: #FFF;
     font-size: .9rem;
+  }
+  .topicWrite .event {
+    display: inline-block;
+    width: fit-content;
+    margin-bottom: .5rem;
+    padding: .25rem .5rem;
+    border-radius: .25rem;
+    background: #29313D;
+    color: #FFF;
+    font-size: .7rem;
+    text-align: center;
+  }
+  .topicWrite .event:hover {
+    opacity: .8;
+    cursor: pointer;
+  }
+  .topicWrite textarea {
+    width: 100%;
+    height: 249px;
+    margin-bottom: -5px;
+    padding: .5rem;
+    border: 1px solid #CCC;
+    font-size: .8rem;
+    outline: none;
   }
 </style>

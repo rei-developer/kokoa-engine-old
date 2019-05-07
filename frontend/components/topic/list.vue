@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class='AD' v-if='domain !== "anime"'>
-      <adsbygoogle ad-slot='1882412178' />
+    <div class='AD'>
+      <iframe src='/ad.html' />
     </div>
     <nuxt-link :to='`/b/${domain}`'>
       <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>

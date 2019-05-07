@@ -9,7 +9,7 @@
           <div class='inputbox'>
             <textarea
               rows='3'
-              placeholder='이곳에 내용을 입력해주세요.'
+              placeholder='이곳에 내용을 입력하세요.'
               v-model='content' />
           </div>
           <div class='send' @click='write'>
