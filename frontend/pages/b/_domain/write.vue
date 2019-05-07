@@ -22,6 +22,9 @@
           <div class='marginBottom' v-if='categories.length > 0'>
             <el-radio-group v-model='form.category' size='small'>
               <el-radio-button
+                label='(없음)'
+                @click='form.category = ""' />
+              <el-radio-button
                 :label='item.name'
                 @click='form.category = item.name'
                 v-for='(item, index) in categories' :key='index' />

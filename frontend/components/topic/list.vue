@@ -19,7 +19,7 @@
     </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='pencil-alt' />
-      {{ boardName }} ({{ numberWithCommas(topicsCount) }})
+      {{ getBoardName(domain) }} ({{ numberWithCommas(topicsCount) }})
     </div>
     <div class='topicList'>
       <div
@@ -146,8 +146,7 @@
       }
     },
     mounted() {
-      this.domain = this.$nuxt._route.params.domain
-      this.boardName = this.getBoardName(this.domain)
+      this.domain = this.$route.params.domain
       this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
       this.getData()
     },

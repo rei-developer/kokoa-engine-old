@@ -176,7 +176,7 @@
     },
     methods: {
       votes: async function(flag) {
-        if (id < 1) return
+        if (this.id < 1) return
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
