@@ -6,94 +6,103 @@
         <div class='blank' />
       </el-col>
       <el-col :xl='16'>
-        <el-row>
-          <el-col :xl='19'>
-            <div class='AD' v-if='domain !== "anime"'>
-              <adsbygoogle ad-slot='1882412178' />
-            </div>
-            <nuxt-link :to='`/b/${domain}`'>
-              <el-button type='info' size='small'>목록</el-button>
-            </nuxt-link>
-            <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-              <el-button class='floatRight' type='primary' size='small'>
-                <font-awesome-icon icon='pencil-alt' />
-                글 작성
-              </el-button>
-            </nuxt-link>
-            <div class='Blank' />
-            <div class='topicArticle'>
-              <div class='header'>
-                <div class='image'>
-                  <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
+        <div class='Container'>
+          <div class='item'>
+            <div class='content'>
+              <div class='AD hidden-mobile'>
+                <iframe src='/ad.html' />
+              </div>
+              <div class='AD hidden-desktop'>
+                <iframe src='/ad-mobile.html' />
+              </div>
+              <div>
+                <nuxt-link :to='`/b/${domain}`'>
+                  <el-button type='info' size='small'>목록</el-button>
+                </nuxt-link>
+                <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
+                  <el-button class='floatRight' type='primary' size='small'>
+                    <font-awesome-icon icon='pencil-alt' />
+                    글 작성
+                  </el-button>
+                </nuxt-link>
+              </div>
+              <div class='Blank' />
+              <div class='topicArticle'>
+                <div class='header'>
+                  <div class='image'>
+                    <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
+                  </div>
+                  <div class='info'>
+                    <div class='subject'>
+                      <span class='star' v-if='topic.isBest > 0'>
+                        <img :src='topic.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+                      </span>
+                      <span class='notice' v-if='topic.isNotice > 0'>NOTICE</span>
+                      <span class='category' v-if='topic.category !== ""'>{{ topic.category }}</span>
+                      {{ topic.title }}
+                    </div>
+                    <div class='author'>
+                      <img :src='topic.admin > 0 ? "/admin.png" : "/user.png"'>
+                      {{ topic.author }}
+                    </div>
+                    <div class='detail'>
+                      <span>
+                        <font-awesome-icon icon='clock' />
+                        {{ $moment(topic.created).fromNow() }}
+                      </span>
+                      <span v-if='topic.hits > 0'>
+                        <font-awesome-icon icon='eye' />
+                        {{ numberWithCommas(topic.hits) }}
+                      </span>
+                      <span v-if='topic.likes > 0'>
+                        <font-awesome-icon icon='star' />
+                        +{{ numberWithCommas(topic.likes) }}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div class='info'>
-                  <div class='subject'>
-                    <span class='star' v-if='topic.isBest > 0'>
-                      <img :src='topic.isBest > 1 ? "/star.svg" : "/burn.svg"'>
-                    </span>
-                    <span class='notice' v-if='topic.isNotice > 0'>NOTICE</span>
-                    <span class='category' v-if='topic.category !== ""'>{{ topic.category }}</span>
-                    {{ topic.title }}
-                  </div>
-                  <div class='author'>
-                    <img :src='topic.admin > 0 ? "/admin.png" : "/user.png"'>
-                    {{ topic.author }}
-                  </div>
-                  <div class='detail'>
-                    <span>
-                      <font-awesome-icon icon='clock' />
-                      {{ $moment(topic.created).fromNow() }}
-                    </span>
-                    <span v-if='topic.hits > 0'>
-                      <font-awesome-icon icon='eye' />
-                      {{ numberWithCommas(topic.hits) }}
-                    </span>
-                    <span v-if='topic.likes > 0'>
-                      <font-awesome-icon icon='star' />
-                      +{{ numberWithCommas(topic.likes) }}
-                    </span>
+                <div class='content'>
+                  <span v-html='topic.content' />
+                  <div class='event'>
+                    <el-button-group>
+                      <el-button type='primary' size='small' round @click='votes(true)'>
+                        <img src='/up.png'>
+                        데뷔 {{ topic.likes }}
+                      </el-button>
+                      <el-button type='info' size='small' round @click='votes(false)'>
+                        탈락 {{ topic.hates }}
+                        <img src='/down.png'>
+                      </el-button>
+                    </el-button-group>
                   </div>
                 </div>
               </div>
-              <div class='content'>
-                <span v-html='topic.content' />
-                <div class='event'>
-                  <el-button-group>
-                    <el-button type='primary' size='small' round @click='votes(true)'>
-                      <img src='/up.png'>
-                      데뷔 {{ topic.likes }}
-                    </el-button>
-                    <el-button type='info' size='small' round @click='votes(false)'>
-                      탈락 {{ topic.hates }}
-                      <img src='/down.png'>
-                    </el-button>
-                  </el-button-group>
-                </div>
+              <PostList :id='id' :topic='topic' />
+              <div>
+                <nuxt-link :to='`/b/${domain}`'>
+                  <el-button type='info' size='small'>목록</el-button>
+                </nuxt-link>
+                <el-button
+                  type='info'
+                  size='small'
+                  @click='removeHandler'
+                  v-if='$store.state.user.isLogged && ($store.state.user.isAdmin > 0 || topic.userId === $store.state.user.id)'>
+                  삭제
+                </el-button>
+                <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
+                  <el-button class='floatRight' type='primary' size='small'>
+                    <font-awesome-icon icon='pencil-alt' />
+                    글 작성
+                  </el-button>
+                </nuxt-link>
               </div>
+              <TopicList class='marginTop' :id='id' />
             </div>
-            <PostList :id='id' :topic='topic' />
-            <nuxt-link :to='`/b/${domain}`'>
-              <el-button type='info' size='small'>목록</el-button>
-            </nuxt-link>
-            <el-button
-              type='info'
-              size='small'
-              @click='removeHandler'
-              v-if='$store.state.user.isLogged && ($store.state.user.isAdmin > 0 || topic.userId === $store.state.user.id)'>
-              삭제
-            </el-button>
-            <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-              <el-button class='floatRight' type='primary' size='small'>
-                <font-awesome-icon icon='pencil-alt' />
-                글 작성
-              </el-button>
-            </nuxt-link>
-            <TopicList class='marginTop' :id='id' />
-          </el-col>
-          <el-col class='sidebar hidden-mobile' :xl='5' hidden-xl-only>
-            <Recent :domain='domain' />
-          </el-col>
-        </el-row>
+            <div class='sidebar'>
+              <Recent />
+            </div>
+          </div>
+        </div>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down>
         <div class='blank' />
@@ -229,7 +238,7 @@
   .topicArticle {
     display: flex;
     margin-top: 1rem;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .95);
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     flex-direction: column;
   }

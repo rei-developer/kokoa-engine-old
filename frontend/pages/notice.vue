@@ -5,64 +5,66 @@
         <div class='blank' />
       </el-col>
       <el-col :xl='16'>
-        <el-row>
-          <el-col :xl='19'>
-            <div class='AD'>
-              <adsbygoogle ad-slot='1882412178' />
-            </div>
-            <div class='marginBottom'>
-              <el-button-group>
-                <el-button type='info' size='small' @click='readAll' round>
-                  <font-awesome-icon icon='eye' />
-                  전부 읽음
-                </el-button>
-                <el-button type='danger' size='small' @click='trashAll' round>
-                  <font-awesome-icon icon='trash' />
-                  전부 삭제
-                </el-button>
-              </el-button-group>
-            </div>
-            <div class='containerSubject'>
-              <font-awesome-icon icon='bell' />
-              알림 목록 ({{ $store.state.user.noticeCount }})
-            </div>
-            <div class='noticeList'>
-              <div
-                :class='"item" + (item.confirm < 1 ? " view" : (index % 2 === 0 ? "" : " odd"))'
-                v-for='(item, index) in notices' :key='index'>
-                <div class='image' @click='move(item)'>
-                  <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
-                </div>
-                <div class='info' @click='move(item)'>
-                  <div class='author'>
-                    <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
-                    {{ item.author }}
-                    <span class='regdate'>
-                      <font-awesome-icon icon='clock' />
-                      {{ item.created }}
-                    </span>
+        <div class='Container'>
+          <div class='item'>
+            <div class='content'>
+              <div class='AD hidden-mobile'>
+                <iframe src='/ad.html' />
+              </div>
+              <div class='AD hidden-desktop'>
+                <iframe src='/ad-mobile.html' />
+              </div>
+              <div class='marginBottom'>
+                <el-button-group>
+                  <el-button type='info' size='small' @click='readAll' round>
+                    <font-awesome-icon icon='eye' />
+                    전부 읽음
+                  </el-button>
+                  <el-button type='danger' size='small' @click='trashAll' round>
+                    <font-awesome-icon icon='trash' />
+                    전부 삭제
+                  </el-button>
+                </el-button-group>
+              </div>
+              <div class='containerSubject'>
+                <font-awesome-icon icon='bell' />
+                알림 목록 ({{ $store.state.user.noticeCount }})
+              </div>
+              <div class='noticeList'>
+                <div
+                  :class='"item" + (item.confirm < 1 ? " view" : (index % 2 === 0 ? "" : " odd"))'
+                  v-for='(item, index) in notices' :key='index'>
+                  <div class='image' @click='move(item)'>
+                    <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
                   </div>
-                  <div class='desciption'>
-                    <span class='tagUser' v-if='item.tagAuthor'>{{ item.tagAuthor }}</span>
-                    <span v-html='item.content' />
+                  <div class='info' @click='move(item)'>
+                    <div class='author'>
+                      <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+                      {{ item.author }}
+                      <span class='regdate'>
+                        <font-awesome-icon icon='clock' />
+                        {{ item.created }}
+                      </span>
+                    </div>
+                    <div class='desciption'>
+                      <span class='tagUser' v-if='item.tagAuthor'>{{ item.tagAuthor }}</span>
+                      <span v-html='item.content' />
+                    </div>
                   </div>
-                </div>
-                <div class='read' @click='read(item)'>
-                  <font-awesome-icon :icon='item.confirm < 1 ? "eye" : "eye-slash"' />
-                </div>
-                <div class='trash' @click='trash(item)'>
-                  <font-awesome-icon icon='trash' />
+                  <div class='read' @click='read(item)'>
+                    <font-awesome-icon :icon='item.confirm < 1 ? "eye" : "eye-slash"' />
+                  </div>
+                  <div class='trash' @click='trash(item)'>
+                    <font-awesome-icon icon='trash' />
+                  </div>
                 </div>
               </div>
             </div>
-          </el-col>
-          <el-col class='sidebar hidden-mobile' :xl='5' hidden-xl-only>
-            <Recent :domain='""' />
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :xl='4' hidden-lg-and-down>
-        <div class='blank' />
+            <div class='sidebar'>
+              <Recent />
+            </div>
+          </div>
+        </div>
       </el-col>
     </el-row>
   </div>

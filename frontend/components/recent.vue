@@ -16,7 +16,9 @@
         <span class='regdate'>{{ item.created }}</span>
       </div>
     </div>
-    <adsbygoogle v-if='domain !== "anime"' />
+    <div class='ADSidebar'>
+      <iframe src='/ad-sidebar.html' />
+    </div>
   </div>
 </template>
 

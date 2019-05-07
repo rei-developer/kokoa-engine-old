@@ -1,17 +1,22 @@
 <template>
   <div>
-    <div class='AD'>
+    <div class='AD hidden-mobile'>
       <iframe src='/ad.html' />
     </div>
-    <nuxt-link :to='`/b/${domain}`'>
-      <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
-    </nuxt-link>
-    <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
-      <el-button class='floatRight' type='primary' size='small'>
-        <font-awesome-icon icon='pencil-alt' />
-        글 작성
-      </el-button>
-    </nuxt-link>
+    <div class='AD hidden-desktop'>
+      <iframe src='/ad-mobile.html' />
+    </div>
+    <div>
+      <nuxt-link :to='`/b/${domain}`'>
+        <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
+      </nuxt-link>
+      <nuxt-link :to='`/b/${domain}/write`' v-if='$store.state.user.isLogged && domain !== "all" && domain !== "best"'>
+        <el-button class='floatRight' type='primary' size='small'>
+          <font-awesome-icon icon='pencil-alt' />
+          글 작성
+        </el-button>
+      </nuxt-link>
+    </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='pencil-alt' />
       {{ boardName }} ({{ numberWithCommas(topicsCount) }})
@@ -226,11 +231,11 @@
     background: rgba(255, 255, 255, .5);
   }
   .topicList .item:hover {
-    background: rgba(250, 250, 250, .5);
+    background: rgba(245, 245, 245, .5);
     cursor: pointer;
   }
   .topicList .item.odd,
-  .topicList .item.view { background: rgba(250, 250, 250, .5) }
+  .topicList .item.view { background: rgba(245, 245, 245, .5) }
   .topicList .item.view { border-left: .25rem solid #29313D }
   .topicList .item .image {
     display: flex;
@@ -258,8 +263,8 @@
   }
   .topicList .item .info .subject span.board {
     padding: 0 .5rem;
-    background: #29313D;
     border-radius: 500rem;
+    background: #29313D;
     color: #FFF;
     font-weight: bold;
   }
@@ -273,8 +278,8 @@
   .topicList .item .info .subject span.posts {
     margin-right: .1rem;
     padding: 0 .25rem;
-    background: #ED1C24;
     border-radius: .1rem;
+    background: #ED1C24;
     color: #FFF;
     font-size: .7rem;
   }

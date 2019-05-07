@@ -6,14 +6,16 @@
         <div class='blank' />
       </el-col>
       <el-col :xl='16'>
-        <el-row>
-          <el-col :xl='19'>
-            <TopicList :id='0' />
-          </el-col>
-          <el-col class='sidebar hidden-mobile' :xl='5' hidden-xl-only>
-            <Recent :domain='domain' />
-          </el-col>
-        </el-row>
+        <div class='Container'>
+          <div class='item'>
+            <div class='content'>
+              <TopicList :id='0' />
+            </div>
+            <div class='sidebar'>
+              <Recent />
+            </div>
+          </div>
+        </div>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down>
         <div class='blank' />

@@ -1,82 +1,86 @@
 <template>
   <div>
     <Loading v-if='loading' />
-    <div class='Container'>
-      <el-row>
-        <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
-        <el-col :xl='16'>
-          <div class='containerSubject'>
-            <font-awesome-icon icon='pencil-alt' />
-            {{ getBoardName(domain) }} 게시판 글 작성
+    <el-row>
+      <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
+      <el-col :xl='16'>
+        <div class='AD hidden-mobile'>
+          <iframe src='/ad.html' />
+        </div>
+        <div class='AD hidden-desktop'>
+          <iframe src='/ad-mobile.html' />
+        </div>
+        <div class='containerSubject'>
+          <font-awesome-icon icon='pencil-alt' />
+          {{ getBoardName(domain) }} 게시판 글 작성
+        </div>
+        <div class='topicWrite'>
+          <div class='marginBottom' v-if='$store.state.user.isLogged && $store.state.user.isAdmin > 0'>
+            <el-switch v-model='form.isNotice' active-color='#29313D'></el-switch>
+            공지사항
           </div>
-          <div class='topicWrite'>
-            <div class='marginBottom' v-if='$store.state.user.isLogged && $store.state.user.isAdmin > 0'>
-              <el-switch v-model='form.isNotice' active-color='#29313D'></el-switch>
-              공지사항
-            </div>
-            <div class='marginBottom' v-if='categories.length > 0'>
-              <el-radio-group v-model='form.category' size='small'>
-                <el-radio-button
-                  :label='item.name'
-                  @click='form.category = item.name'
-                  v-for='(item, index) in categories' :key='index' />
-              </el-radio-group>
-            </div>
-            <div class='marginBottom'>
-              <el-input size='medium' placeholder='100자 제한' v-model='form.title' autofocus>
-                <template slot='prepend'>제목</template>
-              </el-input>
-            </div>
-            <div class='event' @click='htmlMode = !htmlMode'>
-              <span v-if='htmlMode'>
-                <font-awesome-icon icon='edit' />
-                에디터 모드
-              </span>
-              <span v-else>
-                <font-awesome-icon icon='code' />
-                HTML 모드
-              </span>
-            </div>
-            <div v-if='htmlMode'>
-              <textarea
-                rows='14'
-                placeholder='이곳에 내용을 입력하세요.'
+          <div class='marginBottom' v-if='categories.length > 0'>
+            <el-radio-group v-model='form.category' size='small'>
+              <el-radio-button
+                :label='item.name'
+                @click='form.category = item.name'
+                v-for='(item, index) in categories' :key='index' />
+            </el-radio-group>
+          </div>
+          <div class='marginBottom'>
+            <el-input size='medium' placeholder='100자 제한' v-model='form.title' autofocus>
+              <template slot='prepend'>제목</template>
+            </el-input>
+          </div>
+          <div class='event' @click='htmlMode = !htmlMode'>
+            <span v-if='htmlMode'>
+              <font-awesome-icon icon='edit' />
+              에디터 모드
+            </span>
+            <span v-else>
+              <font-awesome-icon icon='code' />
+              HTML 모드
+            </span>
+          </div>
+          <div v-if='htmlMode'>
+            <textarea
+              rows='14'
+              placeholder='이곳에 내용을 입력하세요.'
+              v-model='form.content' />
+          </div>
+          <div v-else>
+            <no-ssr placeholder='에디터를 불러오고 있습니다...'>
+              <vue-editor
+                id='editor'
+                :editorToolbar='[
+                  [{ "size": ["small", false, "large", "huge"] }],
+                  ["bold", "italic", "underline", "strike"],
+                  [{ "align": "" }, { "align": "center" }, { "align": "right" }, { "align": "justify" }],
+                  ["blockquote"],
+                  [{ "header": 1 }, { "header": 2 }],
+                  [{ "list": "ordered"}, { "list": "bullet" }, { "list": "check" }],
+                  [{ "indent": "-1"}, { "indent": "+1" }],
+                  [{ "color": [] }, { "background": [] }],
+                  ["link", "clean"]
+                ]'
+                :editorOptions='{ placeholder: "이곳에 내용을 입력하세요." }'
                 v-model='form.content' />
-            </div>
-            <div v-else>
-              <no-ssr placeholder='에디터를 불러오고 있습니다...'>
-                <vue-editor
-                  id='editor'
-                  :editorToolbar='[
-                    [{ "size": ["small", false, "large", "huge"] }],
-                    ["bold", "italic", "underline", "strike"],
-                    [{ "align": "" }, { "align": "center" }, { "align": "right" }, { "align": "justify" }],
-                    ["blockquote"],
-                    [{ "header": 1 }, { "header": 2 }],
-                    [{ "list": "ordered"}, { "list": "bullet" }, { "list": "check" }],
-                    [{ "indent": "-1"}, { "indent": "+1" }],
-                    [{ "color": [] }, { "background": [] }],
-                    ["link", "clean"]
-                  ]'
-                  :editorOptions='{ placeholder: "이곳에 내용을 입력하세요." }'
-                  v-model='form.content' />
-              </no-ssr>
-            </div>
-            <div class='marginTop'>
-              <input
-                type='file'
-                multiple='multiple'
-                @change='imageUpload' />
-              10MB
-            </div>
+            </no-ssr>
           </div>
-          <div class='marginVertical'>
-            <el-button class='widthAll' type='primary' size='medium' @click='write'>작성</el-button>
+          <div class='marginTop'>
+            <input
+              type='file'
+              multiple='multiple'
+              @change='imageUpload' />
+            10MB
           </div>
-        </el-col>
-        <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
-      </el-row>
-    </div>
+        </div>
+        <div class='marginVertical'>
+          <el-button class='widthAll' type='primary' size='medium' @click='write'>작성</el-button>
+        </div>
+      </el-col>
+      <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
+    </el-row>
   </div>
 </template>
 

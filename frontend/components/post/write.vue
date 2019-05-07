@@ -85,6 +85,7 @@
   .postWrite .item .profile {
     display: flex;
     flex-direction: column;
+    margin-right: .5rem;
     justify-content: center;
     align-items: center;
   }
@@ -99,7 +100,6 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    margin: 0 .5rem;
   }
   .postWrite .item .inputbox textarea {
     padding: .5rem;
@@ -110,6 +110,7 @@
     display: flex;
     flex-direction: column;
     width: 4.5rem;
+    margin-left: .5rem;
     border-radius: .25rem;
     background: #29313D;
     color: #FFF;
@@ -120,6 +121,10 @@
   .postWrite .item .send:hover {
     opacity: .8;
     cursor: pointer;
+  }
+
+  @media (max-width: 1023px) {
+    .postWrite .item .profile { display: none }
   }
 
   /* Sign In */

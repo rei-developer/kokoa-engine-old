@@ -5,65 +5,70 @@
         <div class='blank' />
       </el-col>
       <el-col :xl='16'>
-        <el-row>
-          <el-col :xl='19'>
-            <div class='AD'>
-              <adsbygoogle ad-slot='1882412178' />
-            </div>
-            <div class='marginBottom'>
-              <el-button-group>
-                <el-button type='primary' size='small' @click='getData("all", true)' round>전체순</el-button>
-                <el-button type='info' size='small' @click='getData("best", true)' round>인기순</el-button>
-                <el-button type='info' size='small' @click='getData("girl", true)' round>연예순</el-button>
-                <el-button type='info' size='small' @click='getData("anime", true)' round>애니순</el-button>
-              </el-button-group>
-            </div>
-            <div class='containerSubject'>
-              <font-awesome-icon icon='folder-open' />
-              {{ getBoardName(domain) }} 게시물 목록순
-            </div>
-            <div class='indexTopicList'>
-              <div
-                class='item'
-                v-for='(item, index) in topics' :key='index'>
-                <div class='grade'>
-                  <span class='likes'>
-                    <font-awesome-icon icon='angle-up' />
-                    {{ item.likes }}
-                  </span>
-                  <el-button
-                    size='mini'
-                    plain round
-                    @click='votes(item.id)'>
-                    <font-awesome-icon icon='seedling' />
-                  </el-button>
-                </div>
-                <div class='image' @click='move(item)'>
-                  <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
-                </div>
-                <div class='info' @click='move(item)'>
-                  <div class='subject'>
-                    <span class='board'>{{ getBoardName(item.boardDomain) }}</span>
-                    <span class='star' v-if='item.isBest > 0'>
-                      <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+        <div class='Container'>
+          <div class='item'>
+            <div class='content'>
+              <div class='AD hidden-mobile'>
+                <iframe src='/ad.html' />
+              </div>
+              <div class='AD hidden-desktop'>
+                <iframe src='/ad-mobile.html' />
+              </div>
+              <div class='marginBottom'>
+                <el-button-group>
+                  <el-button type='primary' size='small' @click='getData("all", true)' round>전체순</el-button>
+                  <el-button type='info' size='small' @click='getData("best", true)' round>인기순</el-button>
+                  <el-button type='info' size='small' @click='getData("girl", true)' round>연예순</el-button>
+                  <el-button type='info' size='small' @click='getData("anime", true)' round>애니순</el-button>
+                </el-button-group>
+              </div>
+              <div class='containerSubject'>
+                <font-awesome-icon icon='folder-open' />
+                {{ getBoardName(domain) }} 게시물 목록순
+              </div>
+              <div class='indexTopicList'>
+                <div
+                  class='item'
+                  v-for='(item, index) in topics' :key='index'>
+                  <div class='grade'>
+                    <span class='likes'>
+                      <font-awesome-icon icon='angle-up' />
+                      {{ item.likes }}
                     </span>
-                    <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
-                    {{ item.title }}
-                    <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
-                    <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+                    <el-button
+                      size='mini'
+                      plain round
+                      @click='votes(item.id)'>
+                      <font-awesome-icon icon='seedling' />
+                    </el-button>
                   </div>
-                  <div class='regdate'>
-                    <font-awesome-icon icon='clock' />
-                    {{ item.created }}
+                  <div class='image' @click='move(item)'>
+                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+                  </div>
+                  <div class='info' @click='move(item)'>
+                    <div class='subject'>
+                      <span class='board'>{{ getBoardName(item.boardDomain) }}</span>
+                      <span class='star' v-if='item.isBest > 0'>
+                        <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+                      </span>
+                      <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
+                      {{ item.title }}
+                      <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
+                      <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+                    </div>
+                    <div class='regdate'>
+                      <font-awesome-icon icon='clock' />
+                      {{ item.created }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </el-col>
-          <el-col class='sidebar hidden-mobile' :xl='5' hidden-xl-only>
-            <Recent :domain='""' />
-          </el-col>
-        </el-row>
+            <div class='sidebar'>
+              <Recent />
+            </div>
+          </div>
+        </div>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down>
         <div class='blank' />

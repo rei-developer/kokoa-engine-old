@@ -19,12 +19,26 @@ hr {
 /* Blank */
 .blank { min-height: 0.02px }
 
-/* Sidebar */
-.sidebar {
-  padding-left: 1rem;
+/* Container */
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+.Container > .item {
+  display: flex;
+}
+.Container > .item > .content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.Container > .item > .sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin-left: 1rem;
 }
 
-/* Container */
 .containerSubject {
   margin-bottom: 1rem;
   color: #202020;
@@ -117,7 +131,8 @@ hr {
 @media (min-width: 1024px) {
   .hidden-desktop { display: none }
   .AD {
-    width: 970px;
+    width: 728px;
+    height: 90px;
     margin: 0 auto;
     margin-bottom: 1rem;
   }
@@ -125,10 +140,20 @@ hr {
 
 /* Mobile */
 @media (max-width: 1023px) {
-  .hidden-mobile { display: none }
+  .hidden-mobile,
+  .Container > .item > .sidebar { display: none }
   .AD {
-    width: 100vw;
+    width: 320px;
+    height: 50px;
     margin: 0 auto;
     margin-bottom: 1rem;
   }
+}
+
+.AD iframe,
+.ADSidebar iframe { width: 100% }
+.ADSidebar {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
 }

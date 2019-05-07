@@ -198,12 +198,13 @@
   .postBox {
     margin-top: 1rem;
     padding: .5rem;
-    background: #FFF;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, .5);
   }
   .postReplyWrite {
     padding: .5rem;
     border-bottom: 1px solid #F5F5F5;
+    background: rgba(255, 255, 255, .5);
   }
 
   /* Post List */
@@ -223,7 +224,7 @@
   }
   .postList .item.view,
   .postList .item.reply {
-    background: rgba(250, 250, 250, .5);
+    background: rgba(245, 245, 245, .5);
   }
   .postList .item .reply {
     display: flex;
