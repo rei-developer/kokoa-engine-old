@@ -283,11 +283,11 @@
     font-size: .7rem;
   }
   .topicList .item .info .subject span.category { background: #29313D }
-  .topicList .item .info .subject span.newest { background: #4183C4 }
+  .topicList .item .info .subject span.newest { background: #409EFF }
   .topicList .item .info .subject span.posts { background: #999 }
-  .topicList .item .info .subject span.image { color: #4183C4 }
+  .topicList .item .info .subject span.image { color: #409EFF }
   .topicList .item .info .subject span.view {
-    color: #4183C4;
+    color: #409EFF;
     font-weight: bold;
   }
   .topicList .item .info .author {

@@ -242,7 +242,7 @@
     padding-left: 0;
   }
   .indexTopicList .item .info .subject {
-    color: #4183C4;
+    color: #409EFF;
     font-size: .8rem;
     font-weight: bold;
   }
@@ -261,7 +261,7 @@
   .indexTopicList .item .info .subject span.posts {
     margin-left: .1rem;
     padding: 0 .25rem;
-    background: #4183C4;
+    background: #409EFF;
     border-radius: .1rem;
     color: #FFF;
     font-size: .7rem;

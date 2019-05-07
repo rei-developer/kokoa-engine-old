@@ -279,7 +279,7 @@
     font-size: .8rem;
   }
   .postList .item .info .desciption span.writer {
-    color: #4183C4;
+    color: #409EFF;
     font-weight: bold;
   }
   .postList .item .info .desciption span.tagUser {

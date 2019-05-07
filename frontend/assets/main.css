@@ -89,7 +89,7 @@ hr {
   opacity: .8;
 }
 .el-radio-button span:hover {
-  color: #4183C4 !important;
+  color: #409EFF !important;
 }
 .el-radio-button.is-active span {
   background-color: #29313D !important;
@@ -104,9 +104,8 @@ hr {
 }
 .el-pagination button,
 .el-pagination ul,
-.el-pagination li {
-  background: transparent !important;
-}
+.el-pagination li { background: transparent !important }
+.el-pagination li { margin-top: 0 !important }
 
 /* Router Progress */
 .page-enter-active, .page-leave-active {

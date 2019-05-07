@@ -79,7 +79,7 @@
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
     background-color: #FFF;
-    color: #4183C4;
+    color: #409EFF;
     font-size: .8rem;
     font-weight: bold;
   }
