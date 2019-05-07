@@ -47,7 +47,7 @@
             로그인
           </el-menu-item>
           <el-menu-item index='9' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
-            <font-awesome-icon icon='bell' />
+            <font-awesome-icon icon='envelope' />
             <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
           </el-menu-item>
         </el-menu>
@@ -116,7 +116,7 @@
     display: inline-block;
     width: 40px;
     height: 40px;
-    margin-bottom: 6px;
+    margin: 0 .25rem 6px;
     padding: 2px;
     border: 1px solid #DDD;
     border-radius: 500rem;

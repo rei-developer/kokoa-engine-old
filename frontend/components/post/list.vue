@@ -33,7 +33,7 @@
             </div>
             <el-dropdown class='more' trigger='click' @command='handleCommand' v-if='$store.state.user.isLogged'>
               <span class='el-dropdown-link'>
-                <font-awesome-icon icon='ellipsis-v' />
+                <font-awesome-icon icon='ellipsis-h' />
               </span>
               <el-dropdown-menu slot='dropdown'>
                 <el-dropdown-item :command='["reply", item.id]'>댓글</el-dropdown-item>
@@ -229,7 +229,7 @@
   .postList .item .reply {
     display: flex;
     flex-direction: column;
-    margin: 0 .25rem 0 .5rem;
+    margin-left: .5rem;
     padding: .25rem;
     color: #CCC;
     justify-content: center;

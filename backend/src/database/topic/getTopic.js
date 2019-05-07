@@ -112,6 +112,7 @@ module.exports.topicsToWidget = async limit => {
   const result = await pool.query(
     `SELECT id, boardDomain, category, title, created, isBest,
     (SELECT name FROM Boards WHERE domain = A.boardDomain) boardName,
+    (SELECT likes FROM TopicCounts WHERE topicId = A.id) likes,
     (SELECT imageUrl FROM TopicImages WHERE topicId = A.id LIMIT 1) imageUrl,
     (SELECT COUNT(*) FROM Posts WHERE topicId = A.id) postsCount
     FROM Topics A

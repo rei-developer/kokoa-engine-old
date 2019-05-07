@@ -27,7 +27,7 @@
                 </el-button-group>
               </div>
               <div class='containerSubject'>
-                <font-awesome-icon icon='bell' />
+                <font-awesome-icon icon='envelope' />
                 알림 목록 ({{ $store.state.user.noticeCount }})
               </div>
               <div class='noticeList'>

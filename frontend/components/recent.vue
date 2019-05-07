@@ -13,7 +13,16 @@
           <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
         </span>
         {{ item.title }}
-        <span class='regdate'>{{ item.created }}</span>
+        <div class='event'>
+          <span>
+            <font-awesome-icon icon='clock' />
+            {{ $moment(item.created).fromNow() }}
+          </span>
+          <span v-if='item.likes > 0'>
+            <font-awesome-icon icon='star' />
+            +{{ numberWithCommas(item.likes) }}
+          </span>
+        </div>
       </div>
     </div>
     <div class='ADSidebar'>
@@ -48,6 +57,9 @@
       },
       move(id) {
         this.$router.push({ path: `/b/all/${id}` })
+      },
+      numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
     }
   }
@@ -55,7 +67,6 @@
 
 <style>
   .recentList {
-    line-height: 1.2;
     margin-bottom: 1rem;
     padding: .5em;
     border-radius: .25rem;
@@ -63,22 +74,22 @@
   }
   .recentList .item {
     margin-bottom: .5rem;
-    padding: .5rem;
+    padding: .25rem .5rem;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
     background-color: #FFF;
+    color: #4183C4;
     font-size: .8rem;
+    font-weight: bold;
   }
   .recentList .item:last-child {
     margin-bottom: 0;
   }
   .recentList .item:hover {
     background: #FAFAFA;
+    color: #29313D;
     cursor: pointer;
-  }
-  .recentList .item a {
-    color: #333;
   }
   .recentList .item span.star img {
     width: 14px;
@@ -86,7 +97,10 @@
     margin-bottom: 4px;
     vertical-align: middle;
   }
-  .recentList .item span.regdate {
-    color: #29313D;
+  .recentList .item .event span {
+    margin-right: .25rem;
+    color: #999;
+    font-size: .7rem;
+    font-weight: normal;
   }
 </style>

@@ -100,7 +100,7 @@
         form: {
           category: '',
           title: '',
-          content: '',
+          content: '<p></p>',
           isNotice: false
         },
         images: [],
@@ -149,7 +149,7 @@
       write: async function() {
         if (this.loading) return
         if (this.form.title === '') return this.$message.error('제목을 입력하세요.')
-        if (this.form.content === '') return this.$message.error('본문을 입력하세요.')
+        if (this.form.content === '' || this.form.content === '<p></p>') return this.$message.error('본문을 입력하세요.')
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.loading = true
