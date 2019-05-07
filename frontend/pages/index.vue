@@ -47,6 +47,7 @@
                     <span class='star' v-if='item.isBest > 0'>
                       <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
                     </span>
+                    <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
                     {{ item.title }}
                     <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
                     <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
@@ -250,7 +251,9 @@
     width: 16px;
     height: 16px;
   }
-  .indexTopicList .item .info .subject span.newest {
+  .indexTopicList .item .info .subject span.category,
+  .indexTopicList .item .info .subject span.newest,
+  .indexTopicList .item .info .subject span.posts {
     margin-left: .1rem;
     padding: 0 .25rem;
     background: #4183C4;
@@ -259,15 +262,12 @@
     font-size: .7rem;
     font-weight: normal;
   }
-  .indexTopicList .item .info .subject span.posts {
-    margin-left: .1rem;
-    padding: 0 .25rem;
-    background: #999;
-    border-radius: .1rem;
-    color: #FFF;
-    font-size: .7rem;
-    font-weight: normal;
+  .indexTopicList .item .info .subject span.category {
+    margin-left: 0;
+    margin-right: .1rem;
+    background: #29313D;
   }
+  .indexTopicList .item .info .subject span.posts { background: #999 }
   .indexTopicList .item .info .regdate {
     margin-top: .25rem;
     padding: 0 .5rem;

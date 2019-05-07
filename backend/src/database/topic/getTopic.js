@@ -66,7 +66,7 @@ module.exports.count = async columns => {
 
 module.exports.notices = async domain => {
   const result = await pool.query(
-    `SELECT id, userId, originBoardDomain, category, author, title, created,
+    `SELECT id, userId, originBoardDomain, category, author, title, created, isImage, isBest,
     (SELECT hits FROM TopicCounts WHERE topicId = A.id) hits,
     (SELECT likes FROM TopicCounts WHERE topicId = A.id) likes,
     (SELECT isAdmin FROM Users WHERE id = A.userId) admin

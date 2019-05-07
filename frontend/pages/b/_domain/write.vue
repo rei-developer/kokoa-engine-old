@@ -14,6 +14,14 @@
               <el-switch v-model='form.isNotice' active-color='#29313D'></el-switch>
               공지사항
             </div>
+            <div class='marginBottom' v-if='categories.length > 0'>
+              <el-radio-group v-model='form.category' size='small'>
+                <el-radio-button
+                  :label='item.name'
+                  @click='form.category = item.name'
+                  v-for='(item, index) in categories' :key='index' />
+              </el-radio-group>
+            </div>
             <div class='marginBottom'>
               <el-input size='medium' placeholder='100자 제한' v-model='form.title' autofocus>
                 <template slot='prepend'>제목</template>
@@ -44,7 +52,7 @@
               10MB
             </div>
           </div>
-          <div class='marginTop'>
+          <div class='marginVertical'>
             <el-button class='widthAll' type='primary' size='medium' @click='write'>작성</el-button>
           </div>
         </el-col>
@@ -63,6 +71,7 @@
     data() {
       return {
         domain: '',
+        categories: [],
         form: {
           category: '',
           title: '',
@@ -77,7 +86,8 @@
     },
     async asyncData ({ params }) {
       const domain = params.domain
-      return { domain }
+      const { data } = await axios.get(`/api/topic/categories/${domain}`)
+      return { domain, categories: data }
     },
     methods: {
       getBoardName(domain) {

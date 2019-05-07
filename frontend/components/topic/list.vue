@@ -31,9 +31,13 @@
             </span>
             <span class='view'>
               <span class='notice'>NOTICE</span>
+              <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
               {{ item.title }}
               <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
               <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+              <span class='image' v-if='item.isImage > 0'>
+                <font-awesome-icon icon='image' />
+              </span>
             </span>
           </div>
           <div class='author'>
@@ -67,9 +71,13 @@
               <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
             </span>
             <span :class='id == item.id ? "view" : ""'>
+              <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
               {{ item.title }}
               <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
               <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+              <span v-if='item.isImage > 0'>
+                <font-awesome-icon icon='image' />
+              </span>
             </span>
           </div>
           <div class='author'>
@@ -222,12 +230,8 @@
     cursor: pointer;
   }
   .topicList .item.odd,
-  .topicList .item.view {
-    background: rgba(250, 250, 250, .5);
-  }
-  .topicList .item.view {
-    border-left: .25rem solid #29313D;
-  }
+  .topicList .item.view { background: rgba(250, 250, 250, .5) }
+  .topicList .item.view { border-left: .25rem solid #29313D }
   .topicList .item .image {
     display: flex;
     flex-direction: column;
@@ -263,7 +267,10 @@
     width: 16px;
     height: 16px;
   }
-  .topicList .item .info .subject span.notice {
+  .topicList .item .info .subject span.notice,
+  .topicList .item .info .subject span.category,
+  .topicList .item .info .subject span.newest,
+  .topicList .item .info .subject span.posts {
     margin-right: .1rem;
     padding: 0 .25rem;
     background: #ED1C24;
@@ -271,22 +278,10 @@
     color: #FFF;
     font-size: .7rem;
   }
-  .topicList .item .info .subject span.newest {
-    margin-left: .1rem;
-    padding: 0 .25rem;
-    background: #4183C4;
-    border-radius: .1rem;
-    color: #FFF;
-    font-size: .7rem;
-  }
-  .topicList .item .info .subject span.posts {
-    margin-left: .1rem;
-    padding: 0 .25rem;
-    background: #999;
-    border-radius: .1rem;
-    color: #FFF;
-    font-size: .7rem;
-  }
+  .topicList .item .info .subject span.category { background: #29313D }
+  .topicList .item .info .subject span.newest { background: #4183C4 }
+  .topicList .item .info .subject span.posts { background: #999 }
+  .topicList .item .info .subject span.image { color: #4183C4 }
   .topicList .item .info .subject span.view {
     color: #4183C4;
     font-weight: bold;

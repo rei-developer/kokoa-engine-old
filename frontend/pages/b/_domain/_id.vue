@@ -32,6 +32,7 @@
                       <img :src='topic.isBest > 1 ? "/star.svg" : "/burn.svg"'>
                     </span>
                     <span class='notice' v-if='topic.isNotice > 0'>NOTICE</span>
+                    <span class='category' v-if='topic.category !== ""'>{{ topic.category }}</span>
                     {{ topic.title }}
                   </div>
                   <div class='author'>
@@ -265,7 +266,8 @@
     width: 16px;
     height: 16px;
   }
-  .topicArticle .header .info .subject span.notice {
+  .topicArticle .header .info .subject span.notice,
+  .topicArticle .header .info .subject span.category {
     margin-right: .1rem;
     padding: 0 .25rem;
     background: #ED1C24;
@@ -273,6 +275,7 @@
     color: #FFF;
     font-size: .8rem;
   }
+  .topicArticle .header .info .subject span.category { background: #29313D }
   .topicArticle .header .info .author {
     color: #333;
     font-size: .8rem;
@@ -284,9 +287,7 @@
     font-size: .7rem;
     font-weight: normal;
   }
-  .topicArticle .content {
-    padding: 1rem;
-  }
+  .topicArticle .content { padding: 1rem }
   .topicArticle .content img {
     max-width: 100%;
     height: auto;

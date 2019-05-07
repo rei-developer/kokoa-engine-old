@@ -74,8 +74,19 @@ hr {
 .el-button--danger:hover {
   opacity: .8;
 }
-.el-badge__content {
+.el-radio-button span:hover {
+  color: #4183C4 !important;
+}
+.el-radio-button.is-active span {
   background-color: #29313D !important;
+  border-color: #29313D !important;
+  box-shadow: -1px 0 0 0 #29313D !important;
+}
+.el-radio-button.is-active span:hover {
+  color: #FFF !important;
+}
+.el-badge__content {
+  background-color: #4183C4 !important;
 }
 .el-pagination button,
 .el-pagination ul,
