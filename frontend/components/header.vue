@@ -39,6 +39,8 @@
               {{ $store.state.user.nickname }}
             </template>
             <el-menu-item @click='edit'>프로필 편집</el-menu-item>
+            <el-menu-item @click='myTopicList'>내 작성글</el-menu-item>
+            <el-menu-item @click='myPostList'>내 작성 댓글</el-menu-item>
             <el-menu-item @click='development'>블라인드 목록</el-menu-item>
             <el-menu-item @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
@@ -67,6 +69,12 @@
       },
       edit() {
         this.$router.push({ path: '/edit' })
+      },
+      myTopicList() {
+        this.$router.push({ path: '/edit/myTopicList' })
+      },
+      myPostList() {
+        this.$router.push({ path: '/edit/myPostList' })
       },
       development() {
         this.$alert('현재 개발중입니다. 이용에 불편을 드려 대단히 죄송합니다.', '알림', { confirmButtonText: '확인' })

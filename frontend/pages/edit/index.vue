@@ -60,12 +60,16 @@
           <font-awesome-icon icon='gift' />
           포인트 정보
         </div>
-        <el-input class='marginBottom input-with-select' size='small' :value='$store.state.user.level' readonly>
-          <el-button class='editPrepend' slot='prepend'>레벨</el-button>
-        </el-input>
         <el-input class='marginBottom input-with-select' size='small' :value='numberWithCommas($store.state.user.point)' readonly>
           <el-button class='editPrepend' slot='prepend'>포인트</el-button>
         </el-input>
+        <el-input class='marginBottom input-with-select' size='small' :value='$store.state.user.level' readonly>
+          <el-button class='editPrepend' slot='prepend'>레벨</el-button>
+        </el-input>
+        <el-input class='marginBottom input-with-select' size='small' :value='`${numberWithCommas(exp)} / ${numberWithCommas(maxExp)} (${per}%)`' readonly>
+          <el-button class='editPrepend' slot='prepend'>경험치</el-button>
+        </el-input>
+        <el-progress class='marginBottom' :text-inside='true' :stroke-width='20' :percentage='per' color='#409EFF'></el-progress>
         <el-button class='widthAll' type='primary' size='small' @click='edit'>편집</el-button>
       </div>
     </div>
@@ -83,10 +87,29 @@
         nowPassword: '',
         newPassword: '',
         newPassword2: '',
+        exp: 0,
+        maxExp: 0,
+        per: 0,
         loading: false
       }
     },
+    watch: {
+      '$store.state.user.level': function() {
+        this.getStatus()
+      },
+      '$store.state.user.exp': function() {
+        this.getStatus()
+      }
+    },
+    mounted() {
+      this.getStatus()
+    },
     methods: {
+      getStatus() {
+        this.exp = this.$store.state.user.exp
+        this.maxExp = Math.pow(this.$store.state.user.level, 2) * 50
+        this.per = (this.exp / this.maxExp * 100).toFixed(2)
+      },
       imageUpload: async function(e) {
         if (this.loading || e.target.files.length < 1) return
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')

@@ -8,6 +8,14 @@ module.exports.count = async topicId => {
   return result[0].count
 }
 
+module.exports.countByMe = async userId => {
+  const result = await pool.query(
+    `SELECT COUNT(*) count FROM Posts WHERE userId = ?`,
+    [userId]
+  )
+  return result[0].count
+}
+
 module.exports.posts = async (topicId, page, limit) => {
   const result = await pool.query(
     `SELECT
@@ -32,6 +40,29 @@ module.exports.posts = async (topicId, page, limit) => {
     ORDER BY IF(ISNULL(p.postRootId), p.id, p.postRootId), p.id
     LIMIt ?, ?`,
     [topicId, page * limit, limit]
+  )
+  if (result.length < 1) return false
+  return result
+}
+
+module.exports.postsByMe = async (userId, page, limit) => {
+  const result = await pool.query(
+    `SELECT
+      p.id,
+      p.content,
+      p.created,
+      tp.author tagAuthor,
+      pc.likes,
+      pc.hates,
+      u.profileImageUrl profile
+    FROM Posts p
+    LEFT JOIN Posts tp ON tp.id = p.postParentId
+    LEFT JOIN PostCounts pc ON pc.postId = p.id
+    LEFT JOIN Users u ON u.id = p.userId
+    WHERE p.userId = ?
+    ORDER BY id DESC
+    LIMIt ?, ?`,
+    [userId, page * limit, limit]
   )
   if (result.length < 1) return false
   return result

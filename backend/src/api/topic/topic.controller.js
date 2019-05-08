@@ -32,6 +32,7 @@ module.exports.getListToWidget = async ctx => {
 module.exports.getTopics = async ctx => {
   const { ...body } = ctx.request.body
   const domain = body.domain || 'all'
+  const userId = body.userId || 0
   const category = body.category || ''
   const page = body.page || 0
   const limit = body.limit || 20
@@ -40,6 +41,7 @@ module.exports.getTopics = async ctx => {
   const obj = {}
   if (domain === 'best') obj.isBest = 2
   else if (domain !== 'all') obj.boardDomain = domain
+  if (userId > 0) obj.userId = userId
   if (category !== '') obj.category = category
   obj.isAllowed = 1
   const count = await getTopic.count(obj)
@@ -79,6 +81,18 @@ module.exports.getPosts = async ctx => {
   if (limit < 10 || limit > 50) return
   const count = await getPost.count(topicId)
   const posts = await getPost.posts(topicId, page, limit)
+  ctx.body = { count, posts }
+}
+
+module.exports.getMyPosts = async ctx => {
+  const { ...body } = ctx.request.body
+  const userId = body.userId || 0
+  const page = body.page || 0
+  const limit = body.limit || 20
+  if (userId < 0 || page < 0) return
+  if (limit < 10 || limit > 50) return
+  const count = await getPost.countByMe(userId)
+  const posts = await getPost.postsByMe(userId, page, limit)
   ctx.body = { count, posts }
 }
 
