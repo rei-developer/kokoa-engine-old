@@ -19,7 +19,7 @@
             {{ $moment(item.created).fromNow() }}
           </span>
           <span v-if='item.likes > 0'>
-            <font-awesome-icon icon='star' />
+            <font-awesome-icon icon='heart' />
             +{{ numberWithCommas(item.likes) }}
           </span>
         </div>

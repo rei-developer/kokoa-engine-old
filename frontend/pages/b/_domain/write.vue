@@ -165,7 +165,7 @@
         })
         if (data.status === 'fail') {
           this.loading = false
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.$router.push({ path: `/b/${this.domain}/${data.topicId}` })
       },

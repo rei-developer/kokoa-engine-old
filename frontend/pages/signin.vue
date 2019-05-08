@@ -62,7 +62,7 @@
         const { data } = await axios.post('/api/auth/signin', { username: this.username, password: this.password })
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         localStorage.setItem('token', data.token)
         location.href = '/'

@@ -57,7 +57,7 @@
               {{ numberWithCommas(item.hits) }}
             </span>
             <span v-if='item.likes > 0'>
-              <font-awesome-icon icon='star' />
+              <font-awesome-icon icon='heart' />
               +{{ numberWithCommas(item.likes) }}
             </span>
           </div>
@@ -100,7 +100,7 @@
               {{ numberWithCommas(item.hits) }}
             </span>
             <span v-if='item.likes > 0'>
-              <font-awesome-icon icon='star' />
+              <font-awesome-icon icon='heart' />
               +{{ numberWithCommas(item.likes) }}
             </span>
           </div>
@@ -214,7 +214,7 @@
         )
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.$message.success('공지사항을 해제했습니다.')
         this.forceUpdate()

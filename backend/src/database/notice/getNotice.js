@@ -20,6 +20,7 @@ module.exports.notices = async (userId, page, limit) => {
       p.author,
       p.content,
       p.created,
+      p.updated,
       tp.author tagAuthor,
       u.profileImageUrl profile,
       u.isAdmin admin

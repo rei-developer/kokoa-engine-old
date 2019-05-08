@@ -33,13 +33,13 @@
                   <div class='grade'>
                     <span class='likes'>
                       <font-awesome-icon icon='angle-up' />
-                      {{ item.likes }}
+                      {{ numberWithCommas(item.likes) }}
                     </span>
                     <el-button
                       size='mini'
                       plain round
                       @click='votes(item.id)'>
-                      <font-awesome-icon icon='seedling' />
+                      <font-awesome-icon icon='heart' />
                     </el-button>
                   </div>
                   <div class='image' @click='move(item)'>
@@ -171,7 +171,7 @@
           )
           if (data.status === 'fail') {
             this.$store.commit('setLoading')
-            return this.$message.error(data.message)
+            return this.$message.error(data.message || '오류가 발생했습니다.')
           }
           data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다!') : this.$message('추천했습니다.')
           this.$store.commit('setLoading')

@@ -155,6 +155,7 @@
 
   .notify {
     padding: .25rem 0;
+    border: 0;
     border-radius: .25rem;
     background: #409EFF;
   }
@@ -162,14 +163,8 @@
     opacity: .9;
     cursor: pointer;
   }
-  .notify .el-notification__title {
-    color: #FFF;
-  }
-  .notify .el-notification__content {
-    margin: 0;
-    color: #FFF;
-  }
-  .notify .el-notification__closeBtn {
-    color: #FFF;
-  }
+  .notify .el-notification__title,
+  .notify .el-notification__content,
+  .notify .el-notification__closeBtn { color: #FFF }
+  .notify .el-notification__content { margin: 0 }
 </style>

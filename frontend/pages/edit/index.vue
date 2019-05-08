@@ -131,7 +131,7 @@
         if (data.status === 'fail') {
           this.loading = false
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.editByProfileImage(token, data.filename)
       },
@@ -143,7 +143,7 @@
         )
         this.loading = false
         this.$store.commit('setLoading')
-        if (data.status === 'fail') return this.$message.error(data.message)
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.$message.success('프로필 사진을 업로드했습니다.')
         this.$store.commit('user/setProfileImageUrl', url)
       },
@@ -158,7 +158,7 @@
         )
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.$message.success('프로필을 편집했습니다.')
         if (this.nickname !== '') this.$store.commit('user/setNickname', this.nickname)

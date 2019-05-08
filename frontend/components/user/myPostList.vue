@@ -24,9 +24,17 @@
           <div class='info'>
             <div class='author'>
               <span class='best' v-if='item.likes >= 1'>BEST</span>
-              <span class='regdate'>
-                <font-awesome-icon icon='clock' />
-                {{ $moment(item.created).fromNow() }}
+              <span class='event'>
+                <font-awesome-icon icon='history' />
+                {{ $moment(item.updated).fromNow() }}
+              </span>
+              <span class='event' v-if='item.likes > 0'>
+                <font-awesome-icon icon='heart' />
+                +{{ numberWithCommas(item.likes) }}
+              </span>
+              <span class='event' v-if='item.hates > 0'>
+                <font-awesome-icon icon='heart-broken' />
+                -{{ numberWithCommas(item.hates) }}
               </span>
             </div>
             <div class='desciption'>
@@ -79,7 +87,7 @@
         )
         if (data.status === 'fail') {
           this.loading = false
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         if (data.posts) this.posts = data.posts
         this.postsCount = data.count
@@ -97,7 +105,7 @@
             headers: { 'x-access-token': token }
           }
         )
-        if (data.status === 'fail') return this.$message.error(data.message)
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.posts = this.posts.filter(post => post.id !== id)
         --this.postsCount
         this.$message.success('댓글 삭제 성공!')
@@ -159,7 +167,7 @@
     color: #FFF;
     font-size: .7rem;
   }
-  .myPostList .item .info .author span.regdate {
+  .myPostList .item .info .author span.event {
     margin-right: .25rem;
     color: #999;
     font-size: .7rem;

@@ -19,7 +19,7 @@
               placeholder='이곳에 내용을 입력하세요.'
               v-model='content' />
           </div>
-          <div class='send' @click='write'>
+          <div class='send' @click='submit'>
             <span v-if='loading'>
               <font-awesome-icon class='fa-spin' icon='circle-notch' />
             </span>
@@ -43,33 +43,44 @@
   import axios from 'axios'
 
   export default {
-    props: ['id', 'author', 'topicUserId', 'postUserId', 'postRootId', 'postParentId'],
+    props: ['id', 'edit', 'author', 'pureContent', 'topicUserId', 'postUserId', 'postRootId', 'postParentId'],
     data() {
       return {
-        content: '',
+        content: this.pureContent,
         loading: false
       }
     },
     methods: {
-      write: async function() {
+      submit: async function() {
         if (this.loading) return
-        if (this.content === '') return this.$message.error('내용을 입력하세요.')
+        if (!this.content || this.content === '') return this.$message.error('내용을 입력하세요.')
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.loading = true
-        const { data } = await axios.post('/api/topic/write/post', {
-          topicId: this.id,
-          topicUserId: this.topicUserId,
-          postUserId: this.postUserId,
-          postRootId: this.postRootId,
-          postParentId: this.postParentId,
-          content: this.content
-        }, {
-          headers: { 'x-access-token': token }
-        })
-        if (data.status === 'fail') {
+        let result
+        if (this.edit) {
+          const { data } = await axios.patch(
+            '/api/topic/edit/post',
+            { id: this.id, content: this.content },
+            { headers: { 'x-access-token': token } }
+          )
+          result = data
+        } else {
+          const { data } = await axios.post('/api/topic/write/post', {
+            topicId: this.id,
+            topicUserId: this.topicUserId,
+            postUserId: this.postUserId,
+            postRootId: this.postRootId,
+            postParentId: this.postParentId,
+            content: this.content
+          }, {
+            headers: { 'x-access-token': token }
+          })
+          result = data
+        }
+        if (result.status === 'fail') {
           this.loading = false
-          return this.$message.error(data.message)
+          return this.$message.error(result.message || '오류가 발생했습니다.')
         }
         this.$store.commit('forceUpdate')
         this.content = ''

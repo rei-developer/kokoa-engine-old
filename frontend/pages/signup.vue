@@ -55,7 +55,7 @@
         const { data } = await axios.post('/api/auth/signup', { username: this.username, nickname: this.nickname, email: this.email, authCode: this.authCode, password: this.password })
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.$message.success('계정 생성 성공')
         this.$store.commit('setLoading')
@@ -67,7 +67,7 @@
         const { data } = await axios.post('/api/auth/accept', { email: this.email })
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.$message.success('인증 코드를 전송했습니다.')
         this.$store.commit('setLoading')

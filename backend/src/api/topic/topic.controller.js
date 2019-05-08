@@ -15,6 +15,7 @@ const getPost = require('../../database/topic/getPost')
 const getUser = require('../../database/user/getUser')
 const updateNotice = require('../../database/notice/updateNotice')
 const updateTopic = require('../../database/topic/updateTopic')
+const updatePost = require('../../database/topic/updatePost')
 const deleteNotice = require('../../database/notice/deleteNotice')
 const deletePost = require('../../database/topic/deletePost')
 
@@ -287,7 +288,48 @@ module.exports.createTopicVotes = async ctx => {
 }
 
 module.exports.createPostVotes = async ctx => {
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  let {
+    id,
+    likes
+  } = ctx.request.body
+  if (id < 1) return
+  const post = await getPost(id)
+  if (!post) return ctx.body = { status: 'fail' }
+  const targetUser = await getUser(post.userId)
+  const ip = ctx.get('x-real-ip')
+  if (targetUser === user.id || post.ip === ip) return ctx.body = { message: '본인에게 투표할 수 없습니다.', status: 'fail' }
+  const duration = moment.duration(moment().diff(post.created))
+  const hours = duration.asHours()
+  if (hours > 72) return ctx.body = { message: '3일이 지난 게시물은 투표할 수 없습니다.', status: 'fail' }
+  const date = await getPost.postVotes(user.id, id, ip)
+  if (date) {
+    const created = moment(date).format('YYYY/MM/DD HH:mm:ss')
+    return ctx.body = { message: `이미 투표한 게시물입니다. (${created})`, status: 'fail' }
+  }
+  await createPost.createPostVotes(user.id, id, ip)
+  if (likes)
+    await updatePost.updatePostCountsByLikes(id)
+  else
+    await updatePost.updatePostCountsByHates(id)
+  //await socket.vote(global.io, id, likes ? ++topic.likes : topic.likes, likes ? topic.hates : ++topic.hates)
+  ctx.body = { status: 'ok' }
+}
 
+module.exports.updatePost = async ctx => {
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  const {
+    id,
+    content
+  } = ctx.request.body
+  if (id < 1 || content === '') return ctx.body = { status: 'fail' }
+  const userId = await getPost.userId(id)
+  if (!userId) return ctx.body = { status: 'fail' }
+  if (user.isAdmin < 1 && userId !== user.id) return
+  await updatePost(id, Filter.post(content))
+  ctx.body = { status: 'ok' }
 }
 
 module.exports.updateTopicByIsNotice = async ctx => {

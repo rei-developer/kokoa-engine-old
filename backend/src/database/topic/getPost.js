@@ -1,5 +1,32 @@
 const pool = require('..')
 
+module.exports = async id => {
+  const result = await pool.query(
+    `SELECT
+      p.userId,
+      p.ip,
+      p.created,
+      p.updated,
+      pc.likes,
+      pc.hates
+    FROM Posts p
+    LEFT JOIN PostCounts pc ON pc.postId = p.id
+    WHERE p.id = ?`,
+    [id]
+  )
+  if (result.length < 1) return false
+  return result[0]
+}
+
+module.exports.userId = async id => {
+  const result = await pool.query(
+    `SELECT userId FROM Posts WHERE id = ?`,
+    [id]
+  )
+  if (result.length < 1) return false
+  return result[0].userId
+}
+
 module.exports.count = async topicId => {
   const result = await pool.query(
     `SELECT COUNT(*) count FROM Posts WHERE topicId = ?`,
@@ -26,6 +53,7 @@ module.exports.posts = async (topicId, page, limit) => {
       p.author,
       p.content,
       p.created,
+      p.updated,
       tp.author tagAuthor,
       tp.userId tagUserId,
       pc.likes,
@@ -51,6 +79,7 @@ module.exports.postsByMe = async (userId, page, limit) => {
       p.id,
       p.content,
       p.created,
+      p.updated,
       tp.author tagAuthor,
       pc.likes,
       pc.hates,
@@ -68,11 +97,12 @@ module.exports.postsByMe = async (userId, page, limit) => {
   return result
 }
 
-module.exports.userId = async id => {
+module.exports.postVotes = async (userId, postId, ip) => {
   const result = await pool.query(
-    `SELECT userId FROM Posts WHERE id = ?`,
-    [id]
+    `SELECT created FROM PostVotes
+    WHERE postId = ? AND (userId = ? OR ip = ?)`,
+    [postId, userId, ip]
   )
   if (result.length < 1) return false
-  return result[0].userId
+  return result[0].created
 }

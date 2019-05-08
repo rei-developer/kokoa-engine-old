@@ -59,7 +59,7 @@
                         {{ numberWithCommas(topic.hits) }}
                       </span>
                       <span v-if='topic.likes > 0'>
-                        <font-awesome-icon icon='star' />
+                        <font-awesome-icon icon='heart' />
                         +{{ numberWithCommas(topic.likes) }}
                       </span>
                     </div>
@@ -211,7 +211,7 @@
         )
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다.') : this.$message('투표했습니다.')
         this.$store.commit('setLoading')
@@ -241,7 +241,7 @@
         )
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.$router.go(-1)
       },

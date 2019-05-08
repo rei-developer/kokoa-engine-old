@@ -21,9 +21,17 @@
                 <span class='best' v-if='item.likes >= 1'>BEST</span>
                 <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
                 {{ item.author }}
-                <span class='regdate'>
-                  <font-awesome-icon icon='clock' />
-                  {{ $moment(item.created).fromNow() }}
+                <span class='event'>
+                  <font-awesome-icon icon='history' />
+                  {{ $moment(item.updated).fromNow() }}
+                </span>
+                <span class='event' v-if='item.likes > 0'>
+                  <font-awesome-icon icon='heart' />
+                  +{{ numberWithCommas(item.likes) }}
+                </span>
+                <span class='event' v-if='item.hates > 0'>
+                  <font-awesome-icon icon='heart-broken' />
+                  -{{ numberWithCommas(item.hates) }}
                 </span>
               </div>
               <div class='desciption'>
@@ -40,6 +48,9 @@
               </span>
               <el-dropdown-menu slot='dropdown'>
                 <el-dropdown-item :command='["reply", item.id]'>댓글</el-dropdown-item>
+                <el-dropdown-item :command='["votes", item.id, true]' v-if='item.userId !== $store.state.user.id'>추천</el-dropdown-item>
+                <el-dropdown-item :command='["votes", item.id, false]' v-if='item.userId !== $store.state.user.id'>비추천</el-dropdown-item>
+                <el-dropdown-item :command='["update", item]' v-if='$store.state.user.isAdmin > 0 || item.userId === $store.state.user.id'>수정</el-dropdown-item>
                 <el-dropdown-item :command='["remove", item.id]' v-if='$store.state.user.isAdmin > 0 || item.userId === $store.state.user.id'>삭제</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -52,6 +63,12 @@
               :postUserId='item.userId'
               :postRootId='item.postRootId || item.id'
               :postParentId='item.id' />
+          </div>
+          <div class='postUpdate' v-if='item.id === tempPostUpdateId'>
+            <PostWrite
+              :id='item.id'
+              :edit='true'
+              :pureContent='tempUpdateContent' />
           </div>
         </div>
       </div>
@@ -96,6 +113,8 @@
         newPostsCount: 0,
         viewPostId: 0,
         tempPostReplyId: 0,
+        tempPostUpdateId: 0,
+        tempUpdateContent: '',
         loading: false
       }
     },
@@ -121,11 +140,13 @@
         const { data } = await axios.post('/api/topic/list/post', { id: this.id, page: this.postsPage - 1 })
         if (data.status === 'fail') {
           this.loading = false
-          return this.$message.error(data.message)
+          return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.postsCount = data.count
         this.newPostsCount = 0
         this.tempPostReplyId = 0
+        this.tempPostUpdateId = 0
+        this.tempUpdateContent = ''
         if (data.posts) this.posts = data.posts
         if (this.viewPostId > 0) this.scrollTo()
         this.loading = false
@@ -135,6 +156,12 @@
           case 'reply':
             this.reply(command[1])
             break
+          case 'votes':
+            this.votes(command[1], command[2])
+            break
+          case 'update':
+            this.update(command[1])
+            break
           case 'remove':
             this.remove(command[1])
             break
@@ -142,6 +169,33 @@
       },
       reply(id) {
         this.tempPostReplyId = id
+        this.tempPostUpdateId = 0
+        this.tempUpdateContent = ''
+      },
+      votes: async function(id, flag) {
+        if (id < 1) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
+        this.$store.commit('setLoading', true)
+        const { data } = await axios.post(
+          '/api/topic/vote/post',
+          { id, likes: flag },
+          { headers: { 'x-access-token': token } }
+        )
+        if (data.status === 'fail') {
+          this.$store.commit('setLoading')
+          return this.$message.error(data.message || '오류가 발생했습니다.')
+        }
+
+        this.$message('투표했습니다.')
+        this.$store.commit('setLoading')
+      },
+      update(item) {
+        if (item.id < 1) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        this.tempPostReplyId = 0
+        this.tempPostUpdateId = item.id
+        this.tempUpdateContent = item.content.replace(/<br>+/g, '\n')
       },
       remove: async function(id) {
         if (id < 1) return
@@ -155,7 +209,7 @@
             headers: { 'x-access-token': token }
           }
         )
-        if (data.status === 'fail') return this.$message.error(data.message)
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.posts = this.posts.filter(post => post.id !== id)
         --this.postsCount
         this.$message.success('댓글 삭제 성공!')
@@ -198,7 +252,8 @@
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     background: rgba(255, 255, 255, .5);
   }
-  .postReplyWrite {
+  .postReplyWrite,
+  .postUpdate {
     padding: .5rem;
     border-bottom: 1px solid #F5F5F5;
     background: rgba(255, 255, 255, .5);
@@ -265,7 +320,7 @@
     color: #FFF;
     font-size: .7rem;
   }
-  .postList .item .info .author span.regdate {
+  .postList .item .info .author span.event {
     margin-left: .25rem;
     color: #999;
     font-size: .7rem;

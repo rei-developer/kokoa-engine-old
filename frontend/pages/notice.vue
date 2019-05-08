@@ -42,8 +42,8 @@
                       <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
                       {{ item.author }}
                       <span class='regdate'>
-                        <font-awesome-icon icon='clock' />
-                        {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
+                        <font-awesome-icon icon='history' />
+                        {{ $moment(item.updated).format('YYYY/MM/DD HH:mm:ss') }}
                       </span>
                     </div>
                     <div class='desciption'>
@@ -130,7 +130,7 @@
           { success: true },
           { headers: { 'x-access-token': token } }
         )
-        if (data.status === 'fail') return this.$message.error(data.message)
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.notices = this.notices.map(post => {
           if (post.id === item.id) post.confirm = item.confirm > 0 ? 0 : 1
           return post
@@ -148,7 +148,7 @@
           { success: true },
           { headers: { 'x-access-token': token } }
         )
-        if (data.status === 'fail') return this.$message.error(data.message)
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.notices = this.notices.map(notice => {
           notice.confirm = 1
           return notice
@@ -164,7 +164,7 @@
           `/api/notice/clear/${item.id}`,
           { headers: { 'x-access-token': token } }
         )
-        if (data.status === 'fail') return this.$message.error(data.message)
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.notices = this.notices.filter(notice => notice.id !== item.id)
         let count = this.$store.state.user.noticeCount
         this.$store.commit('user/setNoticeCount', item.confirm > 0 ? count : --count)
@@ -178,7 +178,7 @@
           '/api/notice/clear',
           { headers: { 'x-access-token': token } }
         )
-        if (data.status === 'fail') return this.$message.error(data.message)
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.notices = []
         this.page = 0
         this.$store.commit('user/setNoticeCount', 0)
