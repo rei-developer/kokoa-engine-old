@@ -13,6 +13,7 @@ app.post('/write', topicCtrl.createTopic)
 app.post('/write/post', topicCtrl.createPost)
 app.post('/vote', topicCtrl.createTopicVotes)
 app.post('/vote/post', topicCtrl.createPostVotes)
+app.patch('/edit/notice', topicCtrl.updateTopicByIsNotice)
 app.delete('/delete', topicCtrl.deleteTopic)
 app.delete('/delete/post', topicCtrl.deletePost)
 

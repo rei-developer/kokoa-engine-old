@@ -103,6 +103,7 @@ module.exports.getContent = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   const topic = await getTopic(id)
   if (!topic || topic.isAllowed < 1) return ctx.body = { status: 'fail' }
+  const images = await getTopic.topicImages(id)
   if (client.exists(id)) {
     const hits = await new Promise(resolve => {
       client.get(id, (err, value) => {
@@ -122,7 +123,7 @@ module.exports.getContent = async ctx => {
     await updateNotice.updateNoticeByConfirm(user.id, id)
     count = await getNotice.count(user.id)
   }
-  ctx.body = { topic, count }
+  ctx.body = { topic, images, count }
 }
 
 module.exports.createTopic = async ctx => {
@@ -275,6 +276,18 @@ module.exports.createPostVotes = async ctx => {
 
 }
 
+module.exports.updateTopicByIsNotice = async ctx => {
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  const { id } = ctx.request.body
+  if (id < 1) return ctx.body = { status: 'fail' }
+  const userId = await getPost.userId(id)
+  if (!userId) return ctx.body = { status: 'fail' }
+  if (user.isAdmin < 1) return
+  await updateTopic.updateTopicByIsNotice(id)
+  ctx.body = { status: 'ok' }
+}
+
 module.exports.deleteTopic = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
@@ -312,7 +325,7 @@ module.exports.deletePost = async ctx => {
   if (id < 1) return ctx.body = { status: 'fail' }
   const userId = await getPost.userId(id)
   if (!userId) return ctx.body = { status: 'fail' }
-  if (userId !== user.id) return
+  if (user.isAdmin < 1 && userId !== user.id) return
   await deleteNotice.postId(id)
   await deletePost(id)
   ctx.body = { status: 'ok' }

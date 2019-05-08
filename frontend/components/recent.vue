@@ -49,7 +49,7 @@
         const { data } = await axios.get('/api/topic/list/widget')
         if (!this.topics) return
         this.topics = data.map(i => {
-          i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
+          i.title = i.title.length > 50 ? i.title.substr(0, 50) + '...' : i.title
           i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
           return i
         })

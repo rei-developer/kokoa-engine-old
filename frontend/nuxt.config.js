@@ -54,9 +54,9 @@ module.exports = {
   modules: [
     '@nuxtjs/bulma',
     '@nuxtjs/proxy',
-    ['@nuxtjs/google-adsense', { id: 'ca-pub-5633529273423665' }],
     ['@nuxtjs/moment', ['ko']],
-    'nuxt-fontawesome'
+    'nuxt-fontawesome',
+    'nuxt-clipboard2'
   ],
   fontawesome: {
     imports: [

@@ -23,11 +23,14 @@
                 {{ item.author }}
                 <span class='regdate'>
                   <font-awesome-icon icon='clock' />
-                  {{ item.created }}
+                  {{ $moment(item.created).fromNow() }}
                 </span>
               </div>
               <div class='desciption'>
-                <span class='tagUser' v-if='item.tagUserId'>{{ item.tagAuthor }}</span>
+                <span class='tagUser' v-if='item.tagUserId'>
+                  <font-awesome-icon icon='at' />
+                  {{ item.tagAuthor }}
+                </span>
                 <span :class='item.userId === topic.userId ? "writer" : ""' v-html='item.content' />
               </div>
             </div>
@@ -37,13 +40,14 @@
               </span>
               <el-dropdown-menu slot='dropdown'>
                 <el-dropdown-item :command='["reply", item.id]'>댓글</el-dropdown-item>
-                <el-dropdown-item :command='["remove", item.id]' v-if='item.userId === $store.state.user.id'>삭제</el-dropdown-item>
+                <el-dropdown-item :command='["remove", item.id]' v-if='$store.state.user.isAdmin > 0 || item.userId === $store.state.user.id'>삭제</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
           <div class='postReplyWrite' v-if='item.id === tempPostReplyId'>
             <PostWrite
               :id='id'
+              :author='item.author'
               :topicUserId='topic.userId'
               :postUserId='item.userId'
               :postRootId='item.postRootId || item.id'
@@ -64,10 +68,7 @@
     <div class='postBox'>
       <PostWrite
         :id='id'
-        :topicUserId='topic.userId'
-        :postUserId='null'
-        :postRootId='null'
-        :postParentId='null' />
+        :topicUserId='topic.userId' />
     </div>
     <div class='marginVertical'>
       <el-pagination
@@ -125,12 +126,7 @@
         this.postsCount = data.count
         this.newPostsCount = 0
         this.tempPostReplyId = 0
-        if (data.posts) {
-          this.posts = data.posts.map(i => {
-            i.created = this.$moment(i.created).fromNow()
-            return i
-          })
-        }
+        if (data.posts) this.posts = data.posts
         if (this.viewPostId > 0) this.scrollTo()
         this.loading = false
       },
@@ -161,6 +157,7 @@
         )
         if (data.status === 'fail') return this.$message.error(data.message)
         this.posts = this.posts.filter(post => post.id !== id)
+        --this.postsCount
         this.$message.success('댓글 삭제 성공!')
         this.$store.commit('setLoading')
       },
@@ -283,7 +280,7 @@
     font-weight: bold;
   }
   .postList .item .info .desciption span.tagUser {
-    margin-right: .1rem;
+    margin-right: .25rem;
     padding: 0 .5rem;
     background: #29313D;
     border-radius: 500rem;

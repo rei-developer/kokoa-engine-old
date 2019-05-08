@@ -47,6 +47,10 @@
                     </div>
                     <div class='detail'>
                       <span>
+                        <font-awesome-icon icon='flag-checkered' />
+                        {{ id }}
+                      </span>
+                      <span>
                         <font-awesome-icon icon='clock' />
                         {{ $moment(topic.created).fromNow() }}
                       </span>
@@ -74,6 +78,25 @@
                         <img src='/down.png'>
                       </el-button>
                     </el-button-group>
+                  </div>
+                </div>
+                <div class='info'>
+                  <div class='item'>
+                    <div
+                      class='images'
+                      v-for='(item, index) in images' :key='`i${index}`'>
+                      <font-awesome-icon icon='file-image' />
+                      <a href='#' :download='`https://hawawa.co.kr/img/${item.imageUrl}`'>
+                        <span class='link'>[{{ index + 1 }}] {{ item.name }}</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class='item'>
+                    <span>
+                      <font-awesome-icon icon='link' />
+                      https://hawawa.co.kr/b/{{ domain }}/{{ id }}
+                    </span>
+                    <div class='event' @click='copyLink(`https://hawawa.co.kr/b/${domain}/${id}`)'>복사하기</div>
                   </div>
                 </div>
               </div>
@@ -148,6 +171,7 @@
           profile: '',
           admin: 0
         },
+        images: [],
         loading: true
       }
     },
@@ -161,7 +185,7 @@
       )
       if (data.status === 'fail') return alert(data.message)
       if (store.state.user.isLogged) store.commit('user/setNoticeCount', data.count)
-      return { domain, id, topic: data.topic }
+      return { domain, id, topic: data.topic, images: data.images }
     },
     beforeMount() {
       this.$socket.emit('join', this.id)
@@ -191,6 +215,10 @@
         }
         data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다.') : this.$message('투표했습니다.')
         this.$store.commit('setLoading')
+      },
+      copyLink: async function(link) {
+        this.$message.success('링크를 복사했습니다.')
+        this.$copyText(link)
       },
       removeHandler: async function() {
         if (this.id < 1 || !this.$store.state.user.isLogged) return
@@ -296,7 +324,11 @@
     font-size: .7rem;
     font-weight: normal;
   }
-  .topicArticle .content { padding: 1rem }
+  .topicArticle .content {
+    margin: 0;
+    padding: 1rem;
+    border-bottom: 1px solid #F5F5F5;
+  }
   .topicArticle .content img {
     max-width: 100%;
     height: auto;
@@ -310,5 +342,31 @@
     width: 300px;
     margin: 2rem auto .5rem;
     text-align: center;
+  }
+  .topicArticle .info {
+    color: #29313D;
+    font-size: .8rem;
+  }
+  .topicArticle .info .item {
+    padding: .25rem;
+    border-bottom: 1px solid #F5F5F5;
+  }
+  .topicArticle .info .item:last-child { border: 0 }
+  .topicArticle .info .item span.link:hover {
+    color: #409EFF;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .topicArticle .info .item .event {
+    display: inline-block;
+    width: fit-content;
+    padding: 0 .5rem;
+    background: #EAEAEA;
+    border-radius: .25rem;
+    font-size: .75rem;
+  }
+  .topicArticle .info .item .event:hover {
+    opacity: .8;
+    cursor: pointer;
   }
 </style>

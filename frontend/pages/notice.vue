@@ -43,7 +43,7 @@
                       {{ item.author }}
                       <span class='regdate'>
                         <font-awesome-icon icon='clock' />
-                        {{ item.created }}
+                        {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
                       </span>
                     </div>
                     <div class='desciption'>
@@ -114,10 +114,7 @@
           { headers: { 'x-access-token': token } }
         )
         if (!data.notices) return this.$store.commit('setLoading')
-        data.notices.map(i => {
-          i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
-          this.notices.push(i)
-        })
+        data.notices.map(notice => this.notices.push(notice))
         this.$store.commit('setLoading')
         return data
       },
@@ -215,11 +212,11 @@
     background: #FAFAFA;
     cursor: pointer;
   }
-  .noticeList .item.odd,
-  .noticeList .item.view {
+  .noticeList .item.odd {
     background: #FAFAFA;
   }
   .noticeList .item.view {
+    background: #FAFAFA;
     border-left: .25rem solid #29313D;
   }
   .noticeList .item .image {

@@ -50,7 +50,7 @@
             {{ item.author }}
             <span>
               <font-awesome-icon icon='clock' />
-              {{ item.created }}
+              {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
             </span>
             <span v-if='item.hits > 0'>
               <font-awesome-icon icon='eye' />
@@ -61,6 +61,9 @@
               +{{ numberWithCommas(item.likes) }}
             </span>
           </div>
+        </div>
+        <div class='unlock' @click='unlock(item.id)' v-if='$store.state.user.isAdmin > 0'>
+          <font-awesome-icon icon='unlock-alt' />
         </div>
       </div>
       <div
@@ -90,7 +93,7 @@
             {{ item.author }}
             <span>
               <font-awesome-icon icon='clock' />
-              {{ item.created }}
+              {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
             </span>
             <span v-if='item.hits > 0'>
               <font-awesome-icon icon='eye' />
@@ -185,21 +188,29 @@
         this.$store.commit('setLoading', true)
         if (forceUpdate) this.page = 0
         const { data } = await axios.post('/api/topic/list', { domain: this.domain, page: this.page++ })
-        if (data.notices) {
-          this.notices = data.notices.map(i => {
-            i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
-            i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
-            return i
-          })
-        }
-        this.topics = data.topics.map(i => {
-          i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
-          i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
-          return i
-        })
+        this.notices = []
+        if (data.notices) this.notices = data.notices
+        this.topics = data.topics
         this.topicsCount = data.count
         this.$store.commit('setLoading')
         return data
+      },
+      unlock: async function(id) {
+        if (this.$store.state.user.admin < 1) return
+        const token = this.$store.state.user.token
+        this.$store.commit('setLoading', true)
+        const { data } = await axios.patch(
+          '/api/topic/edit/notice',
+          { id },
+          { headers: { 'x-access-token': token } }
+        )
+        if (data.status === 'fail') {
+          this.$store.commit('setLoading')
+          return this.$message.error(data.message)
+        }
+        this.$message.success('공지사항을 해제했습니다.')
+        this.forceUpdate()
+        this.$store.commit('setLoading')
       },
       move(item) {
         this.$router.push({ path: `/b/${this.domain}/${item.id}?page=${this.page}` })
@@ -300,5 +311,19 @@
     color: #999;
     font-size: .7rem;
     font-weight: normal;
+  }
+  .topicList .item .unlock {
+    display: flex;
+    flex-direction: column;
+    width: 3rem;
+    background: #29313D;
+    color: #FFF;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .topicList .item .unlock:hover {
+    opacity: .8;
+    cursor: pointer;
   }
 </style>

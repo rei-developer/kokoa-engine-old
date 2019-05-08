@@ -58,7 +58,7 @@
                     </div>
                     <div class='regdate'>
                       <font-awesome-icon icon='clock' />
-                      {{ item.created }}
+                      {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
                     </div>
                   </div>
                 </div>
@@ -151,11 +151,7 @@
           { domain, page: this.page++ }
         )
         if (!data.topics) return this.$store.commit('setLoading')
-        data.topics.map(i => {
-          i.title = i.title.length > 40 ? i.title.substr(0, 40) + '...' : i.title
-          i.created = this.$moment(i.created).format('YYYY/MM/DD HH:mm:ss')
-          this.topics.push(i)
-        })
+        data.topics.map(topic => this.topics.push(topic))
         this.$store.commit('setLoading')
         return data
       },

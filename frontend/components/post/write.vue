@@ -1,6 +1,13 @@
 <template>
   <div>
     <div v-if='$store.state.user.isLogged'>
+      <div class='postHeader' v-if='author'>
+        <div class='author'>
+          <font-awesome-icon icon='at' />
+          {{ author }}
+        </div>
+        <div class='label'>에게 대댓글 작성</div>
+      </div>
       <div class='postWrite'>
         <div class='item'>
           <div class='profile'>
@@ -36,7 +43,7 @@
   import axios from 'axios'
 
   export default {
-    props: ['id', 'topicUserId', 'postUserId', 'postRootId', 'postParentId'],
+    props: ['id', 'author', 'topicUserId', 'postUserId', 'postRootId', 'postParentId'],
     data() {
       return {
         content: '',
@@ -73,6 +80,24 @@
 </script>
 
 <style>
+  /* postHeader */
+  .postHeader > .author {
+    display: inline-block;
+    width: fit-content;
+    margin-left: 4.5rem;
+    margin-bottom: .5rem;
+    padding: 0 .5rem;
+    background: #29313D;
+    border-radius: 500rem;
+    color: #FFF;
+    font-size: .75rem;
+  }
+  .postHeader > .label {
+    display: inline-block;
+    color: #29313D;
+    font-size: .75rem;
+    font-weight: normal;
+  }
   /* Post Write */
   .postWrite {
     display: flex;
@@ -124,6 +149,7 @@
   }
 
   @media (max-width: 1023px) {
+    .postHeader > .author { margin-left: 0 }
     .postWrite .item .profile { display: none }
   }
 
