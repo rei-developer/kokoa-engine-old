@@ -24,7 +24,7 @@
               </div>
               <div class='containerSubject'>
                 <font-awesome-icon icon='folder-open' />
-                {{ getBoardName(domain) }} 게시물 목록순
+                {{ getBoardName(domain) }} 게시물 ({{ numberWithCommas(topicsCount) }})
               </div>
               <div class='indexTopicList'>
                 <div
@@ -87,6 +87,7 @@
       return {
         domain: 'all',
         topics: [],
+        topicsCount: 0,
         page: 0,
         bottom: false,
         lading: false
@@ -144,6 +145,7 @@
         if (this.domain != domain) this.domain = domain
         if (forceUpdate) {
           this.topics = []
+          this.topicsCount = 0
           this.page = 0
         }
         const { data } = await axios.post(
@@ -152,6 +154,7 @@
         )
         if (!data.topics) return this.$store.commit('setLoading')
         data.topics.map(topic => this.topics.push(topic))
+        this.topicsCount = data.count
         this.$store.commit('setLoading')
         return data
       },
@@ -186,6 +189,9 @@
           const bottomOfPage = visible + scrollY >= pageHeight
           return bottomOfPage || pageHeight < visible
         }
+      },
+      numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
     }
   }

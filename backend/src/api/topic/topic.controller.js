@@ -165,7 +165,7 @@ module.exports.createTopic = async ctx => {
   await createTopic.createTopicCounts(topicId)
   if (isImage) await createTopic.createTopicImages(topicId, images)
   await User.setUpExpAndPoint(user, 10, 10)
-  await socket.newTopic(global.io, title)
+  await socket.newTopic(global.io, topicId, domain, title)
   ctx.body = { topicId, status: 'ok' }
 }
 
@@ -245,7 +245,7 @@ module.exports.createTopicVotes = async ctx => {
       move = 'BEST'
       await updateTopic.updateTopicByIsBest(id, 2)
       await User.setUpExpAndPoint(targetUser, 100, 100)
-      await socket.newBest(global.io, topic.title)
+      await socket.newBest(global.io, id, topic.boardDomain, topic.title)
     } else {
       await User.setUpExpAndPoint(targetUser, 5, 5)
     }

@@ -62,7 +62,7 @@
             </span>
           </div>
         </div>
-        <div class='unlock' @click='unlock(item.id)' v-if='$store.state.user.isAdmin > 0'>
+        <div class='unlock' @click='unlockHandler(item.id)' v-if='$store.state.user.isAdmin > 0'>
           <font-awesome-icon icon='unlock-alt' />
         </div>
       </div>
@@ -195,8 +195,16 @@
         this.$store.commit('setLoading')
         return data
       },
+      unlockHandler: async function(id) {
+        if (id < 1 || !this.$store.state.user.admin < 1) return
+        this.$confirm('정말로 공지사항을 해제하시겠습니까?', '알림', {
+          confirmButtonText: '해제',
+          cancelButtonText: '취소'
+        }).then(() => {
+          this.unlock(id)
+        })
+      },
       unlock: async function(id) {
-        if (this.$store.state.user.admin < 1) return
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
         const { data } = await axios.patch(

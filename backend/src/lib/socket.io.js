@@ -7,8 +7,8 @@ module.exports = {
       // socket.on('disconnect', () => {})
     })
   },
-  newBest: (io, title) => io.sockets.emit('newBest', { title }),
-  newTopic: (io, title) => io.sockets.emit('newTopic', { title }),
+  newBest: (io, id, domain, title) => io.sockets.emit('newBest', { id, domain, title }),
+  newTopic: (io, id, domain, title) => io.sockets.emit('newTopic', { id, domain, title }),
   newPost: (io, id) => io.sockets.in(id).emit('newPost'),
   vote: (io, id, likes, hates) => io.sockets.in(id).emit('vote', { likes, hates })
 }

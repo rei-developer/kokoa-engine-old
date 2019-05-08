@@ -49,16 +49,20 @@
       this.$socket.on('newBest', data => {
         this.$notify({
           title: data.title,
-          message: '새로운 인기글이 나타났습니다!',
-          position: 'bottom-right'
+          message: '새로운 인기글이 등록되었습니다!',
+          customClass: 'notify',
+          position: 'bottom-right',
+          onClick: () => this.move(data)
         })
         this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
       })
       this.$socket.on('newTopic', data => {
         this.$notify({
           title: data.title,
-          message: '새로운 글이 작성되었습니다.',
-          position: 'bottom-right'
+          message: '새로운 글이 등록되었습니다.',
+          customClass: 'notify',
+          position: 'bottom-right',
+          onClick: () => this.move(data)
         })
         this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
       })
@@ -104,6 +108,9 @@
           this.updateNotices()
         }, 10000)
       },
+      move(item) {
+        this.$router.push({ path: `/b/${item.domain}/${item.id}` })
+      },
       aside() {
         this.$store.commit('setAside')
       },
@@ -144,5 +151,25 @@
   }
   .popupMenu:hover {
     opacity: .8;
+  }
+
+  .notify {
+    padding: .25rem 0;
+    border-radius: .25rem;
+    background: #409EFF;
+  }
+  .notify:hover {
+    opacity: .9;
+    cursor: pointer;
+  }
+  .notify .el-notification__title {
+    color: #FFF;
+  }
+  .notify .el-notification__content {
+    margin: 0;
+    color: #FFF;
+  }
+  .notify .el-notification__closeBtn {
+    color: #FFF;
   }
 </style>

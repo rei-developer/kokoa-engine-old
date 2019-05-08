@@ -81,7 +81,7 @@
                   </div>
                 </div>
                 <div class='info'>
-                  <div class='item'>
+                  <div class='item' v-if='images'>
                     <div
                       class='images'
                       v-for='(item, index) in images' :key='`i${index}`'>
