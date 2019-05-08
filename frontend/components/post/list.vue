@@ -59,6 +59,7 @@
             <PostWrite
               :id='id'
               :author='item.author'
+              :pureContent='""'
               :topicUserId='topic.userId'
               :postUserId='item.userId'
               :postRootId='item.postRootId || item.id'
@@ -128,6 +129,15 @@
         this.playSound('https://soundbible.com/mp3/Blop-Mark_DiAngelo-79054334.mp3')
         this.newPostsCount++
       })
+      this.$socket.on('votePost', data => {
+        this.posts = this.posts.map(post => {
+          if (post.id === data.postId) {
+            post.likes = data.likes
+            post.hates = data.hates
+          }
+          return post
+        })
+      })
     },
     mounted() {
       this.viewPostId = this.$route.query.postId
@@ -163,7 +173,7 @@
             this.update(command[1])
             break
           case 'remove':
-            this.remove(command[1])
+            this.removeHandler(command[1])
             break
         }
       },
@@ -186,7 +196,6 @@
           this.$store.commit('setLoading')
           return this.$message.error(data.message || '오류가 발생했습니다.')
         }
-
         this.$message('투표했습니다.')
         this.$store.commit('setLoading')
       },
@@ -197,8 +206,16 @@
         this.tempPostUpdateId = item.id
         this.tempUpdateContent = item.content.replace(/<br>+/g, '\n')
       },
-      remove: async function(id) {
+      removeHandler: async function(id) {
         if (id < 1) return
+        this.$confirm('정말로 삭제하시겠습니까?', '알림', {
+          confirmButtonText: '삭제',
+          cancelButtonText: '취소'
+        }).then(() => {
+          this.remove(id)
+        })
+      },
+      remove: async function(id) {
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)

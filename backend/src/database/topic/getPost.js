@@ -4,6 +4,7 @@ module.exports = async id => {
   const result = await pool.query(
     `SELECT
       p.userId,
+      p.topicId,
       p.ip,
       p.created,
       p.updated,

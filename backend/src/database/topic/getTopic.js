@@ -66,13 +66,24 @@ module.exports.count = async columns => {
 
 module.exports.notices = async domain => {
   const result = await pool.query(
-    `SELECT id, userId, originBoardDomain, category, author, title, created, isImage, isBest,
-    (SELECT hits FROM TopicCounts WHERE topicId = A.id) hits,
-    (SELECT likes FROM TopicCounts WHERE topicId = A.id) likes,
-    (SELECT isAdmin FROM Users WHERE id = A.userId) admin
-    FROM Topics A
-    WHERE boardDomain = ? AND isNotice = 1
-    ORDER BY id DESC`,
+    `SELECT
+      t.id,
+      t.userId,
+      t.originBoardDomain,
+      t.category,
+      t.author,
+      t.title,
+      t.created,
+      t.isImage,
+      t.isBest,
+      tc.hits,
+      tc.likes,
+      u.isAdmin admin
+    FROM Topics t
+    LEFT JOIN TopicCounts tc ON tc.topicId = t.id
+    LEFT JOIN Users u ON u.id = t.userId
+    WHERE t.boardDomain = ? AND t.isNotice = 1
+    ORDER BY t.id DESC`,
     [domain]
   )
   if (result.length < 1) return false
@@ -88,15 +99,28 @@ module.exports.topics = async (columns, page, limit) => {
   })
   try {
     const result = await pool.query(
-      `SELECT id, userId, boardDomain, originBoardDomain, category, author, title, created, isImage, isBest, isNotice,
-      (SELECT hits FROM TopicCounts WHERE topicId = A.id) hits,
-      (SELECT likes FROM TopicCounts WHERE topicId = A.id) likes,
-      (SELECT isAdmin FROM Users WHERE id = A.userId) admin,
-      (SELECT imageUrl FROM TopicImages WHERE topicId = A.id LIMIT 1) imageUrl,
-      (SELECT COUNT(*) FROM Posts WHERE topicId = A.id) postsCount
-      FROM Topics A
-      WHERE ${keys.map(key => `${key} = ?`).join(' AND ')}
-      ORDER BY id DESC
+      `SELECT
+        t.id,
+        t.userId,
+        t.boardDomain,
+        t.originBoardDomain,
+        t.category,
+        t.author,
+        t.title,
+        t.created,
+        t.isImage,
+        t.isBest,
+        t.isNotice,
+        tc.hits,
+        tc.likes,
+        u.isAdmin admin,
+        (SELECT imageUrl FROM TopicImages WHERE topicId = t.id LIMIT 1) imageUrl,
+        (SELECT COUNT(*) FROM Posts WHERE topicId = t.id) postsCount
+      FROM Topics t
+      LEFT JOIN TopicCounts tc ON tc.topicId = t.id
+      LEFT JOIN Users u ON u.id = t.userId
+      WHERE ${keys.map(key => `t.${key} = ?`).join(' AND ')}
+      ORDER BY t.id DESC
       LIMIT ?, ?`,
       [...values, page * limit, limit]
     )
@@ -110,14 +134,18 @@ module.exports.topics = async (columns, page, limit) => {
 
 module.exports.topicsToWidget = async limit => {
   const result = await pool.query(
-    `SELECT id, boardDomain, category, title, created, isBest,
-    (SELECT name FROM Boards WHERE domain = A.boardDomain) boardName,
-    (SELECT likes FROM TopicCounts WHERE topicId = A.id) likes,
-    (SELECT imageUrl FROM TopicImages WHERE topicId = A.id LIMIT 1) imageUrl,
-    (SELECT COUNT(*) FROM Posts WHERE topicId = A.id) postsCount
-    FROM Topics A
-    WHERE isBest > 0 AND isAllowed = 1
-    ORDER BY id DESC
+    `SELECT
+      t.id,
+      t.boardDomain,
+      t.title,
+      t.created,
+      t.isBest,
+      tc.likes,
+      (SELECT COUNT(*) FROM Posts WHERE topicId = t.id) postsCount
+    FROM Topics t
+    LEFT JOIN TopicCounts tc ON tc.topicId = t.id
+    WHERE t.isBest > 0 AND t.isAllowed = 1
+    ORDER BY t.id DESC
     LIMIT ?`,
     [limit]
   )

@@ -13,6 +13,7 @@
           <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
         </span>
         {{ item.title }}
+        <span class='posts' v-if='item.postsCount > 0'>{{ numberWithCommas(item.postsCount) }}</span>
         <div class='event'>
           <span>
             <font-awesome-icon icon='clock' />
@@ -96,6 +97,15 @@
     height: 14px;
     margin-bottom: 4px;
     vertical-align: middle;
+  }
+  .recentList .item span.posts {
+    margin-left: .1rem;
+    padding: 0 .25rem;
+    background: #999;
+    border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+    font-weight: normal;
   }
   .recentList .item .event span {
     margin-right: .25rem;

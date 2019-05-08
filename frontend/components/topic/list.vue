@@ -21,6 +21,13 @@
       <font-awesome-icon icon='pencil-alt' />
       {{ getBoardName(domain) }} ({{ numberWithCommas(topicsCount) }})
     </div>
+    <div class='marginBottom' v-if='categories.length > 0'>
+      <el-radio-group v-model='category' size='small'>
+        <el-radio-button
+          :label='item.name'
+          v-for='(item, index) in categories' :key='index' />
+      </el-radio-group>
+    </div>
     <div class='topicList'>
       <div
         :class='id == item.id ? "item view" : "item odd"'
@@ -39,7 +46,7 @@
               <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
               {{ item.title }}
               <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
-              <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+              <span class='posts' v-if='item.postsCount > 0'>{{ numberWithCommas(item.postsCount) }}</span>
               <span class='image' v-if='item.isImage > 0'>
                 <font-awesome-icon icon='image' />
               </span>
@@ -137,6 +144,8 @@
       return {
         domain: '',
         boardName: '',
+        category: '',
+        categories: [],
         notices: [],
         topics: [],
         topicsCount: 0,
@@ -146,10 +155,15 @@
     watch: {
       '$store.state.forceUpdate': function() {
         this.getData(true)
+      },
+      category: function() {
+        this.page = 0
+        this.getData(true)
       }
     },
     mounted() {
       this.domain = this.$route.params.domain
+      this.category = this.$route.query.category || '(없음)'
       this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
       this.getData()
     },
@@ -187,8 +201,13 @@
       getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
         if (forceUpdate) this.page = 0
-        const { data } = await axios.post('/api/topic/list', { domain: this.domain, page: this.page++ })
+        const { data } = await axios.post(
+          '/api/topic/list',
+          { domain: this.domain, category: this.category === '(없음)' ? '' : this.category, page: this.page++ }
+        )
+        this.categories = []
         this.notices = []
+        if (data.categories) this.categories = data.categories
         if (data.notices) this.notices = data.notices
         this.topics = data.topics
         this.topicsCount = data.count
@@ -221,7 +240,7 @@
         this.$store.commit('setLoading')
       },
       move(item) {
-        this.$router.push({ path: `/b/${this.domain}/${item.id}?page=${this.page}` })
+        this.$router.push({ path: `/b/${this.domain}/${item.id}?page=${this.page}${this.category !== '(없음)' ? '&category=' + this.category : ''}` })
       },
       currentChange(page) {
         this.page = page - 1

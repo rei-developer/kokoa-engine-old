@@ -54,7 +54,7 @@
                       <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
                       {{ item.title }}
                       <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
-                      <span class='posts' v-if='item.postsCount > 0'>{{ item.postsCount }}</span>
+                      <span class='posts' v-if='item.postsCount > 0'>{{ numberWithCommas(item.postsCount) }}</span>
                     </div>
                     <div class='regdate'>
                       <font-awesome-icon icon='clock' />

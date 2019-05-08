@@ -46,6 +46,7 @@ module.exports.getTopics = async ctx => {
   if (category !== '') obj.category = category
   obj.isAllowed = 1
   const count = await getTopic.count(obj)
+  const categories = await getBoard.categories(domain)
   const notices = await getTopic.notices(domain)
   if (notices.length > 0) {
     const jobs = notices.map(notice => new Promise(resolve => {
@@ -70,7 +71,7 @@ module.exports.getTopics = async ctx => {
     }))
     await Promise.all(jobs)
   }
-  ctx.body = { count, notices, topics }
+  ctx.body = { count, categories, notices, topics }
 }
 
 module.exports.getPosts = async ctx => {
@@ -211,7 +212,6 @@ module.exports.createPost = async ctx => {
     ip,
     header
   })
-  //임시
   const postsCount = await getPost.count(topicId)
   const posts = await getPost.posts(topicId, 0, 100)
   await createPost.createPostCounts(postId)
@@ -313,7 +313,7 @@ module.exports.createPostVotes = async ctx => {
     await updatePost.updatePostCountsByLikes(id)
   else
     await updatePost.updatePostCountsByHates(id)
-  //await socket.vote(global.io, id, likes ? ++topic.likes : topic.likes, likes ? topic.hates : ++topic.hates)
+  await socket.votePost(global.io, post.topicId, id, likes ? ++post.likes : post.likes, likes ? post.hates : ++post.hates)
   ctx.body = { status: 'ok' }
 }
 
@@ -371,6 +371,7 @@ module.exports.deleteTopic = async ctx => {
     await deleteTopic.topicImages(id)
   }
   await deleteTopic(id)
+  await User.setUpExpAndPoint(user, -20, -20)
   ctx.body = { status: 'ok' }
 }
 
@@ -384,5 +385,6 @@ module.exports.deletePost = async ctx => {
   if (user.isAdmin < 1 && userId !== user.id) return
   await deleteNotice.postId(id)
   await deletePost(id)
+  await User.setUpExpAndPoint(user, -10, -10)
   ctx.body = { status: 'ok' }
 }

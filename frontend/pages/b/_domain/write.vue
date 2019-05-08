@@ -22,9 +22,6 @@
           <div class='marginBottom' v-if='categories.length > 0'>
             <el-radio-group v-model='form.category' size='small'>
               <el-radio-button
-                label='(없음)'
-                @click='form.category = ""' />
-              <el-radio-button
                 :label='item.name'
                 @click='form.category = item.name'
                 v-for='(item, index) in categories' :key='index' />
@@ -98,7 +95,7 @@
         domain: '',
         categories: [],
         form: {
-          category: '',
+          category: '(없음)',
           title: '',
           content: '<p></p>',
           isNotice: false
@@ -155,7 +152,7 @@
         this.loading = true
         const { data } = await axios.post('/api/topic/write', {
           domain: this.domain,
-          category: this.form.category,
+          category: this.form.category === '(없음)' ? '' : this.form.category,
           title: this.form.title,
           content: this.form.content,
           isNotice: this.form.isNotice,
