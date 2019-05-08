@@ -3,6 +3,7 @@ const topicCtrl = require('./topic.controller')
 
 const app = new Router()
 
+app.get('/count/:domain', topicCtrl.getTopicCounts)
 app.get('/boardName/:domain', topicCtrl.getBoardName)
 app.get('/categories/:domain', topicCtrl.getCategories)
 app.get('/read/:id', topicCtrl.getContent)

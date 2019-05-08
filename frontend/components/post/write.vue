@@ -43,7 +43,7 @@
   import axios from 'axios'
 
   export default {
-    props: ['id', 'edit', 'author', 'pureContent', 'topicUserId', 'postUserId', 'postRootId', 'postParentId'],
+    props: ['id', 'edit', 'pureContent', 'author', 'topicUserId', 'postUserId', 'postRootId', 'postParentId'],
     data() {
       return {
         content: this.pureContent,
@@ -53,7 +53,7 @@
     methods: {
       submit: async function() {
         if (this.loading) return
-        if (!this.content || this.content === '') return this.$message.error('내용을 입력하세요.')
+        if (this.content === '') return this.$message.error('내용을 입력하세요.')
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.loading = true

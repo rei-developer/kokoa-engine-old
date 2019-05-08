@@ -64,6 +64,35 @@ module.exports.count = async columns => {
   }
 }
 
+module.exports.counts = async domain => {
+  let result
+  if (domain === 'all') {
+    result = await pool.query(
+      `SELECT
+        (SELECT COUNT(*) FROM Topics WHERE created > CURDATE() - INTERVAL 1 DAY) yesterday,
+        (SELECT COUNT(*) FROM Topics WHERE created > CURDATE()) today,
+        (SELECT TIMESTAMPDIFF(MINUTE, CURRENT_DATE(), NOW()) / COUNT(*) FROM Topics WHERE created > CURDATE()) regen`
+    )
+  } else if (domain === 'best') {
+    result = await pool.query(
+      `SELECT
+        (SELECT COUNT(*) FROM Topics WHERE created > CURDATE() - INTERVAL 1 DAY AND isBest > 1) yesterday,
+        (SELECT COUNT(*) FROM Topics WHERE created > CURDATE() AND isBest > 1) today,
+        (SELECT TIMESTAMPDIFF(MINUTE, CURRENT_DATE(), NOW()) / COUNT(*) FROM Topics WHERE created > CURDATE() AND isBest > 1) regen`
+    )
+  } else {
+    result = await pool.query(
+      `SELECT
+        (SELECT COUNT(*) FROM Topics WHERE created > CURDATE() - INTERVAL 1 DAY AND boardDomain = ?) yesterday,
+        (SELECT COUNT(*) FROM Topics WHERE created > CURDATE() AND boardDomain = ?) today,
+        (SELECT TIMESTAMPDIFF(MINUTE, CURRENT_DATE(), NOW()) / COUNT(*) FROM Topics WHERE created > CURDATE() AND boardDomain = ?) regen`,
+      [domain, domain, domain]
+    )
+  }
+  if (result.length < 1) return false
+  return result[0]
+}
+
 module.exports.notices = async domain => {
   const result = await pool.query(
     `SELECT

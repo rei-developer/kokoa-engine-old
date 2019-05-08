@@ -17,16 +17,23 @@
         </el-button>
       </nuxt-link>
     </div>
-    <div class='containerSubject marginTop'>
-      <font-awesome-icon icon='pencil-alt' />
-      {{ getBoardName(domain) }} ({{ numberWithCommas(topicsCount) }})
-    </div>
-    <div class='marginBottom' v-if='categories.length > 0'>
+    <div class='marginTop' v-if='categories.length > 0'>
       <el-radio-group v-model='category' size='small'>
         <el-radio-button
           :label='item.name'
           v-for='(item, index) in categories' :key='index' />
       </el-radio-group>
+    </div>
+    <div class='containerSubject marginTop'>
+      <font-awesome-icon icon='pencil-alt' />
+      {{ getBoardName(domain) }} ({{ numberWithCommas(counts.count) }})
+      <div class='topicCounts'>
+        어제 <span class='bold'>{{ numberWithCommas(this.counts.yesterday) }}</span>
+        <span class='divide'>|</span>
+        오늘 <span class='bold'>{{ numberWithCommas(this.counts.today) }}</span>
+        <span class='divide'>|</span>
+        평균 <span class='bold'>{{ (this.counts.regen).toFixed(1) }}분</span>
+      </div>
     </div>
     <div class='topicList'>
       <div
@@ -118,7 +125,7 @@
       class='marginVertical'
       layout='prev, pager, next'
       :page-size='20'
-      :total='topicsCount'
+      :total='counts.count'
       :current-page='page'
       @current-change='currentChange' />
     <div class='marginBottom'>
@@ -148,17 +155,24 @@
         categories: [],
         notices: [],
         topics: [],
-        topicsCount: 0,
+        counts: {
+          count: 0,
+          yesterday: 0,
+          today: 0,
+          regen: 0
+        },
         page: 0
       }
     },
     watch: {
       '$store.state.forceUpdate': function() {
         this.getData(true)
+        this.getCount()
       },
       category: function() {
         this.page = 0
         this.getData(true)
+        this.getCount()
       }
     },
     mounted() {
@@ -166,6 +180,7 @@
       this.category = this.$route.query.category || '(없음)'
       this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
       this.getData()
+      this.getCount()
     },
     methods: {
       getBoardName(domain) {
@@ -210,9 +225,15 @@
         if (data.categories) this.categories = data.categories
         if (data.notices) this.notices = data.notices
         this.topics = data.topics
-        this.topicsCount = data.count
+        this.counts.count = data.count
         this.$store.commit('setLoading')
-        return data
+      },
+      getCount: async function() {
+        const { data } = await axios.get(`/api/topic/count/${this.domain}`)
+        if (data.status === 'fail') return
+        this.counts.yesterday = data.yesterday - data.today
+        this.counts.today = data.today
+        this.counts.regen = data.regen
       },
       unlockHandler: async function(id) {
         if (id < 1 || !this.$store.state.user.admin < 1) return
@@ -245,6 +266,7 @@
       currentChange(page) {
         this.page = page - 1
         this.getData()
+        this.getCount()
       },
       forceUpdate() {
         this.$store.commit('forceUpdate')
@@ -257,6 +279,23 @@
 </script>
 
 <style>
+  /* Topic Counts */
+  .topicCounts {
+    margin-top: .3rem;
+    padding: .1rem .5rem;
+    border-radius: 500rem;
+    background: #EAEAEA;
+    color: #29313D;
+    font-size: .75rem;
+    float: right;
+  }
+  .topicCounts span.bold { font-weight: bold }
+  .topicCounts span.divide {
+    color: #CCC;
+    font-size: .5rem;
+  }
+
+  /* Topic List */
   .topicList {
     display: flex;
     flex-direction: column;

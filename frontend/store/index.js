@@ -9,5 +9,5 @@ export const mutations = {
   forceUpdate: state => ++state.forceUpdate,
   setTopic: (state, topic) => state.topic = topic,
   setAside: state => state.aside = !state.aside,
-  setLoading: (state, toggle) => state.loading = toggle
+  setLoading: (state, toggle = false) => state.loading = toggle
 }

@@ -58,8 +58,8 @@
           <div class='postReplyWrite' v-if='item.id === tempPostReplyId'>
             <PostWrite
               :id='id'
-              :author='item.author'
               :pureContent='""'
+              :author='item.author'
               :topicUserId='topic.userId'
               :postUserId='item.userId'
               :postRootId='item.postRootId || item.id'
@@ -69,7 +69,7 @@
             <PostWrite
               :id='item.id'
               :edit='true'
-              :pureContent='tempUpdateContent' />
+              :pureContent='item.content.replace(/<br>+/g, "\n")' />
           </div>
         </div>
       </div>
@@ -86,6 +86,7 @@
     <div class='postBox'>
       <PostWrite
         :id='id'
+        :pureContent='""'
         :topicUserId='topic.userId' />
     </div>
     <div class='marginVertical'>
@@ -115,7 +116,6 @@
         viewPostId: 0,
         tempPostReplyId: 0,
         tempPostUpdateId: 0,
-        tempUpdateContent: '',
         loading: false
       }
     },
@@ -156,7 +156,6 @@
         this.newPostsCount = 0
         this.tempPostReplyId = 0
         this.tempPostUpdateId = 0
-        this.tempUpdateContent = ''
         if (data.posts) this.posts = data.posts
         if (this.viewPostId > 0) this.scrollTo()
         this.loading = false
@@ -180,7 +179,6 @@
       reply(id) {
         this.tempPostReplyId = id
         this.tempPostUpdateId = 0
-        this.tempUpdateContent = ''
       },
       votes: async function(id, flag) {
         if (id < 1) return
@@ -204,7 +202,6 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         this.tempPostReplyId = 0
         this.tempPostUpdateId = item.id
-        this.tempUpdateContent = item.content.replace(/<br>+/g, '\n')
       },
       removeHandler: async function(id) {
         if (id < 1) return

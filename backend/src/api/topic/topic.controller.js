@@ -25,6 +25,13 @@ const BURN_LIMIT = 0
 const BEST_LIMIT = 2
 const DELETE_LIMIT = 10
 
+module.exports.getTopicCounts = async ctx => {
+  const { domain } = ctx.params
+  const counts = await getTopic.counts(domain)
+  if (!counts) return ctx.body = { status: 'fail' }
+  ctx.body = counts
+}
+
 module.exports.getListToWidget = async ctx => {
   const topics = await getTopic.topicsToWidget(10)
   ctx.body = topics
