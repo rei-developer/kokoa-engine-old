@@ -105,15 +105,6 @@ module.exports.getMyPosts = async ctx => {
   ctx.body = { count, posts }
 }
 
-module.exports.getBoardName = async ctx => {
-  const { domain } = ctx.params
-  if (domain === 'all') return ctx.body = '전체글'
-  else if (domain === 'best') return ctx.body = '인기글'
-  const board = await getBoard.name(domain)
-  if (!board) return ctx.body = { status: 'fail' }
-  ctx.body = board
-}
-
 module.exports.getCategories = async ctx => {
   const { domain } = ctx.params
   const categories = await getBoard.categories(domain)
@@ -377,7 +368,10 @@ module.exports.deleteTopic = async ctx => {
     await Promise.all(jobsForThumb)
     await deleteTopic.topicImages(id)
   }
-  await deleteTopic(id)
+  if (user.isAdmin > 0)
+    await deleteTopic(id)
+  else
+    await updateTopic.updateTopicByIsAllowed(id)
   await User.setUpExpAndPoint(user, -20, -20)
   ctx.body = { status: 'ok' }
 }

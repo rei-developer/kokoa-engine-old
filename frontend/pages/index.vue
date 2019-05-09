@@ -16,15 +16,16 @@
               </div>
               <div class='marginBottom'>
                 <el-button-group>
-                  <el-button type='primary' size='small' @click='getData("all", true)' round>전체순</el-button>
-                  <el-button type='info' size='small' @click='getData("best", true)' round>인기순</el-button>
-                  <el-button type='info' size='small' @click='getData("girl", true)' round>연예순</el-button>
-                  <el-button type='info' size='small' @click='getData("anime", true)' round>애니순</el-button>
+                  <el-button type='primary' size='small' @click='getData("all", true)' round>전체</el-button>
+                  <el-button type='info' size='small' @click='getData("best", true)' round>인기</el-button>
+                  <el-button type='info' size='small' @click='getData("ilbe", true)' round>일베</el-button>
+                  <el-button type='info' size='small' @click='getData("girl", true)' round>연예</el-button>
+                  <el-button type='info' size='small' @click='getData("anime", true)' round>애니</el-button>
                 </el-button-group>
               </div>
               <div class='containerSubject'>
                 <font-awesome-icon icon='folder-open' />
-                {{ getBoardName(domain) }} 게시물 ({{ numberWithCommas(topicsCount) }})
+                {{ getBoardName() }} 게시물 ({{ numberWithCommas(topicsCount) }})
               </div>
               <div class='indexTopicList'>
                 <div
@@ -78,6 +79,7 @@
 </template>
 
 <script>
+  import Library from '~/assets/lib.js'
   import Recent from '~/components/recent.vue'
   import axios from 'axios'
   
@@ -110,35 +112,8 @@
       this.getData()
     },
     methods: {
-      getBoardName(domain) {
-        let boardName = ''
-        switch (domain) {
-          case 'all':
-            boardName = '전체'
-            break
-          case 'best':
-            boardName = '인기'
-            break
-          case 'girl':
-            boardName = '연예'
-            break
-          case 'anime':
-            boardName = '애니'
-            break
-          case 'talk':
-            boardName = '토크'
-            break
-          case 'social':
-            boardName = '정치'
-            break
-          case 'feedback':
-            boardName = '건의'
-            break
-          case 'notice':
-            boardName = '공지'
-            break
-        }
-        return boardName
+      getBoardName(domain = this.domain) {
+        return Library.getBoardName(domain)
       },
       getData: async function(domain = this.domain, forceUpdate = false) {
         this.$store.commit('setLoading', true)

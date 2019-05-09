@@ -26,13 +26,13 @@
     </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='pencil-alt' />
-      {{ getBoardName(domain) }} ({{ numberWithCommas(counts.count) }})
+      {{ getBoardName() }} ({{ numberWithCommas(counts.count) }})
       <div class='topicCounts'>
-        어제 <span class='bold'>{{ numberWithCommas(this.counts.yesterday) }}</span>
+        어제 <span class='bold'>{{ this.counts.yesterday }}</span>
         <span class='divide'>|</span>
-        오늘 <span class='bold'>{{ numberWithCommas(this.counts.today) }}</span>
+        오늘 <span class='bold'>{{ this.counts.today }}</span>
         <span class='divide'>|</span>
-        평균 <span class='bold'>{{ (this.counts.regen).toFixed(1) }}분</span>
+        평균 <span class='bold'>{{ this.counts.regen }}분</span>
       </div>
     </div>
     <div class='topicList'>
@@ -143,6 +143,7 @@
 </template>
 
 <script>
+  import Library from '~/assets/lib.js'
   import axios from 'axios'
   
   export default {
@@ -150,7 +151,6 @@
     data() {
       return {
         domain: '',
-        boardName: '',
         category: '',
         categories: [],
         notices: [],
@@ -183,35 +183,8 @@
       this.getCount()
     },
     methods: {
-      getBoardName(domain) {
-        let boardName = ''
-        switch (domain) {
-          case 'all':
-            boardName = '전체'
-            break
-          case 'best':
-            boardName = '인기'
-            break
-          case 'girl':
-            boardName = '연예'
-            break
-          case 'anime':
-            boardName = '애니'
-            break
-          case 'talk':
-            boardName = '토크'
-            break
-          case 'social':
-            boardName = '정치'
-            break
-          case 'feedback':
-            boardName = '건의'
-            break
-          case 'notice':
-            boardName = '공지'
-            break
-        }
-        return boardName
+      getBoardName(domain = this.domain) {
+        return Library.getBoardName(domain)
       },
       getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
@@ -231,9 +204,9 @@
       getCount: async function() {
         const { data } = await axios.get(`/api/topic/count/${this.domain}`)
         if (data.status === 'fail') return
-        this.counts.yesterday = data.yesterday - data.today
-        this.counts.today = data.today
-        this.counts.regen = data.regen
+        this.counts.yesterday = this.numberWithCommas(data.yesterday - data.today)
+        this.counts.today = this.numberWithCommas(data.today)
+        this.counts.regen = data.regen ? (data.regen).toFixed(1) : 0
       },
       unlockHandler: async function(id) {
         if (id < 1 || !this.$store.state.user.admin < 1) return
