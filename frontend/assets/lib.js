@@ -20,7 +20,7 @@ module.exports.getBoardName = domain => {
       name = '토크'
       break
     case 'social':
-      name = '정치'
+      name = '사회'
       break
     case 'feedback':
       name = '건의'
