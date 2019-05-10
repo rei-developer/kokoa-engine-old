@@ -9,10 +9,6 @@
         <font-awesome-icon icon='star' />
         <span>인기</span>
       </el-menu-item>
-      <el-menu-item index='3' @click='move("/b/ilbe")'>
-        <font-awesome-icon icon='archive' />
-        <span>일베</span>
-      </el-menu-item>
       <el-menu-item index='4' @click='move("/b/girl")'>
         <span>연예</span>
       </el-menu-item>

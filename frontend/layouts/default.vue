@@ -42,7 +42,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 28
+        frontendVersion: 29
       }
     },
     beforeMount() {
@@ -50,8 +50,8 @@
         this.$notify({
           title: data.title,
           message: '새로운 인기글이 등록되었습니다!',
-          customClass: 'notify',
-          position: 'bottom-right',
+          customClass: 'notify best',
+          position: 'top-right',
           onClick: () => this.move(data)
         })
         this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
@@ -61,7 +61,7 @@
           title: data.title,
           message: '새로운 글이 등록되었습니다.',
           customClass: 'notify',
-          position: 'bottom-right',
+          position: 'top-right',
           onClick: () => this.move(data)
         })
         this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
@@ -157,14 +157,16 @@
     padding: .25rem 0;
     border: 0;
     border-radius: .25rem;
-    background: #409EFF;
   }
   .notify:hover {
     opacity: .9;
     cursor: pointer;
   }
-  .notify .el-notification__title,
-  .notify .el-notification__content,
-  .notify .el-notification__closeBtn { color: #FFF }
+  .notify.best {
+    background: #409EFF;
+  }
+  .notify.best .el-notification__title,
+  .notify.best .el-notification__content,
+  .notify.best .el-notification__closeBtn { color: #FFF }
   .notify .el-notification__content { margin: 0 }
 </style>
