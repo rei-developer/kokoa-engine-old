@@ -18,7 +18,7 @@
       <el-submenu index='6'>
         <template slot='title'>게시판</template>
         <el-menu-item index='6-1' @click='move("/b/talk")'>토크</el-menu-item>
-        <el-menu-item index='6-2' @click='move("/b/social")'>사회</el-menu-item>
+        <el-menu-item index='6-2' @click='move("/b/history")'>역사</el-menu-item>
         <el-menu-item index='6-3' @click='move("/b/feedback")'>건의</el-menu-item>
         <el-menu-item index='6-4' @click='move("/b/notice")'>공지</el-menu-item>
       </el-submenu>

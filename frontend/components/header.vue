@@ -27,7 +27,7 @@
           <el-submenu index='6' class='hidden-mobile'>
             <template slot='title'>게시판</template>
             <el-menu-item index='6-1' route='/b/talk' @click='forceUpdate'>토크</el-menu-item>
-            <el-menu-item index='6-2' route='/b/social' @click='forceUpdate'>사회</el-menu-item>
+            <el-menu-item index='6-2' route='/b/history' @click='forceUpdate'>역사</el-menu-item>
             <el-menu-item index='6-3' route='/b/feedback' @click='forceUpdate'>건의</el-menu-item>
             <el-menu-item index='6-4' route='/b/notice' @click='forceUpdate'>공지</el-menu-item>
           </el-submenu>

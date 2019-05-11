@@ -150,8 +150,8 @@
     props: ['id'],
     data() {
       return {
-        domain: '',
-        category: '',
+        domain: 'all',
+        category: '(없음)',
         categories: [],
         notices: [],
         topics: [],

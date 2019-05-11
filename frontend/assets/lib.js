@@ -19,8 +19,8 @@ module.exports.getBoardName = domain => {
     case 'talk':
       name = '토크'
       break
-    case 'social':
-      name = '사회'
+    case 'history':
+      name = '역사'
       break
     case 'feedback':
       name = '건의'
