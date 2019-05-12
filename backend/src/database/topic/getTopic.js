@@ -119,13 +119,35 @@ module.exports.notices = async domain => {
   return result
 }
 
-module.exports.topics = async (columns, page, limit) => {
+module.exports.topics = async (columns, searches, page, limit) => {
   let keys = []
   let values = []
   _.forIn(columns, (value, key) => {
     keys.push(key)
     values.push(value)
   })
+  let selectQuery = ''
+  let searchData = []
+  if (searches.text !== '') {
+    switch (searches.select) {
+      case 1:
+        selectQuery = ' AND MATCH (t.content) AGAINST (?)'
+        searchData = [searches.text]
+        break
+      case 2:
+        selectQuery = ' AND MATCH (t.title) AGAINST (?) OR MATCH (t.content) AGAINST (?)'
+        searchData = [searches.text, searches.text]
+        break
+      case 3:
+        selectQuery = ' AND MATCH (t.author) AGAINST (?)'
+        searchData = [searches.text]
+        break
+      default:
+        selectQuery = ' AND MATCH (t.title) AGAINST (?)'
+        searchData = [searches.text]
+        break
+    }
+  }
   try {
     const result = await pool.query(
       `SELECT
@@ -148,10 +170,12 @@ module.exports.topics = async (columns, page, limit) => {
       FROM Topics t
       LEFT JOIN TopicCounts tc ON tc.topicId = t.id
       LEFT JOIN Users u ON u.id = t.userId
-      WHERE ${keys.map(key => `t.${key} = ?`).join(' AND ')}
+      WHERE ${keys.map(key => `t.${key} = ?`).join(' AND ')}${selectQuery}
       ORDER BY t.id DESC
       LIMIT ?, ?`,
-      [...values, page * limit, limit]
+      searches.text === ''
+      ? [...values, page * limit, limit]
+      : [...values, ...searchData, page * limit, limit]
     )
     if (result.length < 1) return false
     return result

@@ -42,6 +42,10 @@ module.exports.getTopics = async ctx => {
   const domain = body.domain || 'all'
   const userId = body.userId || 0
   const category = body.category || ''
+  const searches = body.searches || { text: '', select: 0 }
+
+  console.log(searches)
+
   const page = body.page || 0
   const limit = body.limit || 20
   if (page < 0) return
@@ -66,7 +70,7 @@ module.exports.getTopics = async ctx => {
     }))
     await Promise.all(jobs)
   }
-  const topics = await getTopic.topics(obj, page, limit)
+  const topics = await getTopic.topics(obj, searches, page, limit)
   if (topics.length > 0) {
     const jobs = topics.map(topic => new Promise(resolve => {
       client.get(topic.id, (err, value) => {

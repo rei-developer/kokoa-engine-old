@@ -42,7 +42,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 32
+        frontendVersion: 33
       }
     },
     beforeMount() {
@@ -137,7 +137,7 @@
   .popupMenu {
     position: fixed;
     right: 2rem;
-    bottom: 6rem;
+    bottom: 9rem;
     width: 3rem;
     height: 3rem;
     line-height: 3rem;

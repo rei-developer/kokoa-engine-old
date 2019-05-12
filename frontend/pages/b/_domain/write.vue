@@ -53,7 +53,6 @@
               <vue-editor
                 id='editor'
                 :editorToolbar='[
-                  [{ "size": ["small", false, "large", "huge"] }],
                   ["bold", "italic", "underline", "strike"],
                   [{ "align": "" }, { "align": "center" }, { "align": "right" }, { "align": "justify" }],
                   ["blockquote"],

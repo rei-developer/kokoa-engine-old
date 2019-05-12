@@ -41,7 +41,7 @@
     padding: 15px 15px 5px 0;
   }
 
-  p {
+  .Footer > p {
     font-size: 12px;
     text-align: justify;
     line-height: 170%;

@@ -121,8 +121,22 @@
         </div>
       </div>
     </div>
+    <div class='marginVertical'>
+      <el-input class='input-with-select' size='medium' placeholder='검색어 (2글자 이상)' v-model='searches.text'>
+        <el-select v-model='searches.select' slot='prepend'>
+          <el-option label='제목' :value='0' />
+          <el-option label='본문' :value='1' />
+          <el-option label='전체' :value='2' />
+          <el-option label='작성자' :value='3' />
+        </el-select>
+        <el-button slot='append' @click='search'>
+          <font-awesome-icon icon='search' />
+          검색
+        </el-button>
+      </el-input>
+    </div>
     <el-pagination
-      class='marginVertical'
+      class='marginBottom'
       @current-change='currentChange'
       :current-page='page'
       :page-size='20'
@@ -147,7 +161,7 @@
   import axios from 'axios'
   
   export default {
-    props: ['id', 'page'],
+    props: ['id', 'purePage'],
     data() {
       return {
         domain: 'all',
@@ -160,7 +174,12 @@
           yesterday: 0,
           today: 0,
           regen: 0
-        }
+        },
+        searches: {
+          text: '',
+          select: 0
+        },
+        page: Number(this.purePage)
       }
     },
     watch: {
@@ -189,7 +208,12 @@
         if (forceUpdate) this.page = 1
         const { data } = await axios.post(
           '/api/topic/list',
-          { domain: this.domain, category: this.category === '(없음)' ? '' : this.category, page: this.page - 1 }
+          {
+            domain: this.domain,
+            category: this.category === '(없음)' ? '' : this.category,
+            searches: this.searches,
+            page: this.page - 1
+          }
         )
         this.categories = []
         this.notices = []
@@ -230,6 +254,13 @@
         this.$message.success('공지사항을 해제했습니다.')
         this.forceUpdate()
         this.$store.commit('setLoading')
+      },
+      search: async function() {
+        if (this.searches.text === '') return this.$message.error('검색어를 입력하세요.')
+        if (this.searches.text.length < 2) return this.$message.error('검색어는 두 글자 이상 입력하세요.')
+        this.page = 1
+        this.getData(true)
+        this.getCount()
       },
       move(item) {
         this.$router.push({ path: `/b/${this.domain}/${item.id}?page=${this.page}${this.category !== '(없음)' ? '&category=' + this.category : ''}` })

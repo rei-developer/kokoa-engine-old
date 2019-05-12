@@ -119,7 +119,7 @@
                   </el-button>
                 </nuxt-link>
               </div>
-              <TopicList class='marginTop' :id='id' :page='$route.query.page || 1' />
+              <TopicList class='marginTop' :id='id' :purePage='$route.query.page || 1' />
             </div>
             <div class='sidebar'>
               <Recent />
@@ -328,6 +328,7 @@
     margin: 0;
     padding: 1rem;
     border-bottom: 1px solid #F5F5F5;
+    font-size: .9rem;
   }
   .topicArticle .content img {
     max-width: 100%;

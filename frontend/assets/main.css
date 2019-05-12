@@ -99,6 +99,9 @@ hr {
 .el-radio-button.is-active span:hover {
   color: #FFF !important;
 }
+.el-select {
+  min-width: 6rem !important;
+}
 .el-badge__content {
   background-color: #ED1C24 !important;
 }
