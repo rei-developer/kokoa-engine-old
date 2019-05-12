@@ -119,7 +119,7 @@
                   </el-button>
                 </nuxt-link>
               </div>
-              <TopicList class='marginTop' :id='id' />
+              <TopicList class='marginTop' :id='id' :page='$route.query.page || 1' />
             </div>
             <div class='sidebar'>
               <Recent />

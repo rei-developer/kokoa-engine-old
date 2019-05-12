@@ -65,17 +65,15 @@
   import axios from 'axios'
   
   export default {
-    props: ['id'],
+    props: ['id', 'page'],
     data() {
       return {
         boardName: '',
         topics: [],
-        topicsCount: 0,
-        page: 0
+        topicsCount: 0
       }
     },
     mounted() {
-      this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
       this.getData()
     },
     methods: {
@@ -84,10 +82,10 @@
       },
       getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
-        if (forceUpdate) this.page = 0
+        if (forceUpdate) this.page = 1
         const { data } = await axios.post(
           '/api/topic/list',
-          { page: this.page++, userId: this.$store.state.user.id }
+          { page: this.page - 1, userId: this.$store.state.user.id }
         )
         this.topics = data.topics
         this.topicsCount = data.count
@@ -95,10 +93,10 @@
         return data
       },
       move(item) {
-        this.$router.push({ path: `/b/${item.boardDomain}/${item.id}?page=${this.page}` })
+        this.$router.push({ path: `/b/${item.boardDomain}/${item.id}` })
       },
       currentChange(page) {
-        this.page = page - 1
+        this.page = page
         this.getData()
       },
       numberWithCommas(x) {

@@ -123,11 +123,11 @@
     </div>
     <el-pagination
       class='marginVertical'
-      layout='prev, pager, next'
-      :page-size='20'
-      :total='counts.count'
+      @current-change='currentChange'
       :current-page='page'
-      @current-change='currentChange' />
+      :page-size='20'
+      layout='prev, pager, next'
+      :total='counts.count' />
     <div class='marginBottom'>
       <nuxt-link :to='`/b/${domain}`'>
         <el-button type='info' size='small' @click='forceUpdate'>목록</el-button>
@@ -147,7 +147,7 @@
   import axios from 'axios'
   
   export default {
-    props: ['id'],
+    props: ['id', 'page'],
     data() {
       return {
         domain: 'all',
@@ -160,8 +160,7 @@
           yesterday: 0,
           today: 0,
           regen: 0
-        },
-        page: 0
+        }
       }
     },
     watch: {
@@ -170,7 +169,7 @@
         this.getCount()
       },
       category: function() {
-        this.page = 0
+        this.page = 1
         this.getData(true)
         this.getCount()
       }
@@ -178,7 +177,6 @@
     mounted() {
       this.domain = this.$route.params.domain
       this.category = this.$route.query.category || '(없음)'
-      this.page = this.$route.query.page ? this.$route.query.page - 1 : 0
       this.getData()
       this.getCount()
     },
@@ -188,10 +186,10 @@
       },
       getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
-        if (forceUpdate) this.page = 0
+        if (forceUpdate) this.page = 1
         const { data } = await axios.post(
           '/api/topic/list',
-          { domain: this.domain, category: this.category === '(없음)' ? '' : this.category, page: this.page++ }
+          { domain: this.domain, category: this.category === '(없음)' ? '' : this.category, page: this.page - 1 }
         )
         this.categories = []
         this.notices = []
@@ -237,7 +235,7 @@
         this.$router.push({ path: `/b/${this.domain}/${item.id}?page=${this.page}${this.category !== '(없음)' ? '&category=' + this.category : ''}` })
       },
       currentChange(page) {
-        this.page = page - 1
+        this.page = page
         this.getData()
         this.getCount()
       },

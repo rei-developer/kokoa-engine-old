@@ -21,8 +21,8 @@ const deletePost = require('../../database/topic/deletePost')
 
 const client = redis.createClient()
 
-const BURN_LIMIT = 0
-const BEST_LIMIT = 2
+const BURN_LIMIT = 1
+const BEST_LIMIT = 3
 const DELETE_LIMIT = 10
 
 module.exports.getTopicCounts = async ctx => {

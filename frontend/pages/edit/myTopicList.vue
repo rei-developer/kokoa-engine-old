@@ -8,7 +8,7 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
-              <MyTopicList :id='0' />
+              <MyTopicList :id='0' :page='$route.query.page || 1' />
             </div>
             <div class='sidebar'>
               <Recent />

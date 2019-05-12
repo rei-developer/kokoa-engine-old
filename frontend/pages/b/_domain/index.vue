@@ -9,7 +9,7 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
-              <TopicList :id='0' />
+              <TopicList :id='0' :page='$route.query.page || 1' />
             </div>
             <div class='sidebar'>
               <Recent />
