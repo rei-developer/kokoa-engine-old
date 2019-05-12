@@ -1,5 +1,4 @@
-/*
-const fs = require('fs')
+/*const fs = require('fs')
 const { execFile } = require('child_process')
 
 module.exports.createImage = type => async ctx => {
@@ -18,13 +17,12 @@ module.exports.createImage = type => async ctx => {
   } catch (e) {
     ctx.body = { message: e.message, status: 'fail' }
   }
-}
-*/
+}*/
 
-const fs = require('fs')
-const sharp = require('sharp')
-const { execFile } = require('child_process')
-const giflossy = require('giflossy')
+const fs            = require('fs')
+const sharp         = require('sharp')
+const { execFile }  = require('child_process')
+const giflossy      = require('giflossy')
 
 module.exports.createImage = type => async ctx => {
   const checker = /(.gif|.png|.jpg|.jpeg|.webp)/i.test(ctx.req.file.originalname)

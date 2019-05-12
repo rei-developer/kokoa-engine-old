@@ -4,7 +4,7 @@ const cloud     = require('./cloud')
 const notice    = require('./notice')
 const topic     = require('./topic')
 
-const VERSION = 33
+const VERSION = 34
 
 const app = new Router()
 
