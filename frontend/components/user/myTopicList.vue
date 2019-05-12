@@ -61,6 +61,7 @@
 </template>
 
 <script>
+  import Library from '~/assets/lib.js'
   import axios from 'axios'
   
   export default {
@@ -78,35 +79,8 @@
       this.getData()
     },
     methods: {
-      getBoardName(domain) {
-        let boardName = ''
-        switch (domain) {
-          case 'all':
-            boardName = '전체'
-            break
-          case 'best':
-            boardName = '인기'
-            break
-          case 'girl':
-            boardName = '연예'
-            break
-          case 'anime':
-            boardName = '애니'
-            break
-          case 'talk':
-            boardName = '토크'
-            break
-          case 'social':
-            boardName = '정치'
-            break
-          case 'feedback':
-            boardName = '건의'
-            break
-          case 'notice':
-            boardName = '공지'
-            break
-        }
-        return boardName
+      getBoardName(domain = this.domain) {
+        return Library.getBoardName(domain)
       },
       getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
@@ -121,7 +95,7 @@
         return data
       },
       move(item) {
-        this.$router.push({ path: `/b/${item.boardName}/${item.id}?page=${this.page}` })
+        this.$router.push({ path: `/b/${item.boardDomain}/${item.id}?page=${this.page}` })
       },
       currentChange(page) {
         this.page = page - 1

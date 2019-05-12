@@ -333,9 +333,9 @@
     max-width: 100%;
     height: auto;
   }
-  .topicArticle .content ifram {
-    max-width: calc(100vw - 1rem);
-    height: 40vh;
+  .topicArticle .content iframe {
+    min-width: calc(375px - 2rem);
+    min-height: 193px;
     border: 0;
   }
   .topicArticle .content .event {
@@ -368,5 +368,13 @@
   .topicArticle .info .item .event:hover {
     opacity: .8;
     cursor: pointer;
+  }
+
+  @media (min-width: 720px) {
+    .topicArticle .content iframe {
+      min-width: 480px;
+      min-height: 360px;
+      border: 0;
+    }
   }
 </style>
