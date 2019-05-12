@@ -1,7 +1,7 @@
-const util = require('util')
-const nodemailer = require('nodemailer')
+const util          = require('util')
+const nodemailer    = require('nodemailer')
 const smtpTransport = require('nodemailer-smtp-transport')
-const dotenv = require('dotenv')
+const dotenv        = require('dotenv')
 
 dotenv.config()
 

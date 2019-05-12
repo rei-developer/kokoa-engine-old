@@ -1,12 +1,12 @@
-const Router = require('koa-router')
-const auth = require('./auth')
-const cloud = require('./cloud')
-const notice = require('./notice')
-const topic = require('./topic')
-
-const app = new Router()
+const Router    = require('koa-router')
+const auth      = require('./auth')
+const cloud     = require('./cloud')
+const notice    = require('./notice')
+const topic     = require('./topic')
 
 const VERSION = 33
+
+const app = new Router()
 
 app.get('/version', ctx => ctx.body = { version: VERSION, status: 'ok' })
 app.use('/auth', auth.routes())

@@ -1,7 +1,7 @@
-const User = require('../../lib/user')
-const getNotice = require('../../database/notice/getNotice')
-const updateNotice = require('../../database/notice/updateNotice')
-const deleteNotice = require('../../database/notice/deleteNotice')
+const User          = require('../../lib/user')
+const getNotice     = require('../../database/notice/getNotice')
+const updateNotice  = require('../../database/notice/updateNotice')
+const deleteNotice  = require('../../database/notice/deleteNotice')
 
 module.exports.getCount = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))

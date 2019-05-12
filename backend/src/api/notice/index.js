@@ -1,13 +1,13 @@
-const Router = require('koa-router')
-const noticeCtrl = require('./notice.controller')
+const Router        = require('koa-router')
+const Controller    = require('./controller')
 
 const app = new Router()
 
-app.get('/', noticeCtrl.getCount)
-app.post('/list', noticeCtrl.getNotices)
-app.delete('/clear/:id', noticeCtrl.deleteNotice)
-app.delete('/clear', noticeCtrl.deleteNotices)
-app.put('/readed/:id/:flag', noticeCtrl.updateNoticeByConfirm)
-app.put('/readed', noticeCtrl.updateNoticesByConfirm)
+app.get('/', Controller.getCount)
+app.post('/list', Controller.getNotices)
+app.delete('/clear/:id', Controller.deleteNotice)
+app.delete('/clear', Controller.deleteNotices)
+app.put('/readed/:id/:flag', Controller.updateNoticeByConfirm)
+app.put('/readed', Controller.updateNoticesByConfirm)
 
 module.exports = app

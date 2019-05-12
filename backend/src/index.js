@@ -1,10 +1,10 @@
-const Koa = require('koa')
-const Logger = require('koa-logger')
-const bodyParser = require('koa-bodyparser')
-const Router = require('koa-router')
-const helmet = require('koa-helmet')
-const dotenv = require('dotenv')
-const api = require('./api')
+const Koa         = require('koa')
+const Logger      = require('koa-logger')
+const bodyParser  = require('koa-bodyparser')
+const Router      = require('koa-router')
+const helmet      = require('koa-helmet')
+const dotenv      = require('dotenv')
+const api         = require('./api')
 
 dotenv.config()
 
