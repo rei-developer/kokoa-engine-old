@@ -9,7 +9,7 @@
       </el-aside>
       <el-container>
         <div class='version' v-if='frontendVersion < backendVersion'>
-          하와와가 최신 버전이 아닙니다. 브라우저를 닫고 새로 열어주세요!
+          최신 버전이 아닙니다. 탭 또는 브라우저를 새로 열어주세요!
         </div>
         <el-header>
           <Header />
@@ -126,11 +126,16 @@
 <style>
   /* Version */
   .version {
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
-    background: yellow;
-    color: red;
-    font-size: .9rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: .5rem 0;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    background: #29313D;
+    color: yellow;
+    font-size: .8rem;
     text-align: center;
+    z-index: 10000;
   }
 
   /* Popup Menu */

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu :default-openeds='["3"]'>
+    <el-menu :default-openeds='["6"]'>
       <el-menu-item index='1' @click='move("/b/all")'>
         <font-awesome-icon icon='comment-dots' />
         <span>전체</span>

@@ -43,9 +43,6 @@ module.exports.getTopics = async ctx => {
   const userId = body.userId || 0
   const category = body.category || ''
   const searches = body.searches || { text: '', select: 0 }
-
-  console.log(searches)
-
   const page = body.page || 0
   const limit = body.limit || 20
   if (page < 0) return
