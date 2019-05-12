@@ -35,10 +35,7 @@ module.exports = async id => {
 }
 
 module.exports.userId = async id => {
-  const result = await pool.query(
-    `SELECT userId FROM Topics WHERE id = ?`,
-    [id]
-  )
+  const result = await pool.query('SELECT userId FROM Topics WHERE id = ?', [id])
   if (result.length < 1) return false
   return result[0].userId
 }
@@ -126,25 +123,25 @@ module.exports.topics = async (columns, searches, page, limit) => {
     keys.push(key)
     values.push(value)
   })
-  let selectQuery = ''
-  let searchData = []
+  let query = ''
+  let data = []
   if (searches.text !== '') {
     switch (searches.select) {
       case 1:
-        selectQuery = ' AND MATCH (t.content) AGAINST (?)'
-        searchData = [searches.text]
+        query = ' AND MATCH (t.content) AGAINST (?)'
+        data = [searches.text]
         break
       case 2:
-        selectQuery = ' AND MATCH (t.title) AGAINST (?) OR MATCH (t.content) AGAINST (?)'
-        searchData = [searches.text, searches.text]
+        query = ' AND MATCH (t.title) AGAINST (?) OR MATCH (t.content) AGAINST (?)'
+        data = [searches.text, searches.text]
         break
       case 3:
-        selectQuery = ' AND MATCH (t.author) AGAINST (?)'
-        searchData = [searches.text]
+        query = ' AND MATCH (t.author) AGAINST (?)'
+        data = [searches.text]
         break
       default:
-        selectQuery = ' AND MATCH (t.title) AGAINST (?)'
-        searchData = [searches.text]
+        query = ' AND MATCH (t.title) AGAINST (?)'
+        data = [searches.text]
         break
     }
   }
@@ -170,12 +167,12 @@ module.exports.topics = async (columns, searches, page, limit) => {
       FROM Topics t
       LEFT JOIN TopicCounts tc ON tc.topicId = t.id
       LEFT JOIN Users u ON u.id = t.userId
-      WHERE ${keys.map(key => `t.${key} = ?`).join(' AND ')}${selectQuery}
+      WHERE ${keys.map(key => `t.${key} = ?`).join(' AND ')}${query}
       ORDER BY t.id DESC
       LIMIT ?, ?`,
       searches.text === ''
       ? [...values, page * limit, limit]
-      : [...values, ...searchData, page * limit, limit]
+      : [...values, ...data, page * limit, limit]
     )
     if (result.length < 1) return false
     return result
@@ -207,20 +204,13 @@ module.exports.topicsToWidget = async limit => {
 }
 
 module.exports.topicImages = async topicId => {
-  const result = await pool.query(
-    `SELECT name, imageUrl FROM TopicImages WHERE topicId = ?`,
-    [topicId]
-  )
+  const result = await pool.query('SELECT name, imageUrl FROM TopicImages WHERE topicId = ?', [topicId])
   if (result.length < 1) return false
   return result
 }
 
 module.exports.topicVotes = async (userId, topicId, ip) => {
-  const result = await pool.query(
-    `SELECT created FROM TopicVotes
-    WHERE topicId = ? AND (userId = ? OR ip = ?)`,
-    [topicId, userId, ip]
-  )
+  const result = await pool.query('SELECT created FROM TopicVotes WHERE topicId = ? AND (userId = ? OR ip = ?)', [topicId, userId, ip])
   if (result.length < 1) return false
   return result[0].created
 }

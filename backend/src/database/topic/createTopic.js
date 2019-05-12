@@ -21,12 +21,8 @@ module.exports = async columns => {
   }
 }
 
-module.exports.createTopicCounts = async topicId => {
-  await pool.query(
-    `INSERT INTO TopicCounts (topicId) VALUES (?)`,
-    [topicId]
-  )
-}
+module.exports.createTopicCounts = async topicId =>
+  await pool.query('INSERT INTO TopicCounts (topicId) VALUES (?)', [topicId])
 
 module.exports.createTopicImages = async (topicId, items) => {
   await pool.query(
@@ -39,9 +35,5 @@ module.exports.createTopicImages = async (topicId, items) => {
   )
 }
 
-module.exports.createTopicVotes = async (userId, topicId, ip) => {
-  await pool.query(
-    `INSERT INTO TopicVotes (userId, topicId, ip) VALUES (?, ?, ?)`,
-    [userId, topicId, ip]
-  )
-}
+module.exports.createTopicVotes = async (userId, topicId, ip) =>
+  await pool.query('INSERT INTO TopicVotes (userId, topicId, ip) VALUES (?, ?, ?)', [userId, topicId, ip])

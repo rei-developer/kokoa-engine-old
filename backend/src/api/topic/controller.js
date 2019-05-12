@@ -5,19 +5,19 @@ const Filter        = require('../../lib/filter')
 const socket        = require('../../lib/socket.io')
 const User          = require('../../lib/user')
 const createNotice  = require('../../database/notice/createNotice')
+const createPost    = require('../../database/post/createPost')
 const createTopic   = require('../../database/topic/createTopic')
-const createPost    = require('../../database/topic/createPost')
-const deleteTopic   = require('../../database/topic/deleteTopic')
-const getBoard      = require('../../database/board/getBoard')
-const getNotice     = require('../../database/notice/getNotice')
-const getTopic      = require('../../database/topic/getTopic')
-const getPost       = require('../../database/topic/getPost')
-const getUser       = require('../../database/user/getUser')
+const readBoard     = require('../../database/board/readBoard')
+const readNotice    = require('../../database/notice/readNotice')
+const readPost      = require('../../database/post/readPost')
+const readTopic     = require('../../database/topic/readTopic')
+const readUser      = require('../../database/user/readUser')
 const updateNotice  = require('../../database/notice/updateNotice')
+const updatePost    = require('../../database/post/updatePost')
 const updateTopic   = require('../../database/topic/updateTopic')
-const updatePost    = require('../../database/topic/updatePost')
 const deleteNotice  = require('../../database/notice/deleteNotice')
-const deletePost    = require('../../database/topic/deletePost')
+const deletePost    = require('../../database/post/deletePost')
+const deleteTopic   = require('../../database/topic/deleteTopic')
 
 const client = redis.createClient()
 
@@ -27,13 +27,13 @@ const DELETE_LIMIT = 10
 
 module.exports.getTopicCounts = async ctx => {
   const { domain } = ctx.params
-  const counts = await getTopic.counts(domain)
+  const counts = await readTopic.counts(domain)
   if (!counts) return ctx.body = { status: 'fail' }
   ctx.body = counts
 }
 
 module.exports.getListToWidget = async ctx => {
-  const topics = await getTopic.topicsToWidget(10)
+  const topics = await readTopic.topicsToWidget(10)
   ctx.body = topics
 }
 
@@ -53,9 +53,9 @@ module.exports.getTopics = async ctx => {
   if (userId > 0) obj.userId = userId
   if (category !== '') obj.category = category
   obj.isAllowed = 1
-  const count = await getTopic.count(obj)
-  const categories = await getBoard.categories(domain)
-  const notices = await getTopic.notices(domain)
+  const count = await readTopic.count(obj)
+  const categories = await readBoard.categories(domain)
+  const notices = await readTopic.notices(domain)
   if (notices.length > 0) {
     const jobs = notices.map(notice => new Promise(resolve => {
       client.get(notice.id, (err, value) => {
@@ -67,7 +67,7 @@ module.exports.getTopics = async ctx => {
     }))
     await Promise.all(jobs)
   }
-  const topics = await getTopic.topics(obj, searches, page, limit)
+  const topics = await readTopic.topics(obj, searches, page, limit)
   if (topics.length > 0) {
     const jobs = topics.map(topic => new Promise(resolve => {
       client.get(topic.id, (err, value) => {
@@ -89,8 +89,8 @@ module.exports.getPosts = async ctx => {
   const limit = body.limit || 20
   if (topicId < 0 || page < 0) return
   if (limit < 10 || limit > 50) return
-  const count = await getPost.count(topicId)
-  const posts = await getPost.posts(topicId, page, limit)
+  const count = await readPost.count(topicId)
+  const posts = await readPost.posts(topicId, page, limit)
   ctx.body = { count, posts }
 }
 
@@ -101,14 +101,14 @@ module.exports.getMyPosts = async ctx => {
   const limit = body.limit || 20
   if (userId < 0 || page < 0) return
   if (limit < 10 || limit > 50) return
-  const count = await getPost.countByMe(userId)
-  const posts = await getPost.postsByMe(userId, page, limit)
+  const count = await readPost.countByMe(userId)
+  const posts = await readPost.postsByMe(userId, page, limit)
   ctx.body = { count, posts }
 }
 
 module.exports.getCategories = async ctx => {
   const { domain } = ctx.params
-  const categories = await getBoard.categories(domain)
+  const categories = await readBoard.categories(domain)
   ctx.body = categories
 }
 
@@ -116,9 +116,9 @@ module.exports.getContent = async ctx => {
   const { id } = ctx.params
   if (id < 1) return
   const user = await User.getUser(ctx.get('x-access-token'))
-  const topic = await getTopic(id)
+  const topic = await readTopic(id)
   if (!topic || topic.isAllowed < 1) return ctx.body = { status: 'fail' }
-  const images = await getTopic.topicImages(id)
+  const images = await readTopic.topicImages(id)
   if (client.exists(id)) {
     const hits = await new Promise(resolve => {
       client.get(id, (err, value) => {
@@ -136,7 +136,7 @@ module.exports.getContent = async ctx => {
   let count = 0
   if (user) {
     await updateNotice.updateNoticeByConfirm(user.id, id)
-    count = await getNotice.count(user.id)
+    count = await readNotice.count(user.id)
   }
   ctx.body = { topic, images, count }
 }
@@ -155,7 +155,7 @@ module.exports.createTopic = async ctx => {
   if (title === '' || content === '') return
   title = Filter.disable(title)
   content = Filter.topic(content)
-  const isAdminOnly = await getBoard.isAdminOnly(domain)
+  const isAdminOnly = await readBoard.isAdminOnly(domain)
   if (isAdminOnly < 0) return
   if (user.isAdmin < isAdminOnly) return ctx.body = { message: '권한이 없습니다.', status: 'fail' }
   if (user.isAdmin < 1) {
@@ -211,8 +211,8 @@ module.exports.createPost = async ctx => {
     ip,
     header
   })
-  const postsCount = await getPost.count(topicId)
-  const posts = await getPost.posts(topicId, 0, 100)
+  const postsCount = await readPost.count(topicId)
+  const posts = await readPost.posts(topicId, 0, 100)
   await createPost.createPostCounts(postId)
   await User.setUpExpAndPoint(user, 5, 5)
   const items = []
@@ -235,15 +235,15 @@ module.exports.createTopicVotes = async ctx => {
     likes
   } = ctx.request.body
   if (id < 1) return
-  const topic = await getTopic(id)
+  const topic = await readTopic(id)
   if (!topic) return ctx.body = { status: 'fail' }
-  const targetUser = await getUser(topic.userId)
+  const targetUser = await readUser(topic.userId)
   const ip = ctx.get('x-real-ip')
   if (targetUser === user.id || topic.ip === ip) return ctx.body = { message: '본인에게 투표할 수 없습니다.', status: 'fail' }
   const duration = moment.duration(moment().diff(topic.created))
   const hours = duration.asHours()
   if (hours > 72) return ctx.body = { message: '3일이 지난 게시물은 투표할 수 없습니다.', status: 'fail' }
-  const date = await getTopic.topicVotes(user.id, id, ip)
+  const date = await readTopic.topicVotes(user.id, id, ip)
   if (date) {
     const created = moment(date).format('YYYY/MM/DD HH:mm:ss')
     return ctx.body = { message: `이미 투표한 게시물입니다. (${created})`, status: 'fail' }
@@ -294,15 +294,15 @@ module.exports.createPostVotes = async ctx => {
     likes
   } = ctx.request.body
   if (id < 1) return
-  const post = await getPost(id)
+  const post = await readPost(id)
   if (!post) return ctx.body = { status: 'fail' }
-  const targetUser = await getUser(post.userId)
+  const targetUser = await readUser(post.userId)
   const ip = ctx.get('x-real-ip')
   if (targetUser === user.id || post.ip === ip) return ctx.body = { message: '본인에게 투표할 수 없습니다.', status: 'fail' }
   const duration = moment.duration(moment().diff(post.created))
   const hours = duration.asHours()
   if (hours > 72) return ctx.body = { message: '3일이 지난 게시물은 투표할 수 없습니다.', status: 'fail' }
-  const date = await getPost.postVotes(user.id, id, ip)
+  const date = await readPost.postVotes(user.id, id, ip)
   if (date) {
     const created = moment(date).format('YYYY/MM/DD HH:mm:ss')
     return ctx.body = { message: `이미 투표한 게시물입니다. (${created})`, status: 'fail' }
@@ -324,7 +324,7 @@ module.exports.updatePost = async ctx => {
     content
   } = ctx.request.body
   if (id < 1 || content === '') return ctx.body = { status: 'fail' }
-  const userId = await getPost.userId(id)
+  const userId = await readPost.userId(id)
   if (!userId) return ctx.body = { status: 'fail' }
   if (user.isAdmin < 1 && userId !== user.id) return
   await updatePost(id, Filter.post(content))
@@ -336,7 +336,7 @@ module.exports.updateTopicByIsNotice = async ctx => {
   if (!user) return
   const { id } = ctx.request.body
   if (id < 1) return ctx.body = { status: 'fail' }
-  const userId = await getPost.userId(id)
+  const userId = await readPost.userId(id)
   if (!userId) return ctx.body = { status: 'fail' }
   if (user.isAdmin < 1) return
   await updateTopic.updateTopicByIsNotice(id)
@@ -348,10 +348,10 @@ module.exports.deleteTopic = async ctx => {
   if (!user) return
   const { id } = ctx.request.body
   if (id < 1) return ctx.body = { status: 'fail' }
-  const userId = await getTopic.userId(id)
+  const userId = await readTopic.userId(id)
   if (!userId) return ctx.body = { status: 'fail' }
   if (user.isAdmin < 1 && userId !== user.id) return
-  const images = await getTopic.topicImages(id)
+  const images = await readTopic.topicImages(id)
   if (images) {
     const jobs = images.map(image => new Promise(async resolve => {
       fs.unlink(`./img/${image.imageUrl}`, err => {
@@ -382,7 +382,7 @@ module.exports.deletePost = async ctx => {
   if (!user) return
   const { id } = ctx.request.body
   if (id < 1) return ctx.body = { status: 'fail' }
-  const userId = await getPost.userId(id)
+  const userId = await readPost.userId(id)
   if (!userId) return ctx.body = { status: 'fail' }
   if (user.isAdmin < 1 && userId !== user.id) return
   await deleteNotice.postId(id)

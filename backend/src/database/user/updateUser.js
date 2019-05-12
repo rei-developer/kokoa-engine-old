@@ -9,10 +9,9 @@ module.exports = async (columns, userId) => {
     values.push(value)
   })
   await pool.query(
-    `UPDATE Users SET
-    ${keys.map(key => `${key} = ?`).join(', ')}
-    WHERE id = ?
-    `,
+    `UPDATE Users
+    SET ${keys.map(key => `${key} = ?`).join(', ')}
+    WHERE id = ?`,
     [...values, userId]
   )
 }

@@ -1,8 +1,7 @@
 const moment        = require('moment')
-const Status        = require('../../lib/status')
 const User          = require('../../lib/user')
 const createSticker = require('../../database/sticker/createSticker')
-const getSticker    = require('../../database/sticker/getSticker')
+const readSticker   = require('../../database/sticker/readSticker')
 const updateSticker = require('../../database/sticker/updateSticker')
 
 module.exports.getInventoryItem = async ctx => {
@@ -10,36 +9,26 @@ module.exports.getInventoryItem = async ctx => {
   if (id < 1) return
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
-  const check = await getSticker.check(user.id, id)
+  const check = await readSticker.check(user.id, id)
   if (!check) return
   const days = moment().diff(moment(check.regdate), 'days')
-  ctx.body = {
-    days,
-    status: 'ok'
-  }
+  ctx.body = { days, status: 'ok' }
 }
 
 module.exports.getInventory = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
-  const inventory = await getSticker.inventory(user.id)
-  ctx.body = {
-    inventory,
-    status: 'ok'
-  }
+  const inventory = await readSticker.inventory(user.id)
+  ctx.body = { inventory, status: 'ok' }
 }
 
 module.exports.getStickers = async ctx => {
   const { ...body } = ctx.request.body
   const page = body.page || 0
   const limit = body.limit || 20
-  const count = await getSticker.count()
-  const stickers = await getSticker.stickers(page, limit)
-  ctx.body = {
-    count,
-    stickers,
-    status: 'ok'
-  }
+  const count = await readSticker.count()
+  const stickers = await readSticker.stickers(page, limit)
+  ctx.body = { count, stickers, status: 'ok' }
 }
 
 module.exports.createInventoryItem = async ctx => {
@@ -47,10 +36,10 @@ module.exports.createInventoryItem = async ctx => {
   if (id < 1) return
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
-  const sticker = await getSticker(id)
+  const sticker = await readSticker(id)
   if (!sticker) return
-  if (user.point < sticker.price) return ctx.body = Status.fail('포인트가 부족합니다.')
-  const check = await getSticker.check(user.id, id)
+  if (user.point < sticker.price) return ctx.body = { message: '포인트가 부족합니다.', status: 'fail' }
+  const check = await readSticker.check(user.id, id)
   let date
   if (check) {
     const min = moment().diff(moment(check.regdate), 'minutes')
@@ -61,8 +50,5 @@ module.exports.createInventoryItem = async ctx => {
     await createSticker.inventoryItem(user.id, id, date)
   }
   await User.setUpPoint(user, -sticker.price)
-  ctx.body = {
-    date,
-    status: 'ok'
-  }
+  ctx.body = { date, status: 'ok' }
 }

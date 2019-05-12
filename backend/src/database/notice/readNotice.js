@@ -1,10 +1,7 @@
 const pool = require('..')
 
 module.exports.count = async userId => {
-  const result = await pool.query(
-    `SELECT COUNT(*) count FROM Notices WHERE userId = ? AND confirm = 0`,
-    [userId]
-  )
+  const result = await pool.query('SELECT COUNT(*) count FROM Notices WHERE userId = ? AND confirm = 0', [userId])
   return result[0].count
 }
 

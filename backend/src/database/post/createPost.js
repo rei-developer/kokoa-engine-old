@@ -21,16 +21,8 @@ module.exports = async columns => {
   }
 }
 
-module.exports.createPostCounts = async postId => {
-  await pool.query(
-    `INSERT INTO PostCounts (postId) VALUES (?)`,
-    [postId]
-  )
-}
+module.exports.createPostCounts = async postId =>
+  await pool.query('INSERT INTO PostCounts (postId) VALUES (?)', [postId])
 
-module.exports.createPostVotes = async (userId, postId, ip) => {
-  await pool.query(
-    `INSERT INTO PostVotes (userId, postId, ip) VALUES (?, ?, ?)`,
-    [userId, postId, ip]
-  )
-}
+module.exports.createPostVotes = async (userId, postId, ip) =>
+  await pool.query('INSERT INTO PostVotes (userId, postId, ip) VALUES (?, ?, ?)', [userId, postId, ip])

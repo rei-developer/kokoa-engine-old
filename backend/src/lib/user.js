@@ -1,5 +1,5 @@
 const jwt         = require('jsonwebtoken')
-const getUser     = require('../database/user/getUser')
+const readUser    = require('../database/user/readUser')
 const updateUser  = require('../database/user/updateUser')
 
 const getUpperByExp = (user, exp) => {
@@ -26,7 +26,7 @@ module.exports.getUser = async (token) => {
     const result = await new Promise((resolve, reject) => {
       jwt.verify(TOKEN, process.env.JWT_SECRET, async (err, payload) => {
         if (err) return reject(false)
-        const user = await getUser(payload.jti)
+        const user = await readUser(payload.jti)
         if (!user) return reject(false)
         resolve(user)
       })
@@ -49,7 +49,7 @@ module.exports.isAuthenticated = async (ctx, next) => {
       }
       return ctx.body = { message: err.message, status: 'fail' }
     }
-    const user = await getUser(payload.jti)
+    const user = await readUser(payload.jti)
     if (!user) return ctx.body = { message: '존재하지 않는 계정입니다.', status: 'fail' }
     ctx.state.user = user
     await next()

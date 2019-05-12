@@ -31,24 +31,28 @@
             <el-menu-item index='6-3' route='/b/feedback' @click='forceUpdate'>건의</el-menu-item>
             <el-menu-item index='6-4' route='/b/notice' @click='forceUpdate'>공지</el-menu-item>
           </el-submenu>
-          <el-submenu index='7' class='rightMenu' v-if='$store.state.user.isLogged'>
+          <el-submenu index='7' class='hidden-mobile'>
+            <template slot='title'>포인트</template>
+            <el-menu-item index='7-1' route='/sticker'>스티커</el-menu-item>
+          </el-submenu>
+          <el-submenu index='8' class='rightMenu' v-if='$store.state.user.isLogged'>
             <template slot='title'>
               <div class='Avatar'>
                 <img :src='$store.state.user.profileImageUrl'>
               </div>
               {{ $store.state.user.nickname }}
             </template>
-            <el-menu-item @click='edit'>프로필 편집</el-menu-item>
-            <el-menu-item @click='myTopicList'>내 작성글</el-menu-item>
-            <el-menu-item @click='myPostList'>내 작성 댓글</el-menu-item>
+            <el-menu-item index='8-1' route='/edit'>프로필 편집</el-menu-item>
+            <el-menu-item index='8-2' route='/edit/myTopicList'>내 작성글</el-menu-item>
+            <el-menu-item index='8-3' route='/edit/myPostList'>내 작성 댓글</el-menu-item>
             <el-menu-item @click='development'>블라인드 목록</el-menu-item>
             <el-menu-item @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
-          <el-menu-item index='7' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
+          <el-menu-item index='8' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
             <font-awesome-icon icon='sign-in-alt' />
             로그인
           </el-menu-item>
-          <el-menu-item index='8' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
+          <el-menu-item index='9' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
             <font-awesome-icon icon='envelope' />
             <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
           </el-menu-item>
@@ -66,15 +70,6 @@
     methods: {
       forceUpdate() {
         this.$store.commit('forceUpdate')
-      },
-      edit() {
-        this.$router.push({ path: '/edit' })
-      },
-      myTopicList() {
-        this.$router.push({ path: '/edit/myTopicList' })
-      },
-      myPostList() {
-        this.$router.push({ path: '/edit/myPostList' })
       },
       development() {
         this.$alert('현재 개발중입니다. 이용에 불편을 드려 대단히 죄송합니다.', '알림', { confirmButtonText: '확인' })

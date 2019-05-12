@@ -1,12 +1,12 @@
 const User          = require('../../lib/user')
-const getNotice     = require('../../database/notice/getNotice')
+const readNotice    = require('../../database/notice/readNotice')
 const updateNotice  = require('../../database/notice/updateNotice')
 const deleteNotice  = require('../../database/notice/deleteNotice')
 
 module.exports.getCount = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
-  const count = await getNotice.count(user.id)
+  const count = await readNotice.count(user.id)
   ctx.body = { count, status: 'ok' }
 }
 
@@ -17,7 +17,7 @@ module.exports.getNotices = async ctx => {
   if (page < 0 || limit < 20 || limit > 50) return
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
-  const notices = await getNotice.notices(user.id, page, limit)
+  const notices = await readNotice.notices(user.id, page, limit)
   ctx.body = { notices, status: 'ok' }
 }
 

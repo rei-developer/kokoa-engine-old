@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-menu :default-openeds='["6"]'>
+    <el-menu :default-openeds='["6", "7"]'>
       <el-menu-item index='1' @click='move("/b/all")'>
         <font-awesome-icon icon='comment-dots' />
         <span>전체</span>
@@ -21,6 +21,10 @@
         <el-menu-item index='6-2' @click='move("/b/history")'>역사</el-menu-item>
         <el-menu-item index='6-3' @click='move("/b/feedback")'>건의</el-menu-item>
         <el-menu-item index='6-4' @click='move("/b/notice")'>공지</el-menu-item>
+      </el-submenu>
+      <el-submenu index='7'>
+        <template slot='title'>포인트</template>
+        <el-menu-item index='7-1' @click='move("/sticker")'>스티커</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
