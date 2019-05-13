@@ -62,15 +62,15 @@
           <div class='author'>
             <img :src='`/level/${item.level}.png`'>
             {{ item.author }}
-            <span>
+            <span class='event'>
               <font-awesome-icon icon='clock' />
               {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
             </span>
-            <span v-if='item.hits > 0'>
+            <span class='event' v-if='item.hits > 0'>
               <font-awesome-icon icon='eye' />
               {{ numberWithCommas(item.hits) }}
             </span>
-            <span v-if='item.likes > 0'>
+            <span class='event' v-if='item.likes > 0'>
               <font-awesome-icon icon='heart' />
               +{{ numberWithCommas(item.likes) }}
             </span>
