@@ -1,4 +1,5 @@
 const pool = require('..')
+const _ = require('lodash')
 
 module.exports = async id => {
   const result = await pool.query('SELECT * FROM Stickers WHERE id = ?', [id])
@@ -6,15 +7,43 @@ module.exports = async id => {
   return result[0]
 }
 
-module.exports.count = async () => {
-  const result = await pool.query('SELECT COUNT(*) count FROM Stickers WHERE number > 0')
-  return result[0].count
+module.exports.count = async columns => {
+  let keys = []
+  let values = []
+  _.forIn(columns, (value, key) => {
+    keys.push(key)
+    values.push(value)
+  })
+  try {
+    const result = await pool.query(
+      `SELECT COUNT(*) count FROM Stickers WHERE ${keys.map(key => `${key} = ?`).join(' AND ')}`,
+      [...values]
+    )
+    return result[0].count
+  } catch (e) {
+    console.log(e.message)
+    return false
+  }
 }
 
-module.exports.stickers = async (page, limit) => {
-  const result = await pool.query('SELECT * FROM Stickers WHERE number > 0 ORDER BY id DESC LIMIt ?, ?', [page * limit, limit])
-  if (result.length < 1) return false
-  return result
+module.exports.stickers = async (columns, page, limit) => {
+  let keys = []
+  let values = []
+  _.forIn(columns, (value, key) => {
+    keys.push(key)
+    values.push(value)
+  })
+  try {
+    const result = await pool.query(
+      `SELECT * FROM Stickers WHERE ${keys.map(key => `${key} = ?`).join(' AND ')} ORDER BY id DESC LIMIT ?, ?`,
+      [...values, page * limit, limit]
+    )
+    if (result.length < 1) return false
+    return result
+  } catch (e) {
+    console.log(e.message)
+    return false
+  }
 }
 
 module.exports.check = async (userId, stickerId) => {

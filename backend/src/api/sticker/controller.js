@@ -26,8 +26,12 @@ module.exports.getStickers = async ctx => {
   const { ...body } = ctx.request.body
   const page = body.page || 0
   const limit = body.limit || 20
-  const count = await readSticker.count()
-  const stickers = await readSticker.stickers(page, limit)
+  const tags = body.tags || ''
+  const obj = {}
+  if (tags !== '전체') obj.tags = tags
+  obj.isAllowed = 1
+  const count = await readSticker.count(obj)
+  const stickers = await readSticker.stickers(obj, page, limit)
   ctx.body = { count, stickers, status: 'ok' }
 }
 

@@ -15,6 +15,15 @@
       title='현재 스티커 등록 기능은 개발중에 있습니다. 또한, 스티커 이름이 숫자로 되어있는 것은 이름 미상입니다. 이름을 아시는 분은 건의 게시판으로 알려주세요!'
       type='error'
       :closable='false' />
+    <div class='marginTop'>
+      <el-radio-group v-model='tags' size='small'>
+        <el-radio-button label='전체' />
+        <el-radio-button label='연예' />
+        <el-radio-button label='애니' />
+        <el-radio-button label='게임' />
+        <el-radio-button label='기타' />
+      </el-radio-group>
+    </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='cart-arrow-down' />
       스티커샵 ({{ numberWithCommas(count) }})
@@ -60,10 +69,17 @@
     data() {
       return {
         id: 0,
+        tags: '전체',
         sticker: {},
         stickers: [],
         count: 0,
         page: 1
+      }
+    },
+    watch: {
+      tags: function() {
+        this.page = 1
+        this.getData()
       }
     },
     mounted() {
@@ -74,7 +90,7 @@
         this.$store.commit('setLoading', true)
         const { data } = await axios.post(
           '/api/sticker/list',
-          { page: this.page - 1 }
+          { page: this.page - 1, tags: this.tags }
         )
         this.stickers = data.stickers
         this.count = data.count

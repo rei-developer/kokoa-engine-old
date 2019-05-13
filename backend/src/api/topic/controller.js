@@ -196,9 +196,6 @@ module.exports.createPost = async ctx => {
     content,
     sticker
   } = ctx.request.body
-
-  console.log(sticker)
-
   topicUserId = Number(topicUserId)
   if (postUserId) postUserId = Number(postUserId)
   content = Filter.post(content)

@@ -51,9 +51,7 @@ module.exports.count = async columns => {
   })
   try {
     const result = await pool.query(
-      `SELECT COUNT(*) count FROM Topics WHERE
-      ${keys.map(key => `${key} = ?`).join(' AND ')}
-      ORDER BY id DESC`,
+      `SELECT COUNT(*) count FROM Topics WHERE ${keys.map(key => `${key} = ?`).join(' AND ')} ORDER BY id DESC`,
       [...values]
     )
     return result[0].count
