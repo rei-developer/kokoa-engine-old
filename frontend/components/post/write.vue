@@ -237,6 +237,7 @@
     flex-direction: column;
   }
   .postWrite .item .inputbox textarea {
+    height: 4.5rem;
     padding: .5rem;
     border: 2px solid #CCC;
     outline: none !important;
@@ -259,8 +260,8 @@
   }
   .postWrite .item .send .submit {
     width: 4.5rem;
-    height: 44px;
-    line-height: 43px;
+    height: 45px;
+    line-height: 44px;
     border-radius: .25rem;
     border-top-left-radius: 0;
     border-top-right-radius: 0;

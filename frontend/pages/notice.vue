@@ -228,6 +228,8 @@
     display: flex;
     flex-direction: column;
     padding: .25rem;
+    justify-content: center;
+    align-items: center;
   }
   .noticeList .item .image img {
     width: 3rem;

@@ -141,6 +141,8 @@
     display: flex;
     flex-direction: column;
     padding: .25rem;
+    justify-content: center;
+    align-items: center;
   }
   .myPostList .item .image img {
     width: 3rem;
