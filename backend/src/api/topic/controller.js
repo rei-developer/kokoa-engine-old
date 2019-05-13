@@ -323,13 +323,19 @@ module.exports.updatePost = async ctx => {
   if (!user) return
   const {
     id,
-    content
+    content,
+    sticker
   } = ctx.request.body
-  if (id < 1 || content === '') return ctx.body = { status: 'fail' }
+  if (id < 1) return ctx.body = { status: 'fail' }
   const userId = await readPost.userId(id)
   if (!userId) return ctx.body = { status: 'fail' }
   if (user.isAdmin < 1 && userId !== user.id) return
-  await updatePost(id, Filter.post(content))
+  await updatePost(
+    id,
+    Filter.post(content),
+    sticker.id,
+    sticker.select
+  )
   ctx.body = { status: 'ok' }
 }
 
