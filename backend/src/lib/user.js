@@ -68,6 +68,10 @@ module.exports.setPoint = async (user, point) => {
   await updateUser({ point }, user.id)
 }
 
+module.exports.setIcon = async (user, icon) => {
+  await updateUser({ icon }, user.id)
+}
+
 module.exports.setUpExp = async (user, exp) => {
   const upper = await getUpperByExp(user, exp)
   await updateUser({ level: upper.level, exp: upper.exp }, user.id)
