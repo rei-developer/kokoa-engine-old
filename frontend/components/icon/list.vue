@@ -7,20 +7,20 @@
       <iframe src='/ad-mobile.html' />
     </div>
     <div class='containerSubject marginTop'>
-      <font-awesome-icon icon='sticky-note' />
+      <font-awesome-icon icon='cart-arrow-down' />
       아이콘샵 ({{ numberWithCommas(count) }})
-      <div class='stickerPointInfo'>
+      <div class='iconshopPointInfo'>
         <font-awesome-icon icon='gift' />
         <span class='bold'>{{ numberWithCommas($store.state.user.point) }}</span>
       </div>
     </div>
-    <div class='stickerList'>
+    <div class='iconshopList'>
       <div
         class='item'
-        @click='view(item)'
-        v-for='(item, index) in stickers' :key='index'>
+        @click='buyHandler(item)'
+        v-for='(item, index) in icons' :key='index'>
         <div class='image'>
-          <img :src='`https://hawawa.co.kr/sticker/${item.id}/1.${item.ext}`'>
+          <img :src='`https://hawawa.co.kr/icon/${item.filename}`'>
         </div>
         <div class='info'>
           <div class='name'>{{ item.name }}</div>
@@ -48,11 +48,10 @@
   export default {
     data() {
       return {
-        id: 0,
-        sticker: {},
-        stickers: [],
+        icons: [],
         count: 0,
-        page: 1
+        page: 1,
+        loading: false
       }
     },
     mounted() {
@@ -62,20 +61,36 @@
       getData: async function() {
         this.$store.commit('setLoading', true)
         const { data } = await axios.post(
-          '/api/sticker/list',
+          '/api/icon/list',
           { page: this.page - 1 }
         )
-        this.stickers = data.stickers
+        this.icons = data.icons
         this.count = data.count
         this.$store.commit('setLoading')
       },
-      view(item) {
-        this.id = item.id
-        this.sticker = item
+      buyHandler: async function(item) {
+        if (this.loading) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        this.$confirm('정말로 구매하시겠습니까?', '알림', {
+          confirmButtonText: '구매',
+          cancelButtonText: '취소'
+        }).then(() => {
+          this.buy(item)
+        })
       },
-      close() {
-        this.id = 0
-        this.sticker = {}
+      buy: async function(item) {
+        const token = this.$store.state.user.token
+        this.loading = true
+        const { data } = await axios.post(
+          '/api/icon/buy',
+          { id: item.id },
+          { headers: { 'x-access-token': token } }
+        )
+        this.loading = false
+        if (data.status === 'fail') return this.$message.error(data.message)
+        this.$message.success('아이콘 교체 완료')
+        this.$store.commit('user/setIcon', item.filename)
+        this.$store.commit('user/setUpPoint', -(item.price))
       },
       currentChange(page) {
         this.page = page
@@ -89,8 +104,8 @@
 </script>
 
 <style>
-  /* Sticker Point Infomation */
-  .stickerPointInfo {
+  /* Iconshop Point Infomation */
+  .iconshopPointInfo {
     margin-top: .3rem;
     padding: .1rem .5rem;
     border-radius: 500rem;
@@ -99,35 +114,38 @@
     font-size: .75rem;
     float: right;
   }
-  .stickerPointInfo span.bold { font-weight: bold }
+  .iconshopPointInfo span.bold { font-weight: bold }
 
-  /* Sticker List */
-  .stickerList .item {
+  /* Iconshop List */
+  .iconshopList .item {
     display: inline-block;
     margin: .5rem;
     border-bottom: 1px solid #F5F5F5;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     background: rgba(255, 255, 255, .5);
   }
-  .stickerList .item:hover {
+  .iconshopList .item:hover {
     background: rgba(245, 245, 245, .5);
     cursor: pointer;
   }
-  .stickerList .item .image img {
+  .iconshopList .item .image {
     width: 100px;
-    height: 100px;
-    margin: .25rem;
-    margin-bottom: 0;
-    border-radius: .5rem;
   }
-  .stickerList .item .info { padding-bottom: .25rem }
-  .stickerList .item .info .name {
+  .iconshopList .item .image img {
+    width: 32px;
+    height: 32px;
+    margin: .25rem auto;
+    margin-bottom: 0;
+    border-radius: .25rem;
+  }
+  .iconshopList .item .info { padding-bottom: .25rem }
+  .iconshopList .item .info .name {
     color: #409EFF;
     font-size: .8rem;
     font-weight: bold;
     text-align: center;
   }
-  .stickerList .item .info .price {
+  .iconshopList .item .info .price {
     width: fit-content;
     margin: 0 auto;
     padding: 0 .5rem .1rem .5rem;

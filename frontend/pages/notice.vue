@@ -39,7 +39,9 @@
                   </div>
                   <div class='info' @click='move(item)'>
                     <div class='author'>
-                      <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+                      <img :src='`/level/${item.level}.png`'>
+                      <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
+                      <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
                       {{ item.author }}
                       <span class='regdate'>
                         <font-awesome-icon icon='history' />
@@ -248,11 +250,23 @@
     font-size: .8rem;
     font-weight: bold;
   }
+  .noticeList .item .info .author img.icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-top;
+  }
   .noticeList .item .info .author span.best {
     margin-right: .1rem;
     padding: 0 .25rem;
     background: #ED1C24;
     border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+  }
+  .noticeList .item .info .author span.userTitle {
+    padding: 0 .25rem;
+    background: #29313D;
+    border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
   }

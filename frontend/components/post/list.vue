@@ -20,6 +20,7 @@
               <div class='author'>
                 <span class='best' v-if='item.likes >= 1'>BEST</span>
                 <img :src='`/level/${item.level}.png`'>
+                <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
                 <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
                 {{ item.author }}
                 <span class='event'>
@@ -337,6 +338,11 @@
     border-radius: .1rem;
     color: #FFF;
     font-size: .7rem;
+  }
+  .postList .item .info .author img.icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-top;
   }
   .postList .item .info .author span.userTitle {
     padding: 0 .25rem;

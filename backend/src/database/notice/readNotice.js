@@ -22,6 +22,8 @@ module.exports.notices = async (userId, page, limit) => {
       p.updated,
       tp.author tagAuthor,
       u.profileImageUrl profile,
+      u.level,
+      u.icon,
       u.isAdmin admin
     FROM Notices n
     LEFT JOIN Topics t ON t.id = n.topicId

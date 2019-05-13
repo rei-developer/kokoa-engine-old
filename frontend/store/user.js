@@ -10,6 +10,7 @@ export const state = () => ({
   level: 0,
   exp: 0,
   point: 0,
+  icon: '',
   isAdmin: false,
   noticeCount: 0,
   isLogged: false
@@ -28,11 +29,13 @@ export const mutations = {
     state.level = data.user.level
     state.exp = data.user.exp
     state.point = data.user.point
+    state.icon = data.user.icon
     state.isAdmin = data.user.isAdmin
     state.isLogged = true
   },
   setNickname: (state, nickname) => state.nickname = nickname,
   setProfileImageUrl: (state, url) => state.profileImageUrl = `https://hawawa.co.kr/profile/${url}`,
+  setIcon: (state, filename) => state.icon = filename,
   setNoticeCount: (state, count) => state.noticeCount = count,
   setUpPoint: (state, point) => state.point += point,
   signOut: state => {

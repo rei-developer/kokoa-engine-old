@@ -43,6 +43,7 @@
                     </div>
                     <div class='author'>
                       <img :src='`/level/${topic.level}.png`'>
+                      <img class='icon' :src='`https://hawawa.co.kr/icon/${topic.icon}`' v-if='topic.icon !== ""'>
                       <span class='userTitle' v-if='topic.userTitle'>{{ topic.userTitle }}</span>
                       {{ topic.author }}
                     </div>
@@ -318,6 +319,11 @@
     color: #333;
     font-size: .8rem;
     font-weight: bold;
+  }
+  .topicArticle .header .info .author img.icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-top;
   }
   .topicArticle .header .info .author span.userTitle {
     padding: 0 .25rem;

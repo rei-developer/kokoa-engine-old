@@ -30,7 +30,8 @@
           </el-submenu>
           <el-submenu index='7' class='hidden-mobile'>
             <template slot='title'>포인트</template>
-            <el-menu-item index='7-1' route='/sticker'>스티커</el-menu-item>
+            <el-menu-item index='7-1' route='/sticker'>스티커샵</el-menu-item>
+            <el-menu-item index='7-2' route='/iconshop'>아이콘샵</el-menu-item>
           </el-submenu>
           <el-submenu index='8' class='rightMenu' v-if='$store.state.user.isLogged'>
             <template slot='title'>
@@ -38,6 +39,7 @@
                 <img :src='$store.state.user.profileImageUrl'>
               </div>
               <img :src='`/level/${$store.state.user.level}.png`'>
+              <img class='Icon' :src='`https://hawawa.co.kr/icon/${$store.state.user.icon}`' v-if='$store.state.user.icon !== ""'>
               {{ $store.state.user.nickname }}
             </template>
             <el-menu-item index='8-1' route='/edit'>프로필 편집</el-menu-item>
@@ -128,6 +130,13 @@
     height: 34px;
     margin-bottom: 50px;
     border-radius: 500rem;
+  }
+
+  /* Icon */
+  img.Icon {
+    width: 16px;
+    height: 16px;
+    margin-top: -4px;
   }
 
   /* Right Menu */

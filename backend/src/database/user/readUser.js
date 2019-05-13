@@ -13,6 +13,7 @@ module.exports = async id => {
       level,
       exp,
       point,
+      icon,
       isAdmin
     FROM Users
     WHERE id = ?`,

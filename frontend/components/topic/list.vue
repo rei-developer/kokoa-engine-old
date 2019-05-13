@@ -28,11 +28,11 @@
       <font-awesome-icon icon='pencil-alt' />
       {{ getBoardName() }} ({{ numberWithCommas(counts.count) }})
       <div class='topicCounts'>
-        어제 <span class='bold'>{{ this.counts.yesterday }}</span>
+        어제 <span class='bold'>{{ counts.yesterday }}</span>
         <span class='divide'>|</span>
-        오늘 <span class='bold'>{{ this.counts.today }}</span>
+        오늘 <span class='bold'>{{ counts.today }}</span>
         <span class='divide'>|</span>
-        평균 <span class='bold'>{{ this.counts.regen }}분</span>
+        평균 <span class='bold'>{{ counts.regen }}분</span>
       </div>
     </div>
     <div class='topicList'>
@@ -61,6 +61,8 @@
           </div>
           <div class='author'>
             <img :src='`/level/${item.level}.png`'>
+            <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
+            <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
             {{ item.author }}
             <span class='event'>
               <font-awesome-icon icon='clock' />
@@ -104,6 +106,7 @@
           </div>
           <div class='author'>
             <img :src='`/level/${item.level}.png`'>
+            <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
             <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
             {{ item.author }}
             <span class='event'>
@@ -376,6 +379,11 @@
     color: #333;
     font-size: .8rem;
     font-weight: bold;
+  }
+  .topicList .item .info .author img.icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-top;
   }
   .topicList .item .info .author span.userTitle {
     padding: 0 .25rem;

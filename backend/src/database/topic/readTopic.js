@@ -23,7 +23,8 @@ module.exports = async id => {
       tc.likes,
       tc.hates,
       u.profileImageUrl profile,
-      u.level level,
+      u.level,
+      u.icon,
       u.isAdmin admin
     FROM Topics t
     LEFT JOIN TopicCounts tc ON tc.topicId = t.id
@@ -106,6 +107,7 @@ module.exports.notices = async domain => {
       tc.hits,
       tc.likes,
       u.level,
+      u.icon,
       u.isAdmin admin
     FROM Topics t
     LEFT JOIN TopicCounts tc ON tc.topicId = t.id
@@ -164,6 +166,7 @@ module.exports.topics = async (columns, searches, page, limit) => {
         tc.hits,
         tc.likes,
         u.level,
+        u.icon,
         u.isAdmin admin,
         (SELECT imageUrl FROM TopicImages WHERE topicId = t.id LIMIT 1) imageUrl,
         (SELECT COUNT(*) FROM Posts WHERE topicId = t.id) postsCount

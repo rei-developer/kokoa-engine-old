@@ -16,8 +16,8 @@
       type='error'
       :closable='false' />
     <div class='containerSubject marginTop'>
-      <font-awesome-icon icon='sticky-note' />
-      스티커 ({{ numberWithCommas(count) }})
+      <font-awesome-icon icon='cart-arrow-down' />
+      스티커샵 ({{ numberWithCommas(count) }})
       <div class='stickerPointInfo'>
         <font-awesome-icon icon='gift' />
         <span class='bold'>{{ numberWithCommas($store.state.user.point) }}</span>
