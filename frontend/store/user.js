@@ -34,6 +34,7 @@ export const mutations = {
   setNickname: (state, nickname) => state.nickname = nickname,
   setProfileImageUrl: (state, url) => state.profileImageUrl = `https://hawawa.co.kr/profile/${url}`,
   setNoticeCount: (state, count) => state.noticeCount = count,
+  setUpPoint: (state, point) => state.point += point,
   signOut: state => {
     state.token = ''
     state.isLogged = false

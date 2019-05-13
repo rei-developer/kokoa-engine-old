@@ -37,6 +37,7 @@
               <div class='Avatar'>
                 <img :src='$store.state.user.profileImageUrl'>
               </div>
+              <img :src='`/level/${$store.state.user.level}.png`'>
               {{ $store.state.user.nickname }}
             </template>
             <el-menu-item index='8-1' route='/edit'>프로필 편집</el-menu-item>

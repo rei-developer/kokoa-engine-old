@@ -10,8 +10,8 @@ module.exports.getInventoryItem = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
   const check = await readSticker.check(user.id, id)
-  if (!check) return
-  const days = moment().diff(moment(check.regdate), 'days')
+  if (!check) return ctx.body = { status: 'fail' }
+  const days = moment(check.regdate).diff(moment(), 'days')
   ctx.body = { days, status: 'ok' }
 }
 
