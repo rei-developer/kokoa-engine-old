@@ -42,7 +42,8 @@
                       {{ topic.title }}
                     </div>
                     <div class='author'>
-                      <img :src='topic.admin > 0 ? "/admin.png" : "/user.png"'>
+                      <img :src='`/level/${topic.level}.png`'>
+                      <span class='userTitle' v-if='topic.userTitle'>{{ topic.userTitle }}</span>
                       {{ topic.author }}
                     </div>
                     <div class='detail'>
@@ -317,6 +318,13 @@
     color: #333;
     font-size: .8rem;
     font-weight: bold;
+  }
+  .topicArticle .header .info .author span.userTitle {
+    padding: 0 .25rem;
+    background: #29313D;
+    border-radius: .25rem;
+    color: #FFF;
+    font-size: .7rem;
   }
   .topicArticle .header .info .detail span {
     margin-right: .25rem;

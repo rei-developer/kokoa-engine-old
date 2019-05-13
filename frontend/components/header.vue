@@ -14,14 +14,11 @@
             <img src='/favicon.png' class='hidden-desktop'>
             <img src='~/assets/HeaderLogo.png' class='hidden-mobile'>
           </el-menu-item>
-          <el-menu-item index='1' route='/b/all' class='hidden-mobile' @click='forceUpdate'>
-            <font-awesome-icon icon='comment-dots' />
-            전체
-          </el-menu-item>
-          <el-menu-item index='2' route='/b/best' class='hidden-mobile' @click='forceUpdate'>
+          <el-menu-item index='1' route='/b/best' class='hidden-mobile' @click='forceUpdate'>
             <font-awesome-icon icon='star' />
             인기
           </el-menu-item>
+          <el-menu-item index='2' route='/b/all' class='hidden-mobile' @click='forceUpdate'>전체</el-menu-item>
           <el-menu-item index='4' route='/b/girl' class='hidden-mobile' @click='forceUpdate'>연예</el-menu-item>
           <el-menu-item index='5' route='/b/anime' class='hidden-mobile' @click='forceUpdate'>애니</el-menu-item>
           <el-submenu index='6' class='hidden-mobile'>

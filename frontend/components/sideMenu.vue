@@ -1,13 +1,12 @@
 <template>
   <div>
     <el-menu :default-openeds='["6", "7"]'>
-      <el-menu-item index='1' @click='move("/b/all")'>
-        <font-awesome-icon icon='comment-dots' />
-        <span>전체</span>
-      </el-menu-item>
-      <el-menu-item index='2' @click='move("/b/best")'>
+      <el-menu-item index='1' @click='move("/b/best")'>
         <font-awesome-icon icon='star' />
         <span>인기</span>
+      </el-menu-item>
+      <el-menu-item index='2' @click='move("/b/all")'>
+        <span>전체</span>
       </el-menu-item>
       <el-menu-item index='4' @click='move("/b/girl")'>
         <span>연예</span>

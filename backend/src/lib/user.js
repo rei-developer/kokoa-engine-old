@@ -7,7 +7,7 @@ const getUpperByExp = (user, exp) => {
   const maxExp = Math.pow(user.level, 2) * 50
   const underMaxExp = Math.pow(user.level - 1, 2) * 50
   const upper = { level: user.level, exp: user.exp }
-  if (user.level <= 100 && sumExp >= maxExp) {
+  if (user.level < 50 && sumExp >= maxExp) {
     upper.level++
     upper.exp = 0
   } else if (user.level > 0 && sumExp < 0) {

@@ -60,7 +60,7 @@
             </span>
           </div>
           <div class='author'>
-            <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+            <img :src='`/level/${item.level}.png`'>
             {{ item.author }}
             <span>
               <font-awesome-icon icon='clock' />
@@ -103,17 +103,18 @@
             </span>
           </div>
           <div class='author'>
-            <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+            <img :src='`/level/${item.level}.png`'>
+            <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
             {{ item.author }}
-            <span>
+            <span class='event'>
               <font-awesome-icon icon='clock' />
               {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
             </span>
-            <span v-if='item.hits > 0'>
+            <span class='event' v-if='item.hits > 0'>
               <font-awesome-icon icon='eye' />
               {{ numberWithCommas(item.hits) }}
             </span>
-            <span v-if='item.likes > 0'>
+            <span class='event' v-if='item.likes > 0'>
               <font-awesome-icon icon='heart' />
               +{{ numberWithCommas(item.likes) }}
             </span>
@@ -354,14 +355,16 @@
   .topicList .item .info .subject span.category,
   .topicList .item .info .subject span.newest,
   .topicList .item .info .subject span.posts {
-    margin-right: .1rem;
     padding: 0 .25rem;
     border-radius: .1rem;
     background: #ED1C24;
     color: #FFF;
     font-size: .7rem;
   }
-  .topicList .item .info .subject span.category { background: #29313D }
+  .topicList .item .info .subject span.category {
+    background: #EAEAEA;
+    color: #29313D;
+  }
   .topicList .item .info .subject span.newest { background: #409EFF }
   .topicList .item .info .subject span.posts { background: #999 }
   .topicList .item .info .subject span.image { color: #409EFF }
@@ -374,7 +377,14 @@
     font-size: .8rem;
     font-weight: bold;
   }
-  .topicList .item .info .author span {
+  .topicList .item .info .author span.userTitle {
+    padding: 0 .25rem;
+    background: #29313D;
+    border-radius: .25rem;
+    color: #FFF;
+    font-size: .7rem;
+  }
+  .topicList .item .info .author span.event {
     margin-left: .25rem;
     color: #999;
     font-size: .7rem;

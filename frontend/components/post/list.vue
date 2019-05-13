@@ -19,7 +19,8 @@
             <div class='info'>
               <div class='author'>
                 <span class='best' v-if='item.likes >= 1'>BEST</span>
-                <img :src='item.admin > 0 ? "/admin.png" : "/user.png"'>
+                <img :src='`/level/${item.level}.png`'>
+                <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
                 {{ item.author }}
                 <span class='event'>
                   <font-awesome-icon icon='history' />
@@ -331,6 +332,13 @@
     padding: 0 .25rem;
     background: #ED1C24;
     border-radius: .1rem;
+    color: #FFF;
+    font-size: .7rem;
+  }
+  .postList .item .info .author span.userTitle {
+    padding: 0 .25rem;
+    background: #29313D;
+    border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
   }

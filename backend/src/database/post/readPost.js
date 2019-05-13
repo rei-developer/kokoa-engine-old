@@ -51,6 +51,7 @@ module.exports.posts = async (topicId, page, limit) => {
       pc.likes,
       pc.hates,
       u.profileImageUrl profile,
+      u.level,
       u.isAdmin admin
     FROM Posts p
     LEFT JOIN Posts tp ON tp.id = p.postParentId
