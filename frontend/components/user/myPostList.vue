@@ -42,6 +42,9 @@
                 <font-awesome-icon icon='at' />
                 {{ item.tagAuthor }}
               </span>
+              <div class='sticker' v-if='item.stickerId > 0'>
+                <img :src='`https://hawawa.co.kr/sticker/${item.stickerId}/${item.stickerSelect}`'>
+              </div>
               <span v-html='item.content' />
             </div>
           </div>
@@ -176,6 +179,11 @@
   .myPostList .item .info .desciption {
     color: #333;
     font-size: .8rem;
+  }
+  .myPostList .item .info .desciption .sticker img {
+    width: 100px;
+    height: 100px;
+    border-radius: .25rem;
   }
   .myPostList .item .info .desciption span.tagUser {
     margin-right: .25rem;

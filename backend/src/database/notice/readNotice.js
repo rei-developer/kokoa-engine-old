@@ -16,6 +16,8 @@ module.exports.notices = async (userId, page, limit) => {
       t.boardDomain,
       p.author,
       p.content,
+      p.stickerId,
+      p.stickerSelect,
       p.created,
       p.updated,
       tp.author tagAuthor,

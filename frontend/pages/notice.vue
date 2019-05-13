@@ -48,6 +48,9 @@
                     </div>
                     <div class='desciption'>
                       <span class='tagUser' v-if='item.tagAuthor'>{{ item.tagAuthor }}</span>
+                      <div class='sticker' v-if='item.stickerId > 0'>
+                        <img :src='`https://hawawa.co.kr/sticker/${item.stickerId}/${item.stickerSelect}`'>
+                      </div>
                       <span v-html='item.content' />
                     </div>
                   </div>
@@ -262,6 +265,11 @@
   .noticeList .item .info .desciption {
     color: #333;
     font-size: .8rem;
+  }
+  .noticeList .item .info .desciption .sticker img {
+    width: 100px;
+    height: 100px;
+    border-radius: .25rem;
   }
   .noticeList .item .info .desciption span.tagUser {
     margin-right: .1rem;

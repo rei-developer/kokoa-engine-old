@@ -42,7 +42,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 36
+        frontendVersion: 37
       }
     },
     beforeMount() {
@@ -54,7 +54,7 @@
           position: 'top-right',
           onClick: () => this.move(data)
         })
-        this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
+        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
       })
       this.$socket.on('newTopic', data => {
         this.$notify({
@@ -64,7 +64,7 @@
           position: 'top-right',
           onClick: () => this.move(data)
         })
-        this.playSound('https://soundbible.com/mp3/Air Plane Ding-SoundBible.com-496729130.mp3')
+        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
       })
     },
     mounted() {
