@@ -44,6 +44,8 @@ module.exports.posts = async (topicId, page, limit) => {
       p.postParentId,
       p.author,
       p.content,
+      p.stickerId,
+      p.stickerSelect,
       p.created,
       p.updated,
       tp.author tagAuthor,
@@ -71,6 +73,8 @@ module.exports.postsByMe = async (userId, page, limit) => {
     `SELECT
       p.id,
       p.content,
+      p.stickerId,
+      p.stickerSelect,
       p.created,
       p.updated,
       tp.author tagAuthor,

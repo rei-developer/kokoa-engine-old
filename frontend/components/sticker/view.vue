@@ -3,7 +3,7 @@
     <div class='title'>
       <font-awesome-icon icon='info-circle' />
       스티커 정보
-      <button class='close' @click='exit'>×</button>
+      <button class='close' @click='$emit("close")'>×</button>
     </div>
     <div class='content'>
       <div class='head'>
@@ -41,7 +41,6 @@
 
 <script>
   import axios from 'axios'
-  import stickerVue from '../../pages/sticker.vue';
 
   export default {
     props: ['id', 'sticker'],
@@ -88,9 +87,6 @@
         this.$store.commit('user/setUpPoint', -(this.sticker.price))
         this.lastDays += (this.sticker.days - 1)
       },
-      exit() {
-        this.$store.commit('forceUpdate')
-      },
       numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
@@ -131,7 +127,7 @@
     margin: 0;
     border: none;
     background: transparent;
-    color: #fff;
+    color: #FFF;
     text-align: center;
     cursor: pointer;
     outline: none;

@@ -12,7 +12,7 @@
         </div>
         <div class='containerSubject'>
           <font-awesome-icon icon='pencil-alt' />
-          {{ getBoardName(domain) }} 게시판 글 작성
+          {{ getBoardName() }} 게시판 글 작성
         </div>
         <div class='topicWrite'>
           <div class='marginBottom' v-if='$store.state.user.isLogged && $store.state.user.isAdmin > 0'>
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+  import Library from '~/assets/lib.js'
   import Loading from '~/components/loading.vue'
   import axios from 'axios'
   
@@ -112,35 +113,8 @@
       return { domain, categories: data }
     },
     methods: {
-      getBoardName(domain) {
-        let boardName = ''
-        switch (domain) {
-          case 'all':
-            boardName = '전체'
-            break
-          case 'best':
-            boardName = '인기'
-            break
-          case 'girl':
-            boardName = '연예'
-            break
-          case 'anime':
-            boardName = '애니'
-            break
-          case 'talk':
-            boardName = '토크'
-            break
-          case 'social':
-            boardName = '정치'
-            break
-          case 'feedback':
-            boardName = '건의'
-            break
-          case 'notice':
-            boardName = '공지'
-            break
-        }
-        return boardName
+      getBoardName(domain = this.domain) {
+        return Library.getBoardName(domain)
       },
       write: async function() {
         if (this.loading) return

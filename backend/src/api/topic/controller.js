@@ -193,9 +193,12 @@ module.exports.createPost = async ctx => {
     postUserId,
     postRootId,
     postParentId,
-    content
+    content,
+    sticker
   } = ctx.request.body
-  if (content === '') return
+
+  console.log(sticker)
+
   topicUserId = Number(topicUserId)
   if (postUserId) postUserId = Number(postUserId)
   content = Filter.post(content)
@@ -208,6 +211,8 @@ module.exports.createPost = async ctx => {
     postParentId,
     author: user.nickname,
     content,
+    stickerId: sticker.id,
+    stickerSelect: sticker.select,
     ip,
     header
   })

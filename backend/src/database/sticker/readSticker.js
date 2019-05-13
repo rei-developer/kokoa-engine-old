@@ -26,11 +26,12 @@ module.exports.check = async (userId, stickerId) => {
 module.exports.inventory = async userId => {
   const result = await pool.query(
     `SELECT
-      si.stickerId,
+      si.stickerId id,
       s.number,
-      s.ext
+      s.ext,
+      s.name
     FROM StickerInventory si
-    LEFT JOIN Stickers s ON s.id = si.sickerId
+    LEFT JOIN Stickers s ON s.id = si.stickerId
     WHERE si.userId = ? AND TIME_TO_SEC(TIMEDIFF(si.regdate, NOW())) > 0`,
     [userId]
   )

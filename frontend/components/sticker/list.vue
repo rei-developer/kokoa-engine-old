@@ -1,6 +1,10 @@
 <template>
   <div>
-    <StickerView :id='id' :sticker='sticker' v-if='id > 0' />
+    <StickerView
+      :id='id'
+      :sticker='sticker'
+      v-on:close='close'
+      v-if='id > 0' />
     <div class='AD hidden-mobile'>
       <iframe src='/ad.html' />
     </div>
@@ -8,7 +12,7 @@
       <iframe src='/ad-mobile.html' />
     </div>
     <el-alert
-      title='현재 스티커 구입은 가능하나, 아직 완성되지 않은 컨텐츠므로 이용하실 수 없습니다.'
+      title='현재 스티커 등록 기능은 개발중에 있습니다. 또한, 스티커 이름이 숫자로 되어있는 것은 이름 미상입니다. 이름을 아시는 분은 건의 게시판으로 알려주세요!'
       type='error'
       :closable='false' />
     <div class='containerSubject marginTop'>
@@ -62,12 +66,6 @@
         page: 1
       }
     },
-    watch: {
-      '$store.state.forceUpdate': function() {
-        this.id = 0
-        this.sticker = {}
-      }
-    },
     mounted() {
       this.getData()
     },
@@ -85,6 +83,10 @@
       view(item) {
         this.id = item.id
         this.sticker = item
+      },
+      close() {
+        this.id = 0
+        this.sticker = {}
       },
       currentChange(page) {
         this.page = page
