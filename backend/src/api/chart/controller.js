@@ -15,7 +15,7 @@ module.exports.votes = async ctx => {
   const date = await readChart.voted(user.id, id, ip)
   if (date) {
     const created = moment(date).format('YYYY/MM/DD HH:mm:ss')
-    return ctx.body = { message: `이미 투표한 게시물입니다. (${created})`, status: 'fail' }
+    return ctx.body = { message: `이미 참여한 설문조사입니다. (${created})`, status: 'fail' }
   }
   await createChart.votes(user.id, id, select, ip)
   ctx.body = { status: 'ok' }
