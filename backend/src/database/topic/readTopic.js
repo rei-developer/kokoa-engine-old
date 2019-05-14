@@ -15,6 +15,7 @@ module.exports = async id => {
       t.header,
       t.created,
       t.updated,
+      t.isChart,
       t.isImage,
       t.isBest,
       t.isNotice,

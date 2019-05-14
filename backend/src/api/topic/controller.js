@@ -4,10 +4,12 @@ const moment        = require('moment')
 const Filter        = require('../../lib/filter')
 const socket        = require('../../lib/socket.io')
 const User          = require('../../lib/user')
+const createChart   = require('../../database/chart/createChart')
 const createNotice  = require('../../database/notice/createNotice')
 const createPost    = require('../../database/post/createPost')
 const createTopic   = require('../../database/topic/createTopic')
 const readBoard     = require('../../database/board/readBoard')
+const readChart     = require('../../database/chart/readChart')
 const readNotice    = require('../../database/notice/readNotice')
 const readPost      = require('../../database/post/readPost')
 const readTopic     = require('../../database/topic/readTopic')
@@ -118,7 +120,15 @@ module.exports.getContent = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))
   const topic = await readTopic(id)
   if (!topic || topic.isAllowed < 1) return ctx.body = { status: 'fail' }
-  const images = await readTopic.topicImages(id)
+  const charts = topic.isChart > 0
+    ? await readChart(id)
+    : []
+  const chartVotes = topic.isChart > 0
+    ? await readChart.votes(id)
+    : []
+  const images = topic.isImage > 0
+    ? await readTopic.topicImages(id)
+    : []
   if (client.exists(id)) {
     const hits = await new Promise(resolve => {
       client.get(id, (err, value) => {
@@ -138,7 +148,7 @@ module.exports.getContent = async ctx => {
     await updateNotice.updateNoticeByConfirm(user.id, id)
     count = await readNotice.count(user.id)
   }
-  ctx.body = { topic, images, count }
+  ctx.body = { topic, charts, chartVotes, images, count }
 }
 
 module.exports.createTopic = async ctx => {
@@ -146,24 +156,27 @@ module.exports.createTopic = async ctx => {
   if (!user) return
   let {
     domain,
+    isNotice,
     category,
     title,
     content,
-    isNotice,
+    charts,
     images
   } = ctx.request.body
   if (title === '' || content === '') return
   title = Filter.disable(title)
   content = Filter.topic(content)
+  charts = Filter.disable(charts)
   const isAdminOnly = await readBoard.isAdminOnly(domain)
   if (isAdminOnly < 0) return
   if (user.isAdmin < isAdminOnly) return ctx.body = { message: '권한이 없습니다.', status: 'fail' }
   if (user.isAdmin < 1) {
-    //TODO: 관리자 전용 커스텀
+    // TODO: 관리자 전용 커스텀
     if (isNotice > 0) isNotice = 0
   }
   const ip = ctx.get('x-real-ip')
   const header = ctx.header['user-agent']
+  const isChart = charts !== '' ? true : false
   const isImage = images.length > 0 ? true : false
   const topicId = await createTopic({
     userId: user.id,
@@ -174,10 +187,12 @@ module.exports.createTopic = async ctx => {
     content,
     ip,
     header,
+    isChart,
     isImage,
     isNotice
   })
   await createTopic.createTopicCounts(topicId)
+  if (isChart) await createChart(topicId, charts.split('\n'))
   if (isImage) await createTopic.createTopicImages(topicId, images)
   await User.setUpExpAndPoint(user, 10, 10)
   await socket.newTopic(global.io, topicId, domain, title)

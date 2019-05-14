@@ -39,15 +39,13 @@ module.exports = {
     vendor: ['vuex', 'socket.io-client', 'element-ui'],
   },
   plugins: [
-    '~plugins/socket.io.js',
-    '~plugins/element-ui',
-    {
-      src: '~plugins/quill.js',
-      ssr: false
-    },
+    '~/plugins/socket.io.js',
+    '~/plugins/element-ui',
+    { src: '~/plugins/quill.js', ssr: false },
+    { src: '~/plugins/chart', ssr: false },
   ],
   css: [
-    '~assets/main.css',
+    '~/assets/main.css',
     'element-ui/lib/theme-chalk/index.css',
     'element-ui/lib/theme-chalk/display.css'
   ],

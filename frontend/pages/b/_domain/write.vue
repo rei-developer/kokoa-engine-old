@@ -42,9 +42,20 @@
               HTML 모드
             </span>
           </div>
+          <div class='event' @click='charts.hide = !charts.hide'>
+            <font-awesome-icon icon='chart-pie' />
+            설문조사 생성
+          </div>
+          <div class='marginBottom' v-if='!charts.hide'>
+            <textarea
+              class='chart'
+              :rows='3'
+              placeholder='설문조사 목록은 개행(Enter)으로 구분해주세요.'
+              v-model='charts.content' />
+          </div>
           <div v-if='htmlMode'>
             <textarea
-              rows='14'
+              class='content'
               placeholder='이곳에 내용을 입력하세요.'
               v-model='form.content' />
           </div>
@@ -100,6 +111,10 @@
           content: '<p></p>',
           isNotice: false
         },
+        charts: {
+          content: '',
+          hide: true
+        },
         images: [],
         selectedImage: null,
         editor: null,
@@ -125,10 +140,11 @@
         this.loading = true
         const { data } = await axios.post('/api/topic/write', {
           domain: this.domain,
+          isNotice: this.form.isNotice,
           category: this.form.category === '(없음)' ? '' : this.form.category,
           title: this.form.title,
           content: this.form.content,
-          isNotice: this.form.isNotice,
+          charts: this.charts.content,
           images: this.images
         }, {
           headers: { 'x-access-token': token }
@@ -205,11 +221,12 @@
   }
   .topicWrite textarea {
     width: 100%;
-    height: 249px;
     margin-bottom: -5px;
     padding: .5rem;
     border: 1px solid #CCC;
     font-size: .8rem;
     outline: none;
   }
+  .topicWrite textarea.chart { margin-bottom: -13px }
+  .topicWrite textarea.content { height: 249px }
 </style>

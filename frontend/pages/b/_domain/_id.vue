@@ -68,6 +68,28 @@
                   </div>
                 </div>
                 <div class='content'>
+                  <div class='chart' v-if='topic.isChart'>
+                    <no-ssr>
+                      <ChartPie
+                        :data='charts.data'
+                        :labels='charts.labels' />
+                      <div class='marginVertical'>
+                        <el-select v-model='charts.select' placeholder='설문조사 참여'>
+                          <el-option
+                            v-for='(item, index) in charts.labels'
+                            :key='index'
+                            :value='index'
+                            :label='`${index + 1}. ${item} (${charts.data[index] ? numberWithCommas(charts.data[index]) : 0})`' />
+                        </el-select>
+                        <el-button
+                          type='primary'
+                          @click='chartVotes'>
+                          <font-awesome-icon icon='chart-pie' />
+                          설문조사 참여
+                        </el-button>
+                      </div>
+                    </no-ssr>
+                  </div>
                   <span v-html='topic.content' />
                   <div class='event'>
                     <el-button-group>
@@ -140,13 +162,15 @@
   import TopicList from '~/components/topic/list.vue'
   import PostList from '~/components/post/list.vue'
   import Recent from '~/components/recent.vue'
+  import ChartPie from '~/components/chart/chart-pie'
   import axios from 'axios'
   
   export default {
     components: {
       TopicList,
       PostList,
-      Recent
+      Recent,
+      ChartPie
     },
     data() {
       return {
@@ -167,11 +191,17 @@
           hits: 0,
           likes: 0,
           hates: 0,
+          isChart: false,
           isImage: false,
           isBest: false,
           isNotice: false,
           profile: '',
           admin: 0
+        },
+        chart: {
+          data: [],
+          labels: [],
+          select: 0
         },
         images: [],
         loading: true
@@ -187,7 +217,20 @@
       )
       if (data.status === 'fail') return alert(data.message)
       if (store.state.user.isLogged) store.commit('user/setNoticeCount', data.count)
-      return { domain, id, topic: data.topic, images: data.images }
+      const charts = data.charts ? data.charts.map(item => item.text) : []
+      const chartVotes = []
+      if (data.chartVotes) data.chartVotes.map(item => chartVotes[item.select] = item.count)
+      return {
+        domain,
+        id,
+        topic: data.topic,
+        charts: {
+          data: chartVotes,
+          labels: charts,
+          select: 0
+        },
+        images: data.images
+      }
     },
     beforeMount() {
       this.$socket.emit('join', this.id)
@@ -216,6 +259,23 @@
           return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다.') : this.$message('투표했습니다.')
+        this.$store.commit('setLoading')
+      },
+      chartVotes: async function() {
+        if (this.charts.select < 0 || this.charts.select > this.charts.labels.length) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
+        this.$store.commit('setLoading', true)
+        const { data } = await axios.post(
+          '/api/chart/vote',
+          { id: this.id, select: this.charts.select },
+          { headers: { 'x-access-token': token } }
+        )
+        if (data.status === 'fail') {
+          this.$store.commit('setLoading')
+          return this.$message.error(data.message || '오류가 발생했습니다.')
+        }
+        this.$message.success('설문조사를 참여했습니다.')
         this.$store.commit('setLoading')
       },
       copyLink: async function(link) {
@@ -343,6 +403,9 @@
     padding: 1rem;
     border-bottom: 1px solid #F5F5F5;
     font-size: .9rem;
+  }
+  .topicArticle .content .chart {
+    text-align: center;
   }
   .topicArticle .content img {
     max-width: 100%;
