@@ -107,7 +107,7 @@
     methods: {
       getStatus() {
         this.exp = this.$store.state.user.exp
-        this.maxExp = Math.pow(this.$store.state.user.level, 2) * 50
+        this.maxExp = Math.pow(this.$store.state.user.level, 2) * 90
         this.per = (this.exp / this.maxExp * 100).toFixed(2)
       },
       imageUpload: async function(e) {

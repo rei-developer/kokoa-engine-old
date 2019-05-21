@@ -4,8 +4,8 @@ const updateUser  = require('../database/user/updateUser')
 
 const getUpperByExp = (user, exp) => {
   const sumExp = user.exp + exp
-  const maxExp = Math.pow(user.level, 2) * 50
-  const underMaxExp = Math.pow(user.level - 1, 2) * 50
+  const maxExp = Math.pow(user.level, 2) * 90
+  const underMaxExp = Math.pow(user.level - 1, 2) * 90
   const upper = { level: user.level, exp: user.exp }
   if (user.level < 50 && sumExp >= maxExp) {
     upper.level++
