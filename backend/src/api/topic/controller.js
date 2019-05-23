@@ -194,7 +194,7 @@ module.exports.createTopic = async ctx => {
   await createTopic.createTopicCounts(topicId)
   if (isChart) await createChart(topicId, charts.split('\n'))
   if (isImage) await createTopic.createTopicImages(topicId, images)
-  await User.setUpExpAndPoint(user, 10)
+  await User.setUpPoint(user, 10)
   await socket.newTopic(global.io, topicId, domain, title)
   ctx.body = { topicId, status: 'ok' }
 }
@@ -231,7 +231,7 @@ module.exports.createPost = async ctx => {
   const postsCount = await readPost.count(topicId)
   const posts = await readPost.posts(topicId, 0, 100)
   await createPost.createPostCounts(postId)
-  await User.setUpExpAndPoint(user, 5)
+  await User.setUpPoint(user, 5)
   const items = []
   if (user.id !== topicUserId) items.push(topicUserId)
   if (postUserId && user.id !== postUserId && topicUserId !== postUserId) items.push(postUserId)
