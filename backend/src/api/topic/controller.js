@@ -194,7 +194,7 @@ module.exports.createTopic = async ctx => {
   await createTopic.createTopicCounts(topicId)
   if (isChart) await createChart(topicId, charts.split('\n'))
   if (isImage) await createTopic.createTopicImages(topicId, images)
-  // await User.setUpExpAndPoint(user, 10, 10)
+  await User.setUpExpAndPoint(user, 10)
   await socket.newTopic(global.io, topicId, domain, title)
   ctx.body = { topicId, status: 'ok' }
 }
@@ -231,7 +231,7 @@ module.exports.createPost = async ctx => {
   const postsCount = await readPost.count(topicId)
   const posts = await readPost.posts(topicId, 0, 100)
   await createPost.createPostCounts(postId)
-  // await User.setUpExpAndPoint(user, 5, 5)
+  await User.setUpExpAndPoint(user, 5)
   const items = []
   if (user.id !== topicUserId) items.push(topicUserId)
   if (postUserId && user.id !== postUserId && topicUserId !== postUserId) items.push(postUserId)
@@ -396,7 +396,7 @@ module.exports.deleteTopic = async ctx => {
     await deleteTopic(id)
   else
     await updateTopic.updateTopicByIsAllowed(id)
-  // await User.setUpExpAndPoint(user, -20, -20)
+  await User.setUpPoint(user, -20)
   ctx.body = { status: 'ok' }
 }
 
@@ -410,6 +410,6 @@ module.exports.deletePost = async ctx => {
   if (user.isAdmin < 1 && userId !== user.id) return
   await deleteNotice.postId(id)
   await deletePost(id)
-  // await User.setUpExpAndPoint(user, -10, -10)
+  await User.setUpPoint(user, -10)
   ctx.body = { status: 'ok' }
 }
