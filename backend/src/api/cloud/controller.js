@@ -1,4 +1,4 @@
-const fs = require('fs')
+/*const fs = require('fs')
 const { execFile } = require('child_process')
 
 module.exports.createImage = type => async ctx => {
@@ -17,9 +17,8 @@ module.exports.createImage = type => async ctx => {
   } catch (e) {
     ctx.body = { message: e.message, status: 'fail' }
   }
-}
+}*/
 
-/*
 const fs            = require('fs')
 const sharp         = require('sharp')
 const { execFile }  = require('child_process')
@@ -72,4 +71,3 @@ module.exports.createImage = type => async ctx => {
     ctx.body = { message: e.message, status: 'fail' }
   }
 }
-*/
