@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class='animeBackground' v-if='domain === "anime"' />
+    <!-- <div class='animeBackground' v-if='domain === "anime"' /> -->
     <el-row>
       <el-col :xl='4' hidden-lg-and-down>
         <div class='blank' />
