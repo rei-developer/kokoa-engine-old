@@ -65,7 +65,7 @@ module.exports = {
     ]
   },
   proxy: {
-    '/api': 'http://localhost:3000'
+    '/api': 'http://localhost:8000'
   },
   env: {
     SOCKET_HOST_URL: 'https://hawawa.co.kr'
