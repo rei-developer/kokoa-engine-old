@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div class='AD hidden-mobile'>
-      <iframe src='/ad.html' />
-    </div>
-    <div class='AD hidden-desktop'>
-      <iframe src='/ad-mobile.html' />
+    <div class='AD'>
+      <adsbygoogle />
     </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='comment-dots' />

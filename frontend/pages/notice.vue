@@ -8,11 +8,8 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
-              <div class='AD hidden-mobile'>
-                <iframe src='/ad.html' />
-              </div>
-              <div class='AD hidden-desktop'>
-                <iframe src='/ad-mobile.html' />
+              <div class='AD'>
+                <adsbygoogle />
               </div>
               <div class='marginBottom'>
                 <el-button-group>

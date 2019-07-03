@@ -4,11 +4,8 @@
     <el-row>
       <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
       <el-col :xl='16'>
-        <div class='AD hidden-mobile'>
-          <iframe src='/ad.html' />
-        </div>
-        <div class='AD hidden-desktop'>
-          <iframe src='/ad-mobile.html' />
+        <div class='AD'>
+          <adsbygoogle />
         </div>
         <div class='containerSubject'>
           <font-awesome-icon icon='pencil-alt' />
