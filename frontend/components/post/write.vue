@@ -42,7 +42,7 @@
           v-if='stickers.sticker'>
           <div class='item'>
             <div class='image'>
-              <img :src='`https://hawawa.co.kr/sticker/${stickers.sticker.id}/${stickers.select}.${stickers.sticker.ext}`'>
+              <img :src='`https://idolboard.com/sticker/${stickers.sticker.id}/${stickers.select}.${stickers.sticker.ext}`'>
             </div>
             {{ stickers.sticker.name }}
             <div class='remove'>

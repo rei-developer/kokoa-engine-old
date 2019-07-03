@@ -40,7 +40,7 @@
         :class='id == item.id ? "item view" : "item odd"'
         v-for='item in notices' :key='item.id'>
         <div class='image' @click='move(item)'>
-          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+          <img :src='item.imageUrl ? "https://idolboard.com/img/thumb/" + item.imageUrl : "/default.png"'>
         </div>
         <div class='info' @click='move(item)'>
           <div class='subject'>
@@ -61,7 +61,7 @@
           </div>
           <div class='author'>
             <img :src='`/level/${item.level}.png`'>
-            <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
+            <img class='icon' :src='`https://idolboard.com/icon/${item.icon}`' v-if='item.icon !== ""'>
             <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
             {{ item.author }}
             <span class='event'>
@@ -86,7 +86,7 @@
         :class='id == item.id ? "item view" : (index % 2 === 0 ? "item" : "item odd")'
         v-for='(item, index) in topics' :key='index'>
         <div class='image' @click='move(item)'>
-          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+          <img :src='item.imageUrl ? "https://idolboard.com/img/thumb/" + item.imageUrl : "/default.png"'>
         </div>
         <div class='info' @click='move(item)'>
           <div class='subject'>
@@ -106,7 +106,7 @@
           </div>
           <div class='author'>
             <img :src='`/level/${item.level}.png`'>
-            <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
+            <img class='icon' :src='`https://idolboard.com/icon/${item.icon}`' v-if='item.icon !== ""'>
             <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
             {{ item.author }}
             <span class='event'>

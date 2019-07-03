@@ -19,7 +19,7 @@
             <font-awesome-icon icon='chevron-right' />
           </div>
           <div class='image'>
-            <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
+            <img :src='item.profile ? "https://idolboard.com/profile/" + item.profile : "/profile.png"'>
           </div>
           <div class='info'>
             <div class='author'>
@@ -43,7 +43,7 @@
                 {{ item.tagAuthor }}
               </span>
               <div class='sticker' v-if='item.stickerId > 0'>
-                <img :src='`https://hawawa.co.kr/sticker/${item.stickerId}/${item.stickerSelect}`'>
+                <img :src='`https://idolboard.com/sticker/${item.stickerId}/${item.stickerSelect}`'>
               </div>
               <span v-html='item.content' />
             </div>

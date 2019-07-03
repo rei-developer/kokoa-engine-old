@@ -30,7 +30,7 @@
               <div class='topicArticle'>
                 <div class='header'>
                   <div class='image'>
-                    <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
+                    <img :src='topic.profile ? "https://idolboard.com/profile/" + topic.profile : "/profile.png"'>
                   </div>
                   <div class='info'>
                     <div class='subject'>
@@ -43,7 +43,7 @@
                     </div>
                     <div class='author'>
                       <img :src='`/level/${topic.level}.png`'>
-                      <img class='icon' :src='`https://hawawa.co.kr/icon/${topic.icon}`' v-if='topic.icon !== ""'>
+                      <img class='icon' :src='`https://idolboard.com/icon/${topic.icon}`' v-if='topic.icon !== ""'>
                       <span class='userTitle' v-if='topic.userTitle'>{{ topic.userTitle }}</span>
                       {{ topic.author }}
                     </div>
@@ -110,7 +110,7 @@
                       class='images'
                       v-for='(item, index) in images' :key='`i${index}`'>
                       <font-awesome-icon icon='file-image' />
-                      <a href='#' :download='`https://hawawa.co.kr/img/${item.imageUrl}`'>
+                      <a href='#' :download='`https://idolboard.com/img/${item.imageUrl}`'>
                         <span class='link'>[{{ index + 1 }}] {{ item.name }}</span>
                       </a>
                     </div>
@@ -118,9 +118,9 @@
                   <div class='item'>
                     <span>
                       <font-awesome-icon icon='link' />
-                      https://hawawa.co.kr/b/{{ domain }}/{{ id }}
+                      https://idolboard.com/b/{{ domain }}/{{ id }}
                     </span>
-                    <div class='event' @click='copyLink(`https://hawawa.co.kr/b/${domain}/${id}`)'>복사하기</div>
+                    <div class='event' @click='copyLink(`https://idolboard.com/b/${domain}/${id}`)'>복사하기</div>
                   </div>
                 </div>
               </div>
@@ -318,7 +318,7 @@
     },
     head() {
       return {
-        title: `${this.topic.title} - 하와와`
+        title: `${this.topic.title} - 아이돌보드`
       }
     }
   }

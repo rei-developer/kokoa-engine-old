@@ -177,7 +177,7 @@
           )
           if (data.status === 'ok') {
             const name = files[index].name
-            const filename = `https://hawawa.co.kr/img/${data.filename}`
+            const filename = `https://idolboard.com/img/${data.filename}`
             this.$message.success(`${index + 1}번째 이미지 (${name}) 업로드 성공!`)
             this.images.push({
               name,

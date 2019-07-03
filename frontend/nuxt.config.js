@@ -3,13 +3,13 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: '하와와',
+    title: '아이돌보드',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no' },
       { name: 'theme-color', content: '#29313D' },
       { name: 'google-site-verification', content: 'BEmhl96CsIh9rlpvLSKMLLjHOccJrj6VnMdtMjd8Nbk' },
-      { hid: 'description', name: 'description', content: '하와와 - 유머, 정보, 연예인, 애니메이션, 서브컬쳐 커뮤니티' }
+      { hid: 'description', name: 'description', content: '아이돌보드 - K-POP, 프로듀스48, 프로듀스101, 프로미스나인, 아이즈원, 버스터즈' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
@@ -68,7 +68,7 @@ module.exports = {
     '/api': 'http://localhost:8000'
   },
   env: {
-    SOCKET_HOST_URL: 'https://hawawa.co.kr'
+    SOCKET_HOST_URL: 'https://idolboard.com'
   },
   configureWebpack: {
     output: {

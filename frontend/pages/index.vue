@@ -19,7 +19,6 @@
                   <el-button type='primary' size='small' @click='getData("all", true)' round>전체</el-button>
                   <el-button type='info' size='small' @click='getData("best", true)' round>인기</el-button>
                   <el-button type='info' size='small' @click='getData("girl", true)' round>연예</el-button>
-                  <el-button type='info' size='small' @click='getData("anime", true)' round>애니</el-button>
                 </el-button-group>
               </div>
               <div class='containerSubject'>
@@ -43,7 +42,7 @@
                     </el-button>
                   </div>
                   <div class='image' @click='move(item)'>
-                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+                    <img :src='item.imageUrl ? "https://idolboard.com/img/thumb/" + item.imageUrl : "/default.png"'>
                   </div>
                   <div class='info' @click='move(item)'>
                     <div class='subject'>

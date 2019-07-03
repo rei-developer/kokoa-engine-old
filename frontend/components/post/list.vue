@@ -14,13 +14,13 @@
               <font-awesome-icon icon='chevron-right' />
             </div>
             <div class='image'>
-              <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
+              <img :src='item.profile ? "https://idolboard.com/profile/" + item.profile : "/profile.png"'>
             </div>
             <div class='info'>
               <div class='author'>
                 <span class='best' v-if='item.likes >= 1'>BEST</span>
                 <img :src='`/level/${item.level}.png`'>
-                <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
+                <img class='icon' :src='`https://idolboard.com/icon/${item.icon}`' v-if='item.icon !== ""'>
                 <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
                 {{ item.author }}
                 <span class='event'>
@@ -42,7 +42,7 @@
                   {{ item.tagAuthor }}
                 </span>
                 <div class='sticker' v-if='item.stickerId > 0'>
-                  <img :src='`https://hawawa.co.kr/sticker/${item.stickerId}/${item.stickerSelect}`'>
+                  <img :src='`https://idolboard.com/sticker/${item.stickerId}/${item.stickerSelect}`'>
                 </div>
                 <span :class='item.userId === topic.userId ? "writer" : ""' v-html='item.content' />
               </div>

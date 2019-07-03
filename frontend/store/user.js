@@ -23,7 +23,7 @@ export const mutations = {
     state.username = data.user.username
     state.nickname = data.user.nickname
     state.email = data.user.email
-    state.profileImageUrl = data.user.profileImageUrl ? `https://hawawa.co.kr/profile/${data.user.profileImageUrl}` : '/profile.png'
+    state.profileImageUrl = data.user.profileImageUrl ? `https://idolboard.com/profile/${data.user.profileImageUrl}` : '/profile.png'
     state.registerDate = data.user.registerDate
     state.blockDate = data.user.blockDate
     state.level = data.user.level
@@ -34,7 +34,7 @@ export const mutations = {
     state.isLogged = true
   },
   setNickname: (state, nickname) => state.nickname = nickname,
-  setProfileImageUrl: (state, url) => state.profileImageUrl = `https://hawawa.co.kr/profile/${url}`,
+  setProfileImageUrl: (state, url) => state.profileImageUrl = `https://idolboard.com/profile/${url}`,
   setIcon: (state, filename) => state.icon = filename,
   setNoticeCount: (state, count) => state.noticeCount = count,
   setUpPoint: (state, point) => state.point += point,

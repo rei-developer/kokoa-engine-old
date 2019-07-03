@@ -6,7 +6,7 @@
         <el-row :gutter='50'>
           <el-col :span='8'>
             <div class='column-head'>사이트 안내</div>
-            <p>하와와는 연예인, 애니메이션, 정치, 유머 등 타인과의 소통을 중시하는 익명 커뮤니티 사이트입니다. 이곳은 친목 행위를 허용하지 않습니다.</p>
+            <p>아이돌보드</p>
           </el-col>
           <el-col :span='8'>
             <div class='column-head'>이용정책</div>

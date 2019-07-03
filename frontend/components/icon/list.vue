@@ -20,7 +20,7 @@
         @click='buyHandler(item)'
         v-for='(item, index) in icons' :key='index'>
         <div class='image'>
-          <img :src='`https://hawawa.co.kr/icon/${item.filename}`'>
+          <img :src='`https://idolboard.com/icon/${item.filename}`'>
         </div>
         <div class='info'>
           <div class='name'>{{ item.name }}</div>
