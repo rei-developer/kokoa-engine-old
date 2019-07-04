@@ -26,7 +26,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -50,8 +50,9 @@ module.exports = {
     'element-ui/lib/theme-chalk/display.css'
   ],
   modules: [
-    '@nuxtjs/bulma',
     '@nuxtjs/proxy',
+    '@nuxtjs/axios',
+    '@nuxtjs/bulma',
     ['@nuxtjs/google-adsense'],
     ['@nuxtjs/moment', ['ko']],
     'nuxt-fontawesome',
@@ -67,6 +68,9 @@ module.exports = {
         icons: ['fas']
       }
     ]
+  },
+  axios: {
+    proxy: true
   },
   proxy: {
     '/api': 'http://localhost:8000'

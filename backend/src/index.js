@@ -36,5 +36,5 @@ socket.start(io)
 const { PORT, CONSOLE_CLEAN } = process.env
 
 server.listen(PORT, () => {
-  console.log(`${CONSOLE_CLEAN === 'true' ? '\x1Bc' : ''}HAWAWA server is listening to port ${PORT}`)
+  console.log(`${CONSOLE_CLEAN === 'true' ? '\x1Bc' : ''}IDOLBOARD server is listening to port ${PORT}`)
 })

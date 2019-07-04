@@ -160,7 +160,6 @@
   import PostList from '~/components/post/list.vue'
   import Recent from '~/components/recent.vue'
   import ChartPie from '~/components/chart/chart-pie'
-  import axios from 'axios'
   
   export default {
     components: {
@@ -204,11 +203,11 @@
         loading: true
       }
     },
-    async asyncData ({ app, params, store }) {
+    async asyncData ({ app, params, store, $axios }) {
       const domain = params.domain
       const id = params.id
       const token = store.state.user.isLogged ? store.state.user.token : ''
-      const { data } = await axios.get(
+      const data = await $axios.$get(
         `/api/topic/read/${id}`,
         { headers: { 'x-access-token': token } }
       )
@@ -246,7 +245,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/topic/vote',
           { id: this.id, likes: flag },
           { headers: { 'x-access-token': token } }
@@ -263,7 +262,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/chart/vote',
           { id: this.id, select: this.charts.select },
           { headers: { 'x-access-token': token } }
@@ -291,7 +290,7 @@
       remove: async function() {
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.delete(
+        const data = await this.$axios.$delete(
           '/api/topic/delete',
           {
             data: { id: this.id },

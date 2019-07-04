@@ -76,7 +76,6 @@
 <script>
   import Library from '~/assets/lib.js'
   import Recent from '~/components/recent.vue'
-  import axios from 'axios'
   
   export default {
     components: { Recent },
@@ -118,7 +117,7 @@
           this.topicsCount = 0
           this.page = 0
         }
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/topic/list',
           { domain, page: this.page++ }
         )
@@ -134,7 +133,7 @@
           if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
           const token = this.$store.state.user.token
           this.$store.commit('setLoading', true)
-          const { data } = await axios.post(
+          const data = await this.$axios.$post(
             '/api/topic/vote',
             { id, likes: true },
             { headers: { 'x-access-token': token } }
