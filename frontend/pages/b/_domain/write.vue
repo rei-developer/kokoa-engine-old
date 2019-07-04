@@ -120,7 +120,7 @@
     },
     async asyncData ({ params }) {
       const domain = params.domain
-      const data = await this.$axios.$get(`/api/topic/categories/${domain}`)
+      const data = await $axios.$get(`/api/topic/categories/${domain}`)
       return { domain, categories: data }
     },
     methods: {
