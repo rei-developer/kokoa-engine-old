@@ -7,7 +7,6 @@
   },
   "scripts": {
     "start": "node src",
-    "start:prod": "pm2 start src --name TOPICS_HITS_UPDATER",
-    "restart:prod": "pm2 restart src --name TOPICS_HITS_UPDATER"
+    "start:prod": "pm2 start src --name 'IDOLBOARD UPDATER'"
   }
 }

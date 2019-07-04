@@ -1,8 +1,7 @@
 {
   "scripts": {
     "start": "nodemon --watch src/ src/index.js",
-    "start:prod": "pm2 start src --name 'HAWAWA BACKEND'",
-    "restart:prod": "pm2 restart src --name 'HAWAWA BACKEND'"
+    "start:prod": "pm2 start src --name 'IDOLBOARD BACKEND'"
   },
   "dependencies": {
     "child_process": "^1.0.2",

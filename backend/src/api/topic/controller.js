@@ -359,8 +359,8 @@ module.exports.updateTopicByIsNotice = async ctx => {
   if (!user) return
   const { id } = ctx.request.body
   if (id < 1) return ctx.body = { status: 'fail' }
-  const userId = await readPost.userId(id)
-  if (!userId) return ctx.body = { status: 'fail' }
+  const topic = await readTopic(id)
+  if (!topic) return ctx.body = { status: 'fail' }
   if (user.isAdmin < 1) return
   await updateTopic.updateTopicByIsNotice(id)
   ctx.body = { status: 'ok' }
