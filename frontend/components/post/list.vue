@@ -268,13 +268,13 @@
     margin-top: 1rem;
     padding: .5rem;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, 1);
   }
   .postReplyWrite,
   .postUpdate {
     padding: .5rem;
     border-bottom: 1px solid #F5F5F5;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, 1);
   }
 
   /* Post List */
@@ -287,14 +287,14 @@
   .postList .item {
     display: flex;
     border-bottom: 1px solid #F5F5F5;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, 1);
   }
   .postList .item.view {
-    border-left: .25rem solid #29313D;
+    border-left: .5rem solid #00B8FF;
   }
   .postList .item.view,
   .postList .item.reply {
-    background: rgba(245, 245, 245, .5);
+    background: rgba(245, 245, 245, 1);
   }
   .postList .item .reply {
     display: flex;

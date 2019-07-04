@@ -8,8 +8,7 @@
         <el-menu
           class='el-menu'
           mode='horizontal'
-          :router='true'
-          active-text-color='#29313D'>
+          :router='true'>
           <el-menu-item index='0' route='/' class='Logo' @click='forceUpdate'>
             <img src='/favicon.png' class='hidden-desktop'>
             <img src='~/assets/HeaderLogo.png' class='hidden-mobile'>
@@ -84,9 +83,6 @@
   /* Header */
   .Header {
     position: relative;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    background-position: #FFF;
     overflow: visible;
     z-index: 1;
   }

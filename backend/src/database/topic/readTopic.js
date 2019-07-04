@@ -164,6 +164,7 @@ module.exports.topics = async (columns, searches, page, limit) => {
         t.isNotice,
         tc.hits,
         tc.likes,
+        u.profileImageUrl profile,
         u.level,
         u.icon,
         u.isAdmin admin,

@@ -18,7 +18,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#409EFF' },
+  loading: { color: '#00B8FF' },
   /*
   ** Build configuration
   */
@@ -39,10 +39,11 @@ module.exports = {
     vendor: ['vuex', 'socket.io-client', 'element-ui'],
   },
   plugins: [
+    '~/plugins/element-ui.js',
     '~/plugins/socket.io.js',
-    '~/plugins/element-ui',
+    { src: '~/plugins/chart.js', ssr: false },
     { src: '~/plugins/quill.js', ssr: false },
-    { src: '~/plugins/chart', ssr: false },
+    { src: '~/plugins/vue-masonry-css.js', ssr: false }
   ],
   css: [
     '~/assets/main.css',

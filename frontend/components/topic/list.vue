@@ -306,14 +306,14 @@
   .topicList .item {
     display: flex;
     border-bottom: 1px solid #F5F5F5;
-    background: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, 1);
   }
   .topicList .item:hover {
-    background: rgba(245, 245, 245, .5);
+    background: rgba(245, 245, 245, 1);
     cursor: pointer;
   }
   .topicList .item.odd,
-  .topicList .item.view { background: rgba(245, 245, 245, .5) }
+  .topicList .item.view { background: rgba(245, 245, 245, 1) }
   .topicList .item.view { border-left: .25rem solid #29313D }
   .topicList .item .image {
     display: flex;

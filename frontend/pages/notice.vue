@@ -207,6 +207,7 @@
   }
   .noticeList .item {
     display: flex;
+    background: #FFF;
     border-bottom: 1px solid #F5F5F5;
   }
   .noticeList .item:hover {
@@ -218,7 +219,7 @@
   }
   .noticeList .item.view {
     background: #FAFAFA;
-    border-left: .25rem solid #29313D;
+    border-left: .5rem solid #00B8FF;
   }
   .noticeList .item .image {
     display: flex;

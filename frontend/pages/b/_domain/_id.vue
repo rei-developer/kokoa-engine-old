@@ -343,7 +343,7 @@
     height: 4.5rem;
     padding: 2px;
     border-radius: 500rem;
-    box-shadow: 1px 1px 5px rgba(41, 49, 61, .5);
+    box-shadow: 1px 1px 5px rgba(41, 49, 61, 1);
   }
   .topicArticle .header .info {
     display: flex;

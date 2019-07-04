@@ -41,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 54
+        frontendVersion: 55
       }
     },
     beforeMount() {
@@ -146,7 +146,7 @@
     height: 3rem;
     line-height: 3rem;
     border-radius: 500rem;
-    background: #29313D;
+    background: #00B8FF;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
     color: #FFF;
     text-align: center;
