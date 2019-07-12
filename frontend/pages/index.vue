@@ -19,7 +19,7 @@
                 </el-button-group>
               </div>
               <masonry
-                :cols='{ default: 5, 1024: 3, 768: 2 }'
+                :cols='{ default: 4, 1024: 3, 768: 2 }'
                 :gutter='10'>
                 <div
                   class='masonryList'
@@ -141,7 +141,7 @@
         }
         const data = await this.$axios.$post(
           '/api/topic/list',
-          { domain, page: this.page++, limit: 30 }
+          { domain, page: this.page++ }
         )
         if (!data.topics) return this.$store.commit('setLoading')
         data.topics.map(topic => this.topics.push(topic))
@@ -198,7 +198,7 @@
   .masonryList .item img {
     width: 100%;
     max-height: 480px;
-    border-radius: .25rem;
+    border-radius: .15rem;
   }
   .masonryList .item img:hover {
     opacity: .8;

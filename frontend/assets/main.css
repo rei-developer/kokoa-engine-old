@@ -1,5 +1,5 @@
 html {
-  background-color: #00142B !important;
+  background-color: #001935 !important;
 }
 
 hr {
@@ -46,7 +46,7 @@ hr {
 .containerSubject {
   margin-bottom: 1rem;
   color: #FFF;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 /* Element UI Customize */
@@ -61,7 +61,7 @@ hr {
 }
 .el-menu {
   border: 0 !important;
-  background: #00142B !important;
+  background: #001935 !important;
   border-bottom: 1px solid #21374F !important;
 }
 .el-menu-item,
@@ -82,7 +82,7 @@ hr {
 .el-aside {
   position: fixed;
   height: 100%;
-  background: #00142B;
+  background: #001935;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
   z-index: 10000;
 }
@@ -101,7 +101,7 @@ hr {
 .el-button--info {
   border-color: #99A3AE !important;
   background-color: #99A3AE !important;
-  color: #00142B !important;
+  color: #001935 !important;
 }
 .el-button--primary:hover,
 .el-button--warning:hover,

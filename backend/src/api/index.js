@@ -7,7 +7,7 @@ const notice    = require('./notice')
 const sticker   = require('./sticker')
 const topic     = require('./topic')
 
-const VERSION = 55
+const VERSION = 56
 
 const app = new Router()
 
