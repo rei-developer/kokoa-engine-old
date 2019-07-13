@@ -1,177 +1,110 @@
 <template>
-  <div>
-    <no-ssr>
-      <Loading v-if='$store.state.loading' />
-    </no-ssr>
-    <el-container>
-      <el-aside width='200px' v-if='$store.state.aside'>
-        <SideMenu />
-      </el-aside>
-      <el-container>
-        <div class='version' v-if='frontendVersion < backendVersion'>
-          최신 버전이 아닙니다. 탭 또는 브라우저를 새로 열어주세요!
-        </div>
-        <el-header>
-          <Header />
-        </el-header>
-        <el-main>
-          <nuxt />
-        </el-main>
-      </el-container>
-    </el-container>
-    <div class='popupMenu hidden-desktop' @click='aside' round>
-      <font-awesome-icon icon='bars' />
+  <div class='accountBox'>
+    <div class='article'>
+      <div class='header'>
+        <nuxt-link to='/'>
+          <img src='~/assets/Logo.png'>
+        </nuxt-link>
+      </div>
+      <el-input placeholder='ID' v-model='username' autofocus />
+      <el-input class='marginBottom' placeholder='비밀번호' v-model='password' show-password />
+      <el-button-group>
+        <el-button type='info' size='small' @click='signUp'>계정 생성</el-button>
+        <el-button type='primary' size='small' @click='signIn'>
+          <font-awesome-icon icon='pencil-alt' />
+          로그인
+        </el-button>
+      </el-button-group>
+      <div class='saveId'>
+        <el-tooltip class='item' effect='dark' content='로그인 ID를 저장합니다.' placement='top'>
+          <el-switch
+            v-model='save'
+            active-color='#29313D' />
+        </el-tooltip>
+        ID 저장
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Loading from '~/components/loading.vue'
-  import Header from '~/components/header.vue'
-  import SideMenu from '~/components/sideMenu.vue'
-  import Footer from '~/components/footer.vue'
-  
   export default {
     layout: 'sign',
-    components: {
-      Loading,
-      Header,
-      SideMenu,
-      Footer
-    },
     data() {
       return {
-        backendVersion: 0,
-        frontendVersion: 54
+        username: '',
+        password: '',
+        save: false
       }
     },
-    beforeMount() {
-      this.$socket.on('newBest', data => {
-        this.$notify({
-          title: data.title,
-          message: '새로운 인기글이 등록되었습니다!',
-          customClass: 'notify best',
-          position: 'top-right',
-          onClick: () => this.move(data)
-        })
-        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
-      })
-      this.$socket.on('newTopic', data => {
-        this.$notify({
-          title: data.title,
-          message: '새로운 글이 등록되었습니다.',
-          customClass: 'notify',
-          position: 'top-right',
-          onClick: () => this.move(data)
-        })
-        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
-      })
+    created() {
+      if (process.browser) {
+        this.save = (localStorage.save === 'true') || false
+        if (this.save) this.username = localStorage.username || ''
+      }
     },
-    mounted() {
-      this.checkVersion()
-      this.checkLogged()
-      this.getNotices()
-      this.updateNotices()
-    },
-    beforeDestroy() {
-      this.$socket.removeAllListeners()
-      this.$socket.clear()
+    updated() {
+      if (process.browser) {
+        if ((localStorage.save === 'true') !== this.save) {
+          localStorage.save = this.save
+          if (!this.save) localStorage.removeItem('username')
+        }
+        if (localStorage.save === 'true' && localStorage.username !== this.username)
+          localStorage.username = this.username
+      }
     },
     methods: {
-      checkVersion: async function() {
-        const data = await this.$axios.$get('/api/version')
-        this.backendVersion = data.version || 0
+      signIn: async function() {
+        if (this.username === '') return this.$message.error('ID를 입력하세요.')
+        if (this.password === '') return this.$message.error('비밀번호를 입력하세요.')
+        this.$store.commit('setLoading', true)
+        const data = await this.$axios.$post('/api/auth/signin', { username: this.username, password: this.password })
+        if (data.status === 'fail') {
+          this.$store.commit('setLoading')
+          return this.$message.error(data.message || '오류가 발생했습니다.')
+        }
+        localStorage.setItem('token', data.token)
+        location.href = '/'
       },
-      checkLogged: async function() {
-        const token = localStorage.token
-        if (!token) return
-        const data = await this.$axios.$get(
-          '/api/auth/check',
-          { headers: { 'x-access-token': token } }
-        )
-        if (data.status === 'fail') return
-        data.token = token
-        this.$store.commit('user/setUser', data)
-      },
-      getNotices: async function() {
-        const token = localStorage.token
-        if (!token) return
-        const data = await this.$axios.$get(
-          '/api/notice',
-          { headers: { 'x-access-token': token } }
-        )
-        if (data.count) this.$store.commit('user/setNoticeCount', data.count)
-      },
-      updateNotices() {
-        setTimeout(async () => {
-          this.getNotices()
-          this.updateNotices()
-        }, 10000)
-      },
-      move(item) {
-        this.$router.push({ path: `/b/${item.domain}/${item.id}` })
-      },
-      aside() {
-        this.$store.commit('setAside')
-      },
-      playSound(sound) {
-        if (!sound) return
-        const audio = new Audio(sound)
-        audio.play()
+      signUp() {
+        this.$router.push({ path: '/signup' })
       }
     }
   }
 </script>
 
 <style>
-  /* Version */
-  .version {
-    position: fixed;
-    bottom: 0;
+  /* Margin */
+  .marginBottom {
+    margin-bottom: .5rem;
+  }
+
+  /* Account Box */
+  .accountBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 360px;
+    margin-top: -115px;
+    margin-left: -115px;
+  }
+  .accountBox .article {
     width: 100%;
-    padding: .5rem 0;
-    border-top: 1px solid rgba(0, 0, 0, .1);
-    background: #29313D;
-    color: yellow;
+    padding: 1rem;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .08);
+    border-radius: .2rem;
+    background: rgba(255, 255, 255, .95);
+  }
+  .accountBox .article .header {
+    width: 280px;
+    margin: .5rem auto 1rem;
+  }
+  .accountBox .article .saveId {
+    margin-top: 10px;
+    color: #333;
     font-size: .8rem;
-    text-align: center;
-    z-index: 10000;
+    float: right;
   }
 
-  /* Popup Menu */
-  .popupMenu {
-    position: fixed;
-    right: 2rem;
-    bottom: 9rem;
-    width: 3rem;
-    height: 3rem;
-    line-height: 3rem;
-    border-radius: 500rem;
-    background: #29313D;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
-    color: #FFF;
-    text-align: center;
-    cursor: pointer;
-    z-index: 10000;
-  }
-  .popupMenu:hover {
-    opacity: .8;
-  }
-
-  .notify {
-    padding: .25rem 0;
-    border: 0;
-    border-radius: .25rem;
-  }
-  .notify:hover {
-    opacity: .9;
-    cursor: pointer;
-  }
-  .notify.best {
-    background: #25c6ff;
-  }
-  .notify.best .el-notification__title,
-  .notify.best .el-notification__content,
-  .notify.best .el-notification__closeBtn { color: #FFF }
-  .notify .el-notification__content { margin: 0 }
+  ::-webkit-scrollbar { display:none }
 </style>
