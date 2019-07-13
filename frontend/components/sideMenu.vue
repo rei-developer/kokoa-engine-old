@@ -1,6 +1,10 @@
 <template>
   <div>
     <el-menu :default-openeds='["5", "6"]'>
+      <el-menu-item index='0' @click='move("/timeline")'>
+        <font-awesome-icon icon='history' />
+        <span>타임라인</span>
+      </el-menu-item>
       <el-menu-item index='1' @click='move("/b/best")'>
         <font-awesome-icon icon='star' />
         <span>인기</span>

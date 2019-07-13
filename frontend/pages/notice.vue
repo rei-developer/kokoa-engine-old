@@ -219,7 +219,7 @@
   }
   .noticeList .item.view {
     background: #FAFAFA;
-    border-left: .5rem solid #00B8FF;
+    border-left: .5rem solid #25c6ff;
   }
   .noticeList .item .image {
     display: flex;

@@ -1,7 +1,3 @@
-html {
-  background-color: #001935 !important;
-}
-
 hr {
   height: 1px !important;
   margin: .5rem 0 !important;
@@ -45,8 +41,8 @@ hr {
 
 .containerSubject {
   margin-bottom: 1rem;
-  color: #FFF;
-  font-size: 1rem;
+  color: #202020;
+  font-size: 1.2rem;
 }
 
 /* Element UI Customize */
@@ -57,38 +53,35 @@ hr {
 }
 .el-header {
   margin-bottom: 1rem !important;
-  border-bottom: 1px solid #21374F !important;
 }
 .el-menu {
   border: 0 !important;
-  background: #001935 !important;
-  border-bottom: 1px solid #21374F !important;
 }
 .el-menu-item,
 .el-submenu__title {
-  background-color: transparent !important;
   border-bottom: 0 !important;
-  color: rgba(255, 255, 255, .65) !important;
 }
 .el-menu-item svg {
   margin-bottom: 5px !important;
 }
-.el-menu-item:hover,
-.el-submenu__title:hover,
-.el-menu-item:active,
-.el-submenu__title:active {
-  background-color: transparent !important;
-}
 .el-aside {
   position: fixed;
   height: 100%;
-  background: #001935;
+  background: #FFF;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
   z-index: 10000;
 }
+
+.el-button--small {
+  height: 32px !important;
+}
+.el-button--info {
+  border-color: #6d7084 !important;
+  background-color: #6d7084 !important;
+}
 .el-button--primary {
-  border-color: #00B8FF !important;
-  background-color: #00B8FF !important;
+  border-color: #25c6ff !important;
+  background-color: #25c6ff !important;
 }
 .el-button--warning {
   border-color: #FFC90E !important;
@@ -98,24 +91,19 @@ hr {
   border-color: #ED1C24 !important;
   background-color: #ED1C24 !important;
 }
-.el-button--info {
-  border-color: #99A3AE !important;
-  background-color: #99A3AE !important;
-  color: #001935 !important;
-}
+.el-button--info:hover,
 .el-button--primary:hover,
 .el-button--warning:hover,
-.el-button--danger:hover,
-.el-button--info:hover {
+.el-button--danger:hover {
   opacity: .8;
 }
 .el-radio-button span:hover {
-  color: #409EFF !important;
+  color: #25c6ff !important;
 }
 .el-radio-button.is-active span {
-  background-color: #00B8FF !important;
-  border-color: #00B8FF !important;
-  box-shadow: -1px 0 0 0 #00B8FF !important;
+  background-color: #29313D !important;
+  border-color: #29313D !important;
+  box-shadow: -1px 0 0 0 #29313D !important;
 }
 .el-radio-button.is-active span:hover {
   color: #FFF !important;
@@ -167,7 +155,7 @@ hr {
   .Container > .item > .sidebar { display: none }
   .AD {
     width: 320px;
-    height: 50px;
+    height: 100px;
     margin: 0 auto;
     margin-bottom: 1rem;
   }

@@ -67,12 +67,18 @@
 <style>
   .recentList {
     margin-bottom: 1rem;
-    border-top: 2px solid #21374F;
+    padding: .5em;
+    border-radius: .25rem;
+    background-color: #F5F5F5;
   }
   .recentList .item {
+    margin-bottom: .5rem;
     padding: .25rem .5rem;
-    border-bottom: 1px solid #405368;
-    color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    background-color: #FFF;
+    color: #25c6ff;
     font-size: .8rem;
     font-weight: bold;
   }
@@ -80,7 +86,8 @@
     margin-bottom: 0;
   }
   .recentList .item:hover {
-    background: #122943;
+    background: #FAFAFA;
+    color: #29313D;
     cursor: pointer;
   }
   .recentList .item span.star img {
@@ -100,7 +107,7 @@
   }
   .recentList .item .event span {
     margin-right: .25rem;
-    color: #939EA9;
+    color: #999;
     font-size: .7rem;
     font-weight: normal;
   }

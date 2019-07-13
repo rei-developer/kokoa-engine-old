@@ -290,7 +290,7 @@
     background: rgba(255, 255, 255, 1);
   }
   .postList .item.view {
-    border-left: .5rem solid #00B8FF;
+    border-left: .5rem solid #25c6ff;
   }
   .postList .item.view,
   .postList .item.reply {
