@@ -9,7 +9,7 @@
           <div class='item'>
             <div class='content'>
               <div class='AD'>
-                <adsbygoogle />
+                <adsbygoogle ad-slot='1882412178' />
               </div>
               <div class='marginBottom'>
                 <el-button-group>

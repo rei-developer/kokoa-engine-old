@@ -6,7 +6,7 @@
       v-on:close='close'
       v-if='id > 0' />
     <div class='AD'>
-      <adsbygoogle />
+      <adsbygoogle ad-slot='1882412178' />
     </div>
     <el-alert
       title='현재 스티커 등록 기능은 개발중에 있습니다. 또한, 스티커 이름이 숫자로 되어있는 것은 이름 미상입니다. 이름을 아시는 분은 건의 게시판으로 알려주세요!'

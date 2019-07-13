@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class='AD'>
-      <adsbygoogle />
+      <adsbygoogle ad-slot='1882412178' />
     </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='comment-dots' />
