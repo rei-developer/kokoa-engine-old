@@ -253,8 +253,6 @@
     border: 1px solid #EEE;
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
-    background-size: cover;
-    background-repeat: repeat;
   }
   .accountBox .profile .image img {
     width: 5rem;

@@ -323,8 +323,6 @@
     position: relative;
     padding: .5rem;
     border-bottom: 1px solid #EEE;
-    background-size: cover;
-    background-repeat: repeat;
   }
   .topicArticle .header .background {
     position: absolute;
