@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <div class='animeBackground' v-if='domain === "anime"' /> -->
     <el-row>
       <el-col :xl='4' hidden-lg-and-down>
         <div class='blank' />
@@ -25,7 +24,8 @@
               </div>
               <div class='Blank' />
               <div class='topicArticle'>
-                <div class='header'>
+                <div class='header' :style='topic.background ? `background-image: url(${"https://idolboard.com/background/" + topic.background})` : ""'>
+                  <div class='background' />
                   <div class='image'>
                     <img :src='topic.profile ? "https://idolboard.com/profile/" + topic.profile : "/profile.png"'>
                   </div>
@@ -102,16 +102,6 @@
                   </div>
                 </div>
                 <div class='info'>
-                  <div class='item' v-if='images'>
-                    <div
-                      class='images'
-                      v-for='(item, index) in images' :key='`i${index}`'>
-                      <font-awesome-icon icon='file-image' />
-                      <a href='#' :download='`https://idolboard.com/img/${item.imageUrl}`'>
-                        <span class='link'>[{{ index + 1 }}] {{ item.name }}</span>
-                      </a>
-                    </div>
-                  </div>
                   <div class='item'>
                     <span>
                       <font-awesome-icon icon='link' />
@@ -314,7 +304,7 @@
     },
     head() {
       return {
-        title: `${this.topic.title} - 아이돌보드`
+        title: `${this.topic.title} - 하와와`
       }
     }
   }
@@ -324,14 +314,25 @@
   .topicArticle {
     display: flex;
     margin-top: 1rem;
+    border: 1px solid #EEE;
     background: rgba(255, 255, 255, .95);
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     flex-direction: column;
   }
   .topicArticle .header {
     display: flex;
+    position: relative;
     padding: .5rem;
-    border-bottom: 1px solid #F5F5F5;
+    border-bottom: 1px solid #EEE;
+    background-size: cover;
+    background-repeat: repeat;
+  }
+  .topicArticle .header .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(255, 255, 255, .5), transparent);
   }
   .topicArticle .header .image {
     display: flex;
@@ -343,7 +344,8 @@
     height: 4.5rem;
     padding: 2px;
     border-radius: 500rem;
-    box-shadow: 1px 1px 5px rgba(41, 49, 61, 1);
+    box-shadow: 1px 1px 5px rgba(41, 49, 61, .3);
+    background: #FFF;
   }
   .topicArticle .header .info {
     display: flex;
@@ -390,7 +392,7 @@
   }
   .topicArticle .header .info .detail span {
     margin-right: .25rem;
-    color: #999;
+    color: #29313D;
     font-size: .7rem;
     font-weight: normal;
   }
@@ -423,11 +425,11 @@
   }
   .topicArticle .info .item {
     padding: .25rem;
-    border-bottom: 1px solid #F5F5F5;
+    border-bottom: 1px solid #EEE;
   }
   .topicArticle .info .item:last-child { border: 0 }
   .topicArticle .info .item span.link:hover {
-    color: #409EFF;
+    color: #25c6ff;
     text-decoration: underline;
     cursor: pointer;
   }

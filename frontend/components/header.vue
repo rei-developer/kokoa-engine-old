@@ -8,13 +8,14 @@
         <el-menu
           class='el-menu'
           mode='horizontal'
-          :router='true'>
+          :router='true'
+          active-text-color='#29313D'>
           <el-menu-item index='0' route='/' class='Logo' @click='forceUpdate'>
             <img src='/favicon.png'>
           </el-menu-item>
-          <el-menu-item index='1' route='/timeline' class='hidden-mobile' @click='forceUpdate'>
-            <font-awesome-icon icon='history' />
-            타임라인
+          <el-menu-item index='1' route='/gallery' class='hidden-mobile' @click='forceUpdate'>
+            <font-awesome-icon icon='camera-retro' />
+            갤러리
           </el-menu-item>
           <el-menu-item index='2' route='/b/best' class='hidden-mobile' @click='forceUpdate'>
             <font-awesome-icon icon='star' />
@@ -23,17 +24,14 @@
           <el-menu-item index='3' route='/b/all' class='hidden-mobile' @click='forceUpdate'>전체</el-menu-item>
           <el-menu-item index='4' route='/b/girl' class='hidden-mobile' @click='forceUpdate'>연예</el-menu-item>
           <el-menu-item index='5' route='/b/talk' class='hidden-mobile' @click='forceUpdate'>토크</el-menu-item>
-          <el-submenu index='6' class='hidden-mobile'>
-            <template slot='title'>게시판</template>
-            <el-menu-item index='6-1' route='/b/feedback' @click='forceUpdate'>건의</el-menu-item>
-            <el-menu-item index='6-2' route='/b/notice' @click='forceUpdate'>공지</el-menu-item>
-          </el-submenu>
-          <el-submenu index='7' class='hidden-mobile'>
+          <el-menu-item index='6' route='/b/feedback' class='hidden-mobile' @click='forceUpdate'>건의</el-menu-item>
+          <el-menu-item index='7' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>
+          <el-submenu index='8' class='hidden-mobile'>
             <template slot='title'>포인트</template>
-            <el-menu-item index='7-1' route='/sticker'>스티커샵</el-menu-item>
-            <el-menu-item index='7-2' route='/iconshop'>아이콘샵</el-menu-item>
+            <el-menu-item index='8-1' route='/sticker'>스티커샵</el-menu-item>
+            <el-menu-item index='8-2' route='/iconshop'>아이콘샵</el-menu-item>
           </el-submenu>
-          <el-submenu index='8' class='rightMenu' v-if='$store.state.user.isLogged'>
+          <el-submenu index='9' class='rightMenu' v-if='$store.state.user.isLogged'>
             <template slot='title'>
               <div class='Avatar'>
                 <img :src='$store.state.user.profileImageUrl'>
@@ -42,17 +40,16 @@
               <img class='Icon' :src='`https://idolboard.com/icon/${$store.state.user.icon}`' v-if='$store.state.user.icon !== ""'>
               {{ $store.state.user.nickname }}
             </template>
-            <el-menu-item index='8-1' route='/edit'>프로필 편집</el-menu-item>
-            <el-menu-item index='8-2' route='/edit/myTopicList'>내 작성글</el-menu-item>
-            <el-menu-item index='8-3' route='/edit/myPostList'>내 작성 댓글</el-menu-item>
-            <el-menu-item @click='development'>블라인드 목록</el-menu-item>
-            <el-menu-item @click='signOut'>로그아웃</el-menu-item>
+            <el-menu-item index='9-1' route='/edit'>프로필 편집</el-menu-item>
+            <el-menu-item index='9-2' route='/edit/topic'>내 작성글</el-menu-item>
+            <el-menu-item index='9-3' route='/edit/post'>내 작성 댓글</el-menu-item>
+            <el-menu-item index='9-4' @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
-          <el-menu-item index='8' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
+          <el-menu-item index='9' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
             <font-awesome-icon icon='sign-in-alt' />
             로그인
           </el-menu-item>
-          <el-menu-item index='9' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
+          <el-menu-item index='10' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
             <font-awesome-icon icon='envelope' />
             <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
           </el-menu-item>
@@ -71,9 +68,6 @@
       forceUpdate() {
         this.$store.commit('forceUpdate')
       },
-      development() {
-        this.$alert('현재 개발중입니다. 이용에 불편을 드려 대단히 죄송합니다.', '알림', { confirmButtonText: '확인' })
-      },
       signOut() {
         if (!this.$store.state.user.isLogged) return
         this.$store.commit('user/signOut')
@@ -86,6 +80,9 @@
   /* Header */
   .Header {
     position: relative;
+    margin-bottom: 1rem;
+    background-image: url(/header.png);
+    background-color: #FFF;
     overflow: visible;
     z-index: 1;
   }
@@ -96,6 +93,7 @@
     border-bottom-color: transparent !important;
   }
   .Logo:hover {
+    background-color: transparent !important;
     opacity: 0.8;
   }
   .Logo img {
@@ -116,7 +114,7 @@
     display: inline-block;
     width: 40px;
     height: 40px;
-    margin: 0 .25rem 6px;
+    margin: 0 .25rem 3px;
     padding: 2px;
     border: 1px solid #DDD;
     border-radius: 500rem;

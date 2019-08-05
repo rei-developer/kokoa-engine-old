@@ -267,34 +267,34 @@
   .postBox {
     margin-top: 1rem;
     padding: .5rem;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
-    background: rgba(255, 255, 255, 1);
+    border: 1px solid #EEE;
+    background: #FFF;
   }
   .postReplyWrite,
   .postUpdate {
     padding: .5rem;
-    border-bottom: 1px solid #F5F5F5;
-    background: rgba(255, 255, 255, 1);
+    border-bottom: 1px solid #EEE;
+    background: #FFF;
   }
 
   /* Post List */
   .postList {
     display: flex;
-    flex-direction: column;
     margin-top: 1rem;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #EEE;
+    flex-direction: column;
   }
   .postList .item {
     display: flex;
-    border-bottom: 1px solid #F5F5F5;
-    background: rgba(255, 255, 255, 1);
+    border-bottom: 1px solid #EEE;
+    background: #FFF;
   }
   .postList .item.view {
-    border-left: .5rem solid #25c6ff;
+    border-left: .25rem solid #29313D;
   }
   .postList .item.view,
   .postList .item.reply {
-    background: rgba(245, 245, 245, 1);
+    background: #FBFBFB;
   }
   .postList .item .reply {
     display: flex;
@@ -368,7 +368,7 @@
     border-radius: .25rem;
   }
   .postList .item .info .desciption span.writer {
-    color: #409EFF;
+    color: #25c6ff;
     font-weight: bold;
   }
   .postList .item .info .desciption span.tagUser {

@@ -1,12 +1,12 @@
-const fs            = require('fs')
-const jwt           = require('jsonwebtoken')
+const fs = require('fs')
+const jwt = require('jsonwebtoken')
 const bkfd2Password = require('pbkdf2-password')
-const User          = require('../../lib/user')
-const Crypto        = require('../../lib/crypto')
-const SendMail      = require('../../lib/email')
-const createUser    = require('../../database/user/createUser')
-const readUser      = require('../../database/user/readUser')
-const updateUser    = require('../../database/user/updateUser')
+const User = require('../../lib/user')
+const Crypto = require('../../lib/crypto')
+const SendMail = require('../../lib/email')
+const createUser = require('../../database/user/createUser')
+const readUser = require('../../database/user/readUser')
+const updateUser = require('../../database/user/updateUser')
 
 const hasher = bkfd2Password()
 
@@ -115,15 +115,55 @@ exports.updateUserByProfileImage = async ctx => {
   ctx.body = { status: 'ok' }
 }
 
-exports.updateUser = async ctx => {
-  let { nickname } = ctx.request.body
+exports.updateUserByBackgroundImage = async ctx => {
+  const { url } = ctx.request.body
+  if (url === '') return
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
+  const getBackgroundImageUrl = await readUser.backgroundImageUrl(user.id)
+  if (getBackgroundImageUrl && getBackgroundImageUrl !== '') fs.unlink(`./background/${getBackgroundImageUrl}`, () => { })
+  await updateUser({ backgroundImageUrl: url }, user.id)
+  ctx.body = { status: 'ok' }
+}
+
+exports.updateUser = async ctx => {
+  let {
+    username,
+    nickname,
+    newPassword,
+    newPassword2
+  } = ctx.request.body
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  if (username === '') username = user.username
   if (nickname === '') nickname = user.nickname
+  if (username !== user.username) {
+    const getUsername = await readUser.username(username)
+    if (getUsername) return ctx.body = { message: '이미 존재하는 ID입니다.', status: 'fail' }
+  }
   if (nickname !== user.nickname) {
     const getNickname = await readUser.nickname(nickname)
     if (getNickname) return ctx.body = { message: '이미 존재하는 닉네임입니다.', status: 'fail' }
   }
-  await updateUser({ nickname }, user.id)
+  if (newPassword !== '' && newPassword2 !== '' && newPassword === newPassword2) {
+    const getSalt = await readUser.salt(user.id)
+    console.log(getSalt)
+    try {
+      const result = await new Promise((resolve, reject) => {
+        hasher({ password: newPassword, salt: getSalt }, async (err, pass, salt, hash) => {
+          if (err) return reject({ message: err, status: 'fail' })
+          await updateUser.password(hash, salt, user.id)
+          resolve({ status: 'ok' })
+        })
+      })
+      return ctx.body = result
+    } catch (e) {
+      return ctx.body = e
+    }
+  }
+  await updateUser({
+    username,
+    nickname
+  }, user.id)
   ctx.body = { status: 'ok' }
 }

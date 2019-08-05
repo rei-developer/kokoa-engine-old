@@ -5,7 +5,7 @@
     </no-ssr>
     <el-container>
       <el-aside width='200px' v-if='$store.state.aside'>
-        <SideMenu />
+        <Sidemenu />
       </el-aside>
       <el-container>
         <div class='version' v-if='frontendVersion < backendVersion'>
@@ -28,20 +28,20 @@
 <script>
   import Loading from '~/components/loading.vue'
   import Header from '~/components/header.vue'
-  import SideMenu from '~/components/sideMenu.vue'
+  import Sidemenu from '~/components/sideMenu.vue'
   import Footer from '~/components/footer.vue'
   
   export default {
     components: {
       Loading,
       Header,
-      SideMenu,
+      Sidemenu,
       Footer
     },
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 58
+        frontendVersion: 59
       }
     },
     beforeMount() {
@@ -53,7 +53,7 @@
           position: 'top-right',
           onClick: () => this.move(data)
         })
-        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
+        this.playSound('/alram.mp3')
       })
       this.$socket.on('newTopic', data => {
         this.$notify({
@@ -63,7 +63,7 @@
           position: 'top-right',
           onClick: () => this.move(data)
         })
-        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
+        this.playSound('/alram.mp3')
       })
     },
     mounted() {
@@ -140,18 +140,19 @@
   /* Popup Menu */
   .popupMenu {
     position: fixed;
-    right: 2rem;
-    bottom: 9rem;
-    width: 3rem;
-    height: 3rem;
-    line-height: 3rem;
+    left: 2rem;
+    bottom: 2rem;
+    width: 4rem;
+    height: 4rem;
+    line-height: 3.9rem;
     border-radius: 500rem;
-    background: #25c6ff;
+    background: #29313D;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
     color: #FFF;
+    font-size: 1.5rem;
     text-align: center;
     cursor: pointer;
-    z-index: 10000;
+    z-index: 100;
   }
   .popupMenu:hover {
     opacity: .8;
@@ -167,7 +168,7 @@
     cursor: pointer;
   }
   .notify.best {
-    background: #409EFF;
+    background: #25c6ff;
   }
   .notify.best .el-notification__title,
   .notify.best .el-notification__content,
