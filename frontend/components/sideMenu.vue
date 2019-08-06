@@ -4,7 +4,7 @@
       <el-menu-item class='is-active' index='1' @click='exit()'>
         <font-awesome-icon icon='times' />
       </el-menu-item>
-      <el-menu-item index='2' @click='move("/chart")'>
+      <el-menu-item index='2' @click='move("/pick")'>
         <font-awesome-icon icon='chart-line' />
         <span>아이돌 차트</span>
       </el-menu-item>

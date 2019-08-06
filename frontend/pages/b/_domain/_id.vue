@@ -304,7 +304,7 @@
     },
     head() {
       return {
-        title: `${this.topic.title} - 하와와`
+        title: `${this.topic.title} - 아이돌보드`
       }
     }
   }

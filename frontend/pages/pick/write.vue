@@ -79,7 +79,7 @@
           this.loading = false
           return this.$message.error(data.message || '오류가 발생했습니다.')
         }
-        this.$router.push({ path: `/chart` })
+        this.$router.push({ path: `/pick/${data.pickId}` })
       },
       imageUpload: async function(e) {
         this.temps = e.target.files

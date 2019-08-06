@@ -12,7 +12,7 @@
                 <adsbygoogle ad-slot='1882412178' />
               </div>
               <div>
-                <nuxt-link :to='`/chart/write`' v-if='$store.state.user.isLogged'>
+                <nuxt-link :to='`/pick/write`' v-if='$store.state.user.isLogged'>
                   <el-button class='floatRight' type='primary' size='small'>아이돌 등록</el-button>
                 </nuxt-link>
               </div>
@@ -24,15 +24,27 @@
                 <div class='name'>{{ acename }}</div>
                 <div class='group'>{{ acegroupname }} ({{ acepureGroupname }})</div>
               </div>
+              <div class='marginVertical'>
+                <el-input class='input-with-select' size='medium' placeholder='검색어 (2글자 이상)' v-model='searches.text'>
+                  <el-select v-model='searches.select' slot='prepend'>
+                    <el-option label='예명' :value='0' />
+                    <el-option label='그룹' :value='1' />
+                  </el-select>
+                  <el-button slot='append' @click='search'>
+                    <font-awesome-icon icon='search' />
+                    검색
+                  </el-button>
+                </el-input>
+              </div>
               <div class='chartList'>
                 <div
                   class='item'
                   v-for='(item, index) in picks' :key='index'>
                   <div class='grade'>{{ numberWithCommas(index + 1) }}</div>
-                  <div class='image'>
+                  <div class='image' @click='move(item)'>
                     <img :src='item.profile ? "https://idolboard.com/pick/thumb/" + item.profile : "/default.png"'>
                   </div>
-                  <div class='info'>
+                  <div class='info' @click='move(item)'>
                     <div class='name'>{{ item.name }}</div>
                     <div class='group'>{{ item.groupname }} ({{ item.pureGroupname }})</div>
                   </div>
@@ -71,6 +83,10 @@
         aceprofileImageUrl: '',
         picks: [],
         picksCount: 0,
+        searches: {
+          text: '',
+          select: 0
+        },
         page: 0,
         bottom: false
       }
@@ -101,15 +117,20 @@
         }
         const data = await this.$axios.$post(
           '/api/pick/list',
-          { page: this.page++ }
+          {
+            searches: this.searches,
+            page: this.page++
+          }
         )
         if (!data.picks) return this.$store.commit('setLoading')
         data.picks.map(topic => this.picks.push(topic))
         this.picksCount = data.count
-        this.acename = data.picks[0].name
-        this.acegroupname = data.picks[0].groupname
-        this.acepureGroupname = data.picks[0].pureGroupname
-        this.aceprofileImageUrl = data.picks[0].profile
+        if (this.page === 1) {
+          this.acename = data.picks[0].name
+          this.acegroupname = data.picks[0].groupname
+          this.acepureGroupname = data.picks[0].pureGroupname
+          this.aceprofileImageUrl = data.picks[0].profile
+        }
         this.$store.commit('setLoading')
         return data
       },
@@ -132,6 +153,15 @@
           this.$store.commit('setLoading')
         }
       },
+      search: async function() {
+        if (this.searches.text === '') return this.$message.error('검색어를 입력하세요.')
+        if (this.searches.text.length < 2) return this.$message.error('검색어는 두 글자 이상 입력하세요.')
+        this.page = 1
+        this.getData(true)
+      },
+      move(item) {
+        this.$router.push({ path: `/pick/${item.id}` })
+      },
       bottomVisible() {
         if (process.browser) {
           const scrollY = window.pageYOffset
@@ -151,12 +181,15 @@
 <style>
   .chartAce {
     position: relative;
-    height: 20rem;
-    margin: .5rem 0;
+    height: 40rem;
+    margin-top: .5rem;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
     background-size: cover;
-    background-position: center center;
+    background-position: top center;
+  }
+  @media (max-width: 1023px) {
+    .chartAce { height: 20rem }
   }
   .chartAce .background {
     position: absolute;
@@ -195,6 +228,10 @@
     margin-bottom: .5rem;
     border: 1px solid #EEE;
     background: #FFF;
+  }
+  .chartList .item:hover {
+    background: #F0F0F0;
+    cursor: pointer;
   }
   .chartList .item .grade {
     display: flex;

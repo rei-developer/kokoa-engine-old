@@ -57,11 +57,11 @@ module.exports.picks = async (columns, searches, page, limit) => {
   let data = []
   if (searches.text !== '') {
     switch (searches.select) {
-      case 1:
+      case 0:
         query = ' AND MATCH (name) AGAINST (?)'
         data = [searches.text]
         break
-      case 2:
+      case 1:
         query = ' AND MATCH (groupname) AGAINST (?) OR MATCH (pureGroupname) AGAINST (?)'
         data = [searches.text, searches.text]
         break

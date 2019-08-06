@@ -13,7 +13,7 @@
           <el-menu-item index='1' route='/' class='Logo' @click='forceUpdate'>
             <img src='/favicon.png'>
           </el-menu-item>
-          <el-menu-item index='2' route='/chart' class='hidden-mobile' @click='forceUpdate'>
+          <el-menu-item index='2' route='/pick' class='hidden-mobile' @click='forceUpdate'>
             <font-awesome-icon icon='chart-line' />
             아이돌 차트
           </el-menu-item>
