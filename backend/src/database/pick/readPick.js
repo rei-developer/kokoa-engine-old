@@ -14,7 +14,7 @@ module.exports = async id => {
       profileImageUrl profile
     FROM Picks
     WHERE id = ?
-    ORDER BY likes DESC`,
+    ORDER BY likes`,
     [id]
   )
   if (result.length < 1) return false
