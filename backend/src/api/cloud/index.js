@@ -20,6 +20,7 @@ const app = new Router()
 
 app.post('/profile', upload.single('image'), Controller.createImage())
 app.post('/background', upload.single('image'), Controller.createImage('background'))
+app.post('/pick', upload.single('image'), Controller.createImage('pick'))
 app.post('/topic', upload.single('image'), Controller.createImage('topic'))
 
 module.exports = app

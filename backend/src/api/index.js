@@ -4,10 +4,11 @@ const chart = require('./chart')
 const cloud = require('./cloud')
 const icon = require('./icon')
 const notice = require('./notice')
+const pick = require('./pick')
 const sticker = require('./sticker')
 const topic = require('./topic')
 
-const VERSION = 63
+const VERSION = 64
 
 const app = new Router()
 
@@ -17,6 +18,7 @@ app.use('/chart', chart.routes())
 app.use('/cloud', cloud.routes())
 app.use('/icon', icon.routes())
 app.use('/notice', notice.routes())
+app.use('/pick', pick.routes())
 app.use('/sticker', sticker.routes())
 app.use('/topic', topic.routes())
 

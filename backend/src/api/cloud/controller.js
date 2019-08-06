@@ -52,6 +52,13 @@ module.exports.createImage = type => async ctx => {
                 .toBuffer()
               )
               .then(result => fs.writeFile(`./background/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))
+          } else if (type === 'pick') {
+            image.metadata()
+              .then((metadata) => image.resize(Math.min(metadata.width, 960))
+                .jpeg(80)
+                .toBuffer()
+              )
+              .then(result => fs.writeFile(`./pick/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))
           } else {
             image.metadata()
               .then(() => image.resize(100, 100)
@@ -67,6 +74,13 @@ module.exports.createImage = type => async ctx => {
               .toBuffer()
             )
             .then(result => fs.writeFile(`./img/thumb/${filename}`, result, () => { }))
+        } else if (type === 'pick') {
+          const thumbnail = sharp(data)
+          thumbnail.metadata()
+            .then(() => thumbnail.resize(80, 80)
+              .toBuffer()
+            )
+            .then(result => fs.writeFile(`./pick/thumb/${filename}`, result, () => { }))
         }
       })
       ctx.body = { filename, status: 'ok' }
