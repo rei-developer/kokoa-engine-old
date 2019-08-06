@@ -29,15 +29,12 @@ module.exports.createPick = async ctx => {
     pureGroupname,
     filename
   } = ctx.request.body
-
-  console.log(filename)
-
   if (name === '' || groupname === '' || pureGroupname === '') return
   name = Filter.disable(name)
   groupname = Filter.disable(groupname)
   pureGroupname = Filter.disable(pureGroupname)
-
   await createPick({
+    userId: user.id,
     name,
     groupname,
     pureGroupname,
