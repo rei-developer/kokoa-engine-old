@@ -13,9 +13,10 @@
               </div>
               <div class='marginBottom'>
                 <el-button-group>
-                  <el-button type='primary' size='small' @click='getData("all", true)' round>전체</el-button>
-                  <el-button type='info' size='small' @click='getData("best", true)' round>인기</el-button>
-                  <el-button type='info' size='small' @click='getData("girl", true)' round>연예</el-button>
+                  <el-button type='primary' size='small' @click='getData("all", true)' round>전체글</el-button>
+                  <el-button type='info' size='small' @click='getData("best", true)' round>핫이슈</el-button>
+                  <el-button type='info' size='small' @click='getData("girl", true)' round>연예인</el-button>
+                  <el-button type='info' size='small' @click='getData("support", true)' round>서포트</el-button>
                 </el-button-group>
               </div>
               <masonry

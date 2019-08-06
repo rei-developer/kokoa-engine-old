@@ -1,29 +1,20 @@
 module.exports.getBoardName = domain => {
   let name = ''
   switch (domain) {
-    case 'all':
-      name = '전체'
-      break
     case 'best':
-      name = '인기'
+      name = '핫이슈'
+      break
+    case 'all':
+      name = '전체글'
       break
     case 'girl':
-      name = '연예'
+      name = '연예인'
       break
-    case 'anime':
-      name = '애니'
-      break
-    case 'talk':
-      name = '토크'
-      break
-    case 'history':
-      name = '역사'
-      break
-    case 'feedback':
-      name = '건의'
+    case 'support':
+      name = '서포트'
       break
     case 'notice':
-      name = '공지'
+      name = '공지사항'
       break
   }
   return name
