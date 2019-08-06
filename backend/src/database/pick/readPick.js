@@ -14,7 +14,7 @@ module.exports = async id => {
       profileImageUrl profile
     FROM Picks
     WHERE id = ?
-    ORDER BY likes`,
+    ORDER BY likes DESC`,
     [id]
   )
   if (result.length < 1) return false
@@ -81,7 +81,7 @@ module.exports.picks = async (columns, searches, page, limit) => {
         profileImageUrl profile
       FROM Picks
       WHERE ${keys.map(key => `${key} = ?`).join(' AND ')}${query}
-      ORDER BY id DESC
+      ORDER BY likes DESC
       LIMIT ?, ?`,
       searches.text === ''
         ? [...values, page * limit, limit]
