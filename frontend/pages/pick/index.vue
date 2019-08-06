@@ -137,13 +137,10 @@
       votes: async function(id) {
         if (process.browser) {
           if (id < 1) return
-          if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
-          const token = this.$store.state.user.token
           this.$store.commit('setLoading', true)
           const data = await this.$axios.$post(
             '/api/pick/vote',
-            { id, likes: true },
-            { headers: { 'x-access-token': token } }
+            { id, likes: true }
           )
           if (data.status === 'fail') {
             this.$store.commit('setLoading')

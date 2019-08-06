@@ -69,11 +69,7 @@
     },
     async asyncData ({ app, params, store, $axios }) {
       const id = params.id
-      const token = store.state.user.isLogged ? store.state.user.token : ''
-      const data = await $axios.$get(
-        `/api/pick/read/${id}`,
-        { headers: { 'x-access-token': token } }
-      )
+      const data = await $axios.$get(`/api/pick/read/${id}`)
       if (data.status === 'fail') return console.log(data.message)
       return {
         id,
@@ -83,13 +79,10 @@
     methods: {
       votes: async function() {
         if (this.id < 1) return
-        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
-        const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
         const data = await this.$axios.$post(
           '/api/pick/vote',
-          { id: this.id },
-          { headers: { 'x-access-token': token } }
+          { id: this.id }
         )
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
