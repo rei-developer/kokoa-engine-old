@@ -23,9 +23,12 @@
           </el-menu-item>
           <el-menu-item index='3' route='/b/all' class='hidden-mobile' @click='forceUpdate'>전체</el-menu-item>
           <el-menu-item index='4' route='/b/girl' class='hidden-mobile' @click='forceUpdate'>연예</el-menu-item>
-          <el-menu-item index='5' route='/b/talk' class='hidden-mobile' @click='forceUpdate'>토크</el-menu-item>
-          <el-menu-item index='6' route='/b/feedback' class='hidden-mobile' @click='forceUpdate'>건의</el-menu-item>
-          <el-menu-item index='7' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>
+          <el-menu-item index='5' route='/b/feedback' class='hidden-mobile' @click='forceUpdate'>건의</el-menu-item>
+          <el-menu-item index='6' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>
+          <el-menu-item index='7' route='/chart' class='hidden-mobile' @click='forceUpdate'>
+            <font-awesome-icon icon='chart-line' />
+            아이돌 차트
+          </el-menu-item>
           <el-submenu index='8' class='hidden-mobile'>
             <template slot='title'>포인트</template>
             <el-menu-item index='8-1' route='/sticker'>스티커샵</el-menu-item>

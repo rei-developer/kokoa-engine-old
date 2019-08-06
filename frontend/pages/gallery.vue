@@ -16,7 +16,6 @@
                   <el-button type='primary' size='small' @click='getData("all", true)' round>전체</el-button>
                   <el-button type='info' size='small' @click='getData("best", true)' round>인기</el-button>
                   <el-button type='info' size='small' @click='getData("girl", true)' round>연예</el-button>
-                  <el-button type='info' size='small' @click='getData("talk", true)' round>토크</el-button>
                 </el-button-group>
               </div>
               <masonry
@@ -44,44 +43,6 @@
                   </div>
                 </div>
               </masonry>
-              <!--
-              <div class='indexTopicList'>
-                <div
-                  class='item'
-                  v-for='(item, index) in topics' :key='index'>
-                  <div class='grade'>
-                    <span class='likes'>
-                      <font-awesome-icon icon='angle-up' />
-                      {{ numberWithCommas(item.likes) }}
-                    </span>
-                    <el-button
-                      size='mini'
-                      plain round
-                      @click='votes(item.id)'>
-                      <font-awesome-icon icon='heart' />
-                    </el-button>
-                  </div>
-                  <div class='image' @click='move(item)'>
-                    <img :src='item.imageUrl ? "https://idolboard.com/img/thumb/" + item.imageUrl : "/default.png"'>
-                  </div>
-                  <div class='info' @click='move(item)'>
-                    <div class='subject'>
-                      <span class='board'>{{ getBoardName(item.boardDomain) }}</span>
-                      <span class='star' v-if='item.isBest > 0'>
-                        <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
-                      </span>
-                      <span class='category' v-if='item.category !== ""'>{{ item.category }}</span>
-                      {{ item.title }}
-                      <span class='newest' v-if='$moment().diff($moment(item.created), "days") <= 1'>NEW</span>
-                      <span class='posts' v-if='item.postsCount > 0'>{{ numberWithCommas(item.postsCount) }}</span>
-                    </div>
-                    <div class='regdate'>
-                      <font-awesome-icon icon='clock' />
-                      {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </div>
             <div class='sidebar'>
               <Recent />

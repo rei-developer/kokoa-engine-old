@@ -18,14 +18,15 @@
       <el-menu-item index='5' @click='move("/b/girl")'>
         <span>연예</span>
       </el-menu-item>
-      <el-menu-item index='6' @click='move("/b/talk")'>
-        <span>토크</span>
-      </el-menu-item>
-      <el-menu-item index='7' @click='move("/b/feedback")'>
+      <el-menu-item index='6' @click='move("/b/feedback")'>
         <span>건의</span>
       </el-menu-item>
-      <el-menu-item index='8' @click='move("/b/notice")'>
+      <el-menu-item index='7' @click='move("/b/notice")'>
         <span>공지</span>
+      </el-menu-item>
+      <el-menu-item index='8' @click='move("/chart")'>
+        <font-awesome-icon icon='chart-line' />
+        <span>아이돌 차트</span>
       </el-menu-item>
       <el-submenu index='9'>
         <template slot='title'>포인트</template>
