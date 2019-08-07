@@ -83,6 +83,7 @@
   .Header {
     position: relative;
     margin-bottom: 1rem;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .25);
     background-image: url(/header.png);
     background-color: #FFF;
     overflow: visible;
@@ -131,8 +132,8 @@
 
   /* Icon */
   img.Icon {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
     margin-top: -4px;
   }
 

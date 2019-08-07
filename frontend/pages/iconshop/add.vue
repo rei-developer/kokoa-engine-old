@@ -133,7 +133,7 @@
     font-size: .9rem;
   }
   .iconAdd .preview {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
   }
 </style>

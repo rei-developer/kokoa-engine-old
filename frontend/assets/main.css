@@ -129,6 +129,11 @@ ul.el-menu--horizontal .el-submenu__title,
 .el-pagination li { background: transparent !important }
 .el-pagination li { margin-top: 0 !important }
 
+.ql-editor {
+  height: 300px !important;
+  overflow-y: auto !important;
+}
+
 /* Router Progress */
 .page-enter-active, .page-leave-active {
   transition-duration: .5s;
