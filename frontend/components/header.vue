@@ -26,7 +26,7 @@
             핫이슈
           </el-menu-item>
           <el-menu-item index='5' route='/b/girl' class='hidden-mobile' @click='forceUpdate'>연예인</el-menu-item>
-          <el-menu-item index='6' route='/b/support' class='hidden-mobile' @click='forceUpdate'>서포트</el-menu-item>
+          <el-menu-item index='6' route='/b/photo' class='hidden-mobile' @click='forceUpdate'>은꼴사</el-menu-item>
           <el-menu-item index='7' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지사항</el-menu-item>
           <el-submenu index='8' class='hidden-mobile'>
             <template slot='title'>포인트</template>

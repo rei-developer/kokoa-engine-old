@@ -19,8 +19,8 @@
       <el-menu-item index='5' @click='move("/b/girl")'>
         <span>연예인</span>
       </el-menu-item>
-      <el-menu-item index='6' @click='move("/b/support")'>
-        <span>서포트</span>
+      <el-menu-item index='6' @click='move("/b/photo")'>
+        <span>은꼴사</span>
       </el-menu-item>
       <el-menu-item index='6' @click='move("/b/notice")'>
         <span>공지사항</span>

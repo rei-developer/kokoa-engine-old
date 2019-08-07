@@ -290,8 +290,8 @@
     font-size: .7rem;
   }
   .pickPostList .item .info .author img.icon {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
     vertical-align: text-top;
   }
   .pickPostList .item .info .author span.userTitle {

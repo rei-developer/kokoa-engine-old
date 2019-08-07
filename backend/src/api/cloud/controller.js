@@ -35,6 +35,7 @@ module.exports.createImage = type => async ctx => {
         if (checkerByGIF) {
           execFile(giflossy, ['-O3', '--lossy=80', '-o', `./img/${filename}`, `./img/${filename}`], err => {
             if (err) return ctx.body = { message: err, status: 'fail' }
+            if (type === 'icon') fs.writeFile(`./icon/${filename}`, data, () => fs.unlink(`./img/${filename}`, () => { }))
           })
         } else {
           const image = sharp(data)
@@ -54,7 +55,7 @@ module.exports.createImage = type => async ctx => {
               .then(result => fs.writeFile(`./background/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))
           } else if (type === 'icon') {
             image.metadata()
-              .then(() => image.resize(16, 16)
+              .then(() => image.resize(23, 23)
                 .toBuffer()
               )
               .then(result => fs.writeFile(`./icon/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))

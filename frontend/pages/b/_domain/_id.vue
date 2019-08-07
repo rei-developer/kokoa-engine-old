@@ -377,8 +377,8 @@
     font-weight: bold;
   }
   .topicArticle .header .info .author img.icon {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
     vertical-align: text-top;
   }
   .topicArticle .header .info .author span.userTitle {

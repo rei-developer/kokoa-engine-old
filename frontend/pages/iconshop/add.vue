@@ -34,7 +34,7 @@
             <input
               type='file'
               @change='imageUpload' />
-            1MB
+            1MB (23 * 23)
           </div>
         </div>
         <div class='marginVertical'>

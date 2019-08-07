@@ -250,8 +250,8 @@
     font-weight: bold;
   }
   .noticeList .item .info .author img.icon {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
     vertical-align: text-top;
   }
   .noticeList .item .info .author span.best {

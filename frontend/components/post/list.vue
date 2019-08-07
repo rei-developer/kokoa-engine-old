@@ -341,8 +341,8 @@
     font-size: .7rem;
   }
   .postList .item .info .author img.icon {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
     vertical-align: text-top;
   }
   .postList .item .info .author span.userTitle {
