@@ -1,3 +1,4 @@
+const Filter = require('../../lib/filter')
 const User = require('../../lib/user')
 const createIcon = require('../../database/icon/createIcon')
 const readIcon = require('../../database/icon/readIcon')
