@@ -25,7 +25,6 @@
               <div class='Blank' />
               <div class='topicArticle'>
                 <div class='header' :style='topic.background ? `background-image: url(${"https://idolboard.com/background/" + topic.background})` : ""'>
-                  <div class='background' />
                   <div class='image'>
                     <img :src='topic.profile ? "https://idolboard.com/profile/" + topic.profile : "/profile.png"'>
                   </div>
@@ -323,14 +322,6 @@
     position: relative;
     padding: .5rem;
     border-bottom: 1px solid #EEE;
-  }
-  .topicArticle .header .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(255, 255, 255, .5), transparent);
   }
   .topicArticle .header .image {
     display: flex;
