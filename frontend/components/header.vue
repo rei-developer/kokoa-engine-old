@@ -30,8 +30,8 @@
           <el-menu-item index='7' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지사항</el-menu-item>
           <el-submenu index='8' class='hidden-mobile'>
             <template slot='title'>포인트</template>
-            <el-menu-item index='8-1' route='/sticker'>스티커샵</el-menu-item>
-            <el-menu-item index='8-2' route='/iconshop'>아이콘샵</el-menu-item>
+            <el-menu-item index='8-1' route='/iconshop'>아이콘샵</el-menu-item>
+            <el-menu-item index='8-2' route='/sticker'>스티커샵</el-menu-item>
           </el-submenu>
           <el-submenu index='9' class='rightMenu' v-if='$store.state.user.isLogged'>
             <template slot='title'>

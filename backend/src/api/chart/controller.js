@@ -1,7 +1,7 @@
-const moment      = require('moment')
-const User        = require('../../lib/user')
+const moment = require('moment')
+const User = require('../../lib/user')
 const createChart = require('../../database/chart/createChart')
-const readChart   = require('../../database/chart/readChart')
+const readChart = require('../../database/chart/readChart')
 
 module.exports.votes = async ctx => {
   const user = await User.getUser(ctx.get('x-access-token'))

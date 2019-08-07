@@ -1,5 +1,6 @@
-const User          = require('../../lib/user')
-const readIcon      = require('../../database/icon/readIcon')
+const User = require('../../lib/user')
+const createIcon = require('../../database/icon/createIcon')
+const readIcon = require('../../database/icon/readIcon')
 
 module.exports.getIcons = async ctx => {
   const { ...body } = ctx.request.body
@@ -8,6 +9,27 @@ module.exports.getIcons = async ctx => {
   const count = await readIcon.count()
   const icons = await readIcon.icons(page, limit)
   ctx.body = { count, icons, status: 'ok' }
+}
+
+module.exports.createIcon = async ctx => {
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  let {
+    name,
+    description,
+    price,
+    filename
+  } = ctx.request.body
+  if (name === '' || description === '') return
+  name = Filter.disable(name)
+  description = Filter.disable(description)
+  await createIcon({
+    name,
+    description,
+    price,
+    filename
+  })
+  ctx.body = { status: 'ok' }
 }
 
 module.exports.buy = async ctx => {

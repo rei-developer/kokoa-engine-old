@@ -11,6 +11,11 @@
         <span class='bold'>{{ numberWithCommas($store.state.user.point) }}</span>
       </div>
     </div>
+    <div>
+      <nuxt-link :to='`/iconshop/add`' v-if='$store.state.user.isLogged'>
+        <el-button class='floatRight' type='primary' size='small'>아이콘 등록</el-button>
+      </nuxt-link>
+    </div>
     <div class='iconshopList'>
       <div
         class='item'
@@ -67,7 +72,7 @@
       buyHandler: async function(item) {
         if (this.loading) return
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
-        this.$confirm('정말로 구매하시겠습니까?', '알림', {
+        this.$confirm('정말로 해당 아이콘으로 교체하시겠습니까?', '알림', {
           confirmButtonText: '구매',
           cancelButtonText: '취소'
         }).then(() => {

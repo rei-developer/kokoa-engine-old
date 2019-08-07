@@ -52,6 +52,12 @@ module.exports.createImage = type => async ctx => {
                 .toBuffer()
               )
               .then(result => fs.writeFile(`./background/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))
+          } else if (type === 'icon') {
+            image.metadata()
+              .then(() => image.resize(16, 16)
+                .toBuffer()
+              )
+              .then(result => fs.writeFile(`./icon/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))
           } else if (type === 'pick') {
             image.metadata()
               .then((metadata) => image.resize(Math.min(metadata.width, 960))

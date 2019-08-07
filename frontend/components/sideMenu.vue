@@ -27,8 +27,8 @@
       </el-menu-item>
       <el-submenu index='8'>
         <template slot='title'>포인트</template>
-        <el-menu-item index='8-1' @click='move("/sticker")'>스티커샵</el-menu-item>
-        <el-menu-item index='8-2' @click='move("/iconshop")'>아이콘샵</el-menu-item>
+        <el-menu-item index='8-1' @click='move("/iconshop")'>아이콘샵</el-menu-item>
+        <el-menu-item index='8-2' @click='move("/sticker")'>스티커샵</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
