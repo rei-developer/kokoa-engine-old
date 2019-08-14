@@ -20,7 +20,7 @@
         <span>연예인</span>
       </el-menu-item>
       <el-menu-item index='6' @click='move("/b/photo")'>
-        <span>은꼴사</span>
+        <span>짤모음</span>
       </el-menu-item>
       <el-menu-item index='6' @click='move("/b/notice")'>
         <span>공지사항</span>

@@ -16,7 +16,7 @@
                   <el-button type='primary' size='small' @click='getData("all", true)' round>전체글</el-button>
                   <el-button type='info' size='small' @click='getData("best", true)' round>핫이슈</el-button>
                   <el-button type='info' size='small' @click='getData("girl", true)' round>연예인</el-button>
-                  <el-button type='info' size='small' @click='getData("photo", true)' round>은꼴사</el-button>
+                  <el-button type='info' size='small' @click='getData("photo", true)' round>짤모음</el-button>
                 </el-button-group>
               </div>
               <div class='containerSubject'>
