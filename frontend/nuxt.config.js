@@ -8,7 +8,7 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no' },
       { name: 'theme-color', content: '#29313D' },
-      { name: 'google-site-verification', content: 'BEmhl96CsIh9rlpvLSKMLLjHOccJrj6VnMdtMjd8Nbk' },
+      { name: 'google-site-verification', content: 'BxPxwI8rlJTdR-pDX9EMgegVSy0dNLjXvgQLuRk8D5I' },
       { hid: 'description', name: 'description', content: '아이돌보드 - K-POP, 프로듀스48, 프로듀스101, 프로미스나인, 아이즈원, 버스터즈' }
     ],
     link: [
