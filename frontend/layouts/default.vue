@@ -41,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 69
+        frontendVersion: 70
       }
     },
     beforeMount() {
@@ -50,20 +50,20 @@
           title: data.title,
           message: '새로운 인기글이 등록되었습니다!',
           customClass: 'notify best',
-          position: 'top-right',
+          position: 'top-left',
           onClick: () => this.move(data)
         })
-        this.playSound('/alram.mp3')
+        this.playSound('/bb1.mp3')
       })
       this.$socket.on('newTopic', data => {
         this.$notify({
           title: data.title,
           message: '새로운 글이 등록되었습니다.',
           customClass: 'notify',
-          position: 'top-right',
+          position: 'top-left',
           onClick: () => this.move(data)
         })
-        this.playSound('/alram.mp3')
+        this.playSound('/bb1.mp3')
       })
     },
     mounted() {
@@ -140,7 +140,7 @@
   /* Popup Menu */
   .popupMenu {
     position: fixed;
-    left: 2rem;
+    right: 2rem;
     bottom: 2rem;
     width: 4rem;
     height: 4rem;
