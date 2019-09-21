@@ -8,9 +8,6 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
-              <div class='AD'>
-                <adsbygoogle ad-slot='1882412178' />
-              </div>
               <div class='marginBottom'>
                 <el-button-group>
                   <el-button type='primary' size='small' @click='getData("all", true)' round>전체글</el-button>
@@ -29,14 +26,13 @@
                   v-for='(item, index) in topics' :key='index'>
                   <div class='grade'>
                     <span class='likes'>
-                      <font-awesome-icon icon='angle-up' />
                       {{ numberWithCommas(item.likes) }}
                     </span>
                     <el-button
                       size='mini'
                       plain round
                       @click='votes(item.id)'>
-                      <font-awesome-icon icon='heart' />
+                      <font-awesome-icon icon='star' />
                     </el-button>
                   </div>
                   <div class='image' @click='move(item)'>

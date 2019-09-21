@@ -1,33 +1,36 @@
 <template>
   <div>
-    <div class='containerSubject'>
-      <font-awesome-icon icon='star' />
-      최근 인기 게시물
-    </div>
     <div class='recentList'>
       <div
-        class='item'
+        :class='item.isBest > 1 ? "item best" : "item"'
         @click='move(item.id)'
         v-for='(item, index) in topics' :key='index'>
-        <span class='star' v-if='item.isBest > 0'>
-          <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
-        </span>
-        {{ item.title }}
-        <span class='posts' v-if='item.postsCount > 0'>{{ numberWithCommas(item.postsCount) }}</span>
-        <div class='event'>
-          <span>
-            <font-awesome-icon icon='clock' />
-            {{ $moment(item.created).fromNow() }}
-          </span>
-          <span v-if='item.likes > 0'>
-            <font-awesome-icon icon='heart' />
-            +{{ numberWithCommas(item.likes) }}
-          </span>
+        <div class='info' @click='move(item)'>
+          <div class='subject'>
+            <span class='star' v-if='item.isBest > 0'>
+              <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+            </span>
+            {{ item.title }}
+          </div>
+          <div class='author'>
+            <span class='event'>
+              <font-awesome-icon icon='clock' />
+              {{ $moment(item.created).fromNow() }}
+            </span>
+            <span class='event' v-if='item.postsCount > 0'>
+              <font-awesome-icon icon='comment-dots' />
+              {{ numberWithCommas(item.postsCount) }}
+            </span>
+            <span class='event' v-if='item.likes > 0'>
+              <font-awesome-icon icon='heart' />
+              +{{ numberWithCommas(item.likes) }}
+            </span>
+          </div>
+        </div>
+        <div class='image' @click='move(item)'>
+          <img :src='item.imageUrl ? "https://idolboard.com/img/thumb/" + item.imageUrl : "/default.png"'>
         </div>
       </div>
-    </div>
-    <div class='ADSidebar'>
-      <adsbygoogle ad-slot='1882412178' />
     </div>
   </div>
 </template>
@@ -66,47 +69,54 @@
 
 <style>
   .recentList {
-    margin-bottom: 1rem;
-    padding: .5em;
-    border-radius: .25rem;
-    background-color: #F5F5F5;
+    display: flex;
+    flex-direction: column;
   }
   .recentList .item {
+    display: flex;
     margin-bottom: .5rem;
-    padding: .25rem .5rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
-    background-color: #FFF;
+    padding: .25rem;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: .25rem;
+    background: #FFF;
+  }
+  .recentList .item.best {
+    border: 1px solid rgba(0, 0, 0, .05);
+    background: #EEF6F9;
+  }
+  .recentList .item:hover .info .subject,
+  .recentList .item:hover .info .author span.event { color: #FFF }
+  .recentList .item:hover {
+    background: #25c6ff;
+    cursor: pointer;
+  }
+  .recentList .item .image {
+    display: flex;
+    flex-direction: column;
+  }
+  .recentList .item .image img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: .25rem;
+    background: #FFF;
+  }
+  .recentList .item .info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .recentList .item .info .subject {
     color: #25c6ff;
     font-size: .8rem;
     font-weight: bold;
   }
-  .recentList .item:last-child {
-    margin-bottom: 0;
+  .recentList .item .info .subject span.star img {
+    width: 18px;
+    height: 18px;
+    vertical-align: top;
   }
-  .recentList .item:hover {
-    background: #FAFAFA;
-    color: #29313D;
-    cursor: pointer;
-  }
-  .recentList .item span.star img {
-    width: 14px;
-    height: 14px;
-    margin-bottom: 4px;
-    vertical-align: middle;
-  }
-  .recentList .item span.posts {
-    margin-left: .1rem;
-    padding: 0 .25rem;
-    background: #999;
-    border-radius: .1rem;
-    color: #FFF;
-    font-size: .7rem;
-    font-weight: normal;
-  }
-  .recentList .item .event span {
-    margin-right: .25rem;
+  .recentList .item .info .author span.event {
+    margin-left: .25rem;
     color: #999;
     font-size: .7rem;
     font-weight: normal;

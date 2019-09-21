@@ -198,6 +198,7 @@ module.exports.topicsToWidget = async limit => {
       t.created,
       t.isBest,
       tc.likes,
+      (SELECT imageUrl FROM TopicImages WHERE topicId = t.id LIMIT 1) imageUrl,
       (SELECT COUNT(*) FROM Posts WHERE topicId = t.id) postsCount
     FROM Topics t
     LEFT JOIN TopicCounts tc ON tc.topicId = t.id

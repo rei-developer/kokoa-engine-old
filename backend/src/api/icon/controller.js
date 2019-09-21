@@ -45,3 +45,14 @@ module.exports.buy = async ctx => {
   await User.setUpPoint(user, -icon.price)
   ctx.body = { status: 'ok' }
 }
+
+module.exports.remove = async ctx => {
+  console.log("D")
+  const user = await User.getUser(ctx.get('x-access-token'))
+  console.log("C")
+  if (!user) return
+  console.log("A")
+  await User.setIcon(user, '')
+  console.log("B")
+  ctx.body = { status: 'ok' }
+}

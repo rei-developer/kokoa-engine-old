@@ -8,9 +8,6 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
-              <div class='AD'>
-                <adsbygoogle ad-slot='1882412178' />
-              </div>
               <div>
                 <nuxt-link :to='`/pick`'>
                   <el-button type='info' size='small'>목록</el-button>

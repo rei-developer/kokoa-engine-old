@@ -41,14 +41,14 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 70
+        frontendVersion: 71
       }
     },
     beforeMount() {
       this.$socket.on('newBest', data => {
         this.$notify({
           title: data.title,
-          message: '새로운 인기글이 등록되었습니다!',
+          message: '새 인기글',
           customClass: 'notify best',
           position: 'top-left',
           onClick: () => this.move(data)
@@ -58,7 +58,7 @@
       this.$socket.on('newTopic', data => {
         this.$notify({
           title: data.title,
-          message: '새로운 글이 등록되었습니다.',
+          message: '새 게시물',
           customClass: 'notify',
           position: 'top-left',
           onClick: () => this.move(data)

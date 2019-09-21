@@ -345,6 +345,7 @@
   .topicList .item .info .subject span.star img {
     width: 16px;
     height: 16px;
+    vertical-align: top;
   }
   .topicList .item .info .subject span.notice,
   .topicList .item .info .subject span.category,

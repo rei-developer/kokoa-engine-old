@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class='AD'>
-      <adsbygoogle ad-slot='1882412178' />
-    </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='comment-dots' />
       내 작성 댓글 ({{ numberWithCommas(postsCount) }})

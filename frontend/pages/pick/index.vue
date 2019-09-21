@@ -8,9 +8,6 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
-              <div class='AD'>
-                <adsbygoogle ad-slot='1882412178' />
-              </div>
               <div>
                 <nuxt-link :to='`/pick/write`' v-if='$store.state.user.isLogged'>
                   <el-button class='floatRight' type='primary' size='small'>아이돌 등록</el-button>

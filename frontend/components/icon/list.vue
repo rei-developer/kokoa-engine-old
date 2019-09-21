@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class='AD'>
-      <adsbygoogle ad-slot='1882412178' />
-    </div>
     <div class='containerSubject marginTop'>
       <font-awesome-icon icon='cart-arrow-down' />
       아이콘샵 ({{ numberWithCommas(count) }})
@@ -12,9 +9,12 @@
       </div>
     </div>
     <div>
-      <nuxt-link :to='`/iconshop/add`' v-if='$store.state.user.isLogged'>
-        <el-button class='floatRight' type='primary' size='small'>아이콘 등록</el-button>
-      </nuxt-link>
+      <el-button-group>
+        <el-button type='info' size='small' @click='remove'>장착한 아이콘 삭제</el-button>
+        <nuxt-link :to='`/iconshop/add`' v-if='$store.state.user.isLogged'>
+          <el-button type='primary' size='small'>아이콘 등록</el-button>
+        </nuxt-link>
+      </el-button-group>
     </div>
     <div class='iconshopList'>
       <div
@@ -92,6 +92,18 @@
         this.$message.success('아이콘 교체 완료')
         this.$store.commit('user/setIcon', item.filename)
         this.$store.commit('user/setUpPoint', -(item.price))
+      },
+      remove: async function() {
+        const token = this.$store.state.user.token
+        this.loading = true
+        const data = await this.$axios.$delete(
+          '/api/icon/remove',
+          { headers: { 'x-access-token': token } }
+        )
+        this.loading = false
+        if (data.status === 'fail') return this.$message.error(data.message)
+        this.$message.success('아이콘 삭제 완료')
+        this.$store.commit('user/setIcon', '')
       },
       currentChange(page) {
         this.page = page

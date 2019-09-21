@@ -4,9 +4,6 @@
     <el-row>
       <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
       <el-col :xl='16'>
-        <div class='AD'>
-          <adsbygoogle ad-slot='1882412178' />
-        </div>
         <div class='containerSubject'>
           <font-awesome-icon icon='pencil-alt' />
           {{ getBoardName() }} 게시판 글 작성
