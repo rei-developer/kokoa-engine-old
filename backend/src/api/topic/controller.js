@@ -35,7 +35,7 @@ module.exports.getTopicCounts = async ctx => {
 }
 
 module.exports.getListToWidget = async ctx => {
-  const topics = await readTopic.topicsToWidget(15)
+  const topics = await readTopic.topicsToWidget(21)
   ctx.body = topics
 }
 

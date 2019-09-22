@@ -27,8 +27,8 @@
             </span>
           </div>
         </div>
-        <div class='image' @click='move(item)'>
-          <img :src='item.imageUrl ? "https://idolboard.com/img/thumb/" + item.imageUrl : "/default.png"'>
+        <div class='image' @click='move(item)' v-if='item.imageUrl'>
+          <img :src='`https://idolboard.com/img/thumb/${item.imageUrl}`'>
         </div>
       </div>
     </div>
@@ -74,14 +74,17 @@
   }
   .recentList .item {
     display: flex;
-    margin-bottom: .5rem;
+    min-height: 73px;
     padding: .25rem;
     border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: .25rem;
+    border-top: 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, .1);
     background: #FFF;
   }
   .recentList .item.best {
     border: 1px solid rgba(0, 0, 0, .05);
+    border-top: 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, .1);
     background: #EEF6F9;
   }
   .recentList .item:hover .info .subject,
@@ -89,6 +92,16 @@
   .recentList .item:hover {
     background: #25c6ff;
     cursor: pointer;
+  }
+  .recentList .item:first-child {
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+  }
+  .recentList .item:last-child {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
   }
   .recentList .item .image {
     display: flex;
