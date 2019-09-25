@@ -39,6 +39,11 @@ module.exports.getListToWidget = async ctx => {
   ctx.body = topics
 }
 
+module.exports.getLinks = async ctx => {
+  const links = await readTopic.links('girl')
+  ctx.body = links
+}
+
 module.exports.getTopics = async ctx => {
   const { ...body } = ctx.request.body
   const domain = body.domain || 'all'
@@ -116,7 +121,6 @@ module.exports.getCategories = async ctx => {
 
 module.exports.getContent = async ctx => {
   const { id } = ctx.params
-  if (id < 1) return
   const user = await User.getUser(ctx.get('x-access-token'))
   const topic = await readTopic(id)
   if (!topic || topic.isAllowed < 1) return ctx.body = { status: 'fail' }
@@ -129,6 +133,7 @@ module.exports.getContent = async ctx => {
   const images = topic.isImage > 0
     ? await readTopic.topicImages(id)
     : []
+  const links = await readTopic.links(topic.boardDomain)
   if (client.exists(id)) {
     const hits = await new Promise(resolve => {
       client.get(id, (err, value) => {
@@ -148,7 +153,7 @@ module.exports.getContent = async ctx => {
     await updateNotice.updateNoticeByConfirm(user.id, id)
     count = await readNotice.count(user.id)
   }
-  ctx.body = { topic, charts, chartVotes, images, count }
+  ctx.body = { topic, charts, chartVotes, images, links, count }
 }
 
 module.exports.createTopic = async ctx => {

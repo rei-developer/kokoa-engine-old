@@ -8,6 +8,9 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
+              <div v-for='(item, index) in links' :key='index'>
+                <nuxt-link :to='`/b/${domain}/${item.id}`'></nuxt-link>
+              </div>
               <div>
                 <nuxt-link :to='`/b/${domain}`'>
                   <el-button type='info' size='small'>목록</el-button>
@@ -186,6 +189,7 @@
           select: 0
         },
         images: [],
+        links: [],
         loading: true
       }
     },
@@ -211,7 +215,8 @@
           labels: charts,
           select: 0
         },
-        images: data.images
+        images: data.images,
+        links: data.links
       }
     },
     beforeMount() {
@@ -298,9 +303,12 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
     },
-    head() {
+    head () {
       return {
-        title: `${this.topic.title} - 아이돌보드`
+        title: `${this.topic.title} - 아이돌보드`,
+        meta: [
+          { hid: `${this.id}`, name: `${this.topic.content.substr(0, 100)}`, content: '아이돌보드 - K-POP, ITZY, 트와이스, 프로듀스48, 프로듀스101, 프로미스나인, 아이즈원, 버스터즈' }
+        ]
       }
     }
   }
@@ -387,6 +395,7 @@
     padding: 1rem;
     border-bottom: 1px solid #F5F5F5;
     font-size: .9rem;
+    word-break: break-all;
   }
   .topicArticle .content .chart {
     text-align: center;

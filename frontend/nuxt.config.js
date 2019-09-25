@@ -9,7 +9,7 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no' },
       { name: 'theme-color', content: '#29313D' },
       { name: 'google-site-verification', content: 'BxPxwI8rlJTdR-pDX9EMgegVSy0dNLjXvgQLuRk8D5I' },
-      { hid: 'description', name: 'description', content: '아이돌보드 - K-POP, 프로듀스48, 프로듀스101, 프로미스나인, 아이즈원, 버스터즈' }
+      { hid: 'description', name: 'description', content: '아이돌보드 - K-POP, ITZY, 트와이스, 프로듀스48, 프로듀스101, 프로미스나인, 아이즈원, 버스터즈' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }

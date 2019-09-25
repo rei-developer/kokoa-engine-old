@@ -1,5 +1,5 @@
-const Router        = require('koa-router')
-const Controller    = require('./controller')
+const Router = require('koa-router')
+const Controller = require('./controller')
 
 const app = new Router()
 
@@ -7,6 +7,7 @@ app.get('/count/:domain', Controller.getTopicCounts)
 app.get('/categories/:domain', Controller.getCategories)
 app.get('/read/:id', Controller.getContent)
 app.get('/list/widget', Controller.getListToWidget)
+app.get('/link', Controller.getLinks)
 app.post('/list', Controller.getTopics)
 app.post('/list/post', Controller.getPosts)
 app.post('/list/post/me', Controller.getMyPosts)

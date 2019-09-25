@@ -262,10 +262,19 @@
       move(item) {
         this.$router.push({ path: `/b/${this.domain}/${item.id}?page=${this.page}${this.category !== '(없음)' ? '&category=' + this.category : ''}` })
       },
+      scrollTo() {
+        this.$nextTick(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        })
+      },
       currentChange(page) {
         this.page = page
         this.getData()
         this.getCount()
+        this.scrollTo()
       },
       forceUpdate() {
         this.$store.commit('forceUpdate')

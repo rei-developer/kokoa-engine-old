@@ -8,6 +8,9 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
+              <div v-for='(item, index) in links' :key='index'>
+                <nuxt-link :to='`/b/girl/${item.id}`'></nuxt-link>
+              </div>
               <div class='marginBottom'>
                 <el-button-group>
                   <el-button type='primary' size='small' @click='getData("all", true)' round>전체글</el-button>
@@ -81,9 +84,16 @@
         domain: 'all',
         topics: [],
         topicsCount: 0,
+        links: [],
         page: 0,
         bottom: false,
         lading: false
+      }
+    },
+    async asyncData ({ app, $axios }) {
+      const data = await $axios.$get('/api/topic/link')
+      return {
+        links: data
       }
     },
     watch: {

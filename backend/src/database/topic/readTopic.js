@@ -189,6 +189,12 @@ module.exports.topics = async (columns, searches, page, limit) => {
   }
 }
 
+module.exports.links = async domain => {
+  const result = await pool.query('SELECT id FROM Topics WHERE boardDomain = ? ORDER BY RAND() LIMIT 20', [domain])
+  if (result.length < 1) return false
+  return result
+}
+
 module.exports.topicsToWidget = async limit => {
   const result = await pool.query(
     `SELECT
