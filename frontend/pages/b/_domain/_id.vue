@@ -164,7 +164,6 @@
         topic: {
           userId: 0,
           boardDomain: '',
-          originBoardDomain: '',
           category: '',
           author: '',
           title: '',

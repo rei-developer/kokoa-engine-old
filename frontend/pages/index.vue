@@ -13,10 +13,11 @@
               </div>
               <div class='marginBottom'>
                 <el-button-group>
-                  <el-button type='primary' size='small' @click='getData("all", true)' round>전체글</el-button>
-                  <el-button type='info' size='small' @click='getData("best", true)' round>핫이슈</el-button>
-                  <el-button type='info' size='small' @click='getData("girl", true)' round>연예인</el-button>
-                  <el-button type='info' size='small' @click='getData("photo", true)' round>짤모음</el-button>
+                  <el-button type='info' size='small' @click='getData("all", true)' round>전체</el-button>
+                  <el-button type='info' size='small' @click='getData("best", true)' round>인기</el-button>
+                  <el-button type='info' size='small' @click='getData("photo", true)' round>짤방</el-button>
+                  <el-button type='primary' size='small' @click='getData("girl", true)' round>연예</el-button>
+                  <el-button type='info' size='small' @click='getData("anime", true)' round>애니</el-button>
                 </el-button-group>
               </div>
               <div class='containerSubject'>
@@ -43,7 +44,6 @@
                   </div>
                   <div class='info' @click='move(item)'>
                     <div class='subject'>
-                      <span class='board'>{{ getBoardName(item.boardDomain) }}</span>
                       <span class='star' v-if='item.isBest > 0'>
                         <img :src='item.isBest > 1 ? "/star.svg" : "/burn.svg"'>
                       </span>
@@ -81,7 +81,7 @@
     components: { Recent },
     data() {
       return {
-        domain: 'all',
+        domain: 'girl',
         topics: [],
         topicsCount: 0,
         links: [],
@@ -98,7 +98,7 @@
     },
     watch: {
       '$store.state.forceUpdate': function() {
-        this.getData('all', true)
+        this.getData('girl', true)
       },
       bottom: function(bottom) {
         if (bottom) this.getData()
@@ -206,8 +206,8 @@
     flex-direction: column;
   }
   .indexTopicList .item .image img {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4rem;
+    height: 4rem;
     margin: .25rem;
     border-radius: .2rem;
   }

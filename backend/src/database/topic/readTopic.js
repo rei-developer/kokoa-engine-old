@@ -6,7 +6,6 @@ module.exports = async id => {
     `SELECT
       t.userId,
       t.boardDomain,
-      t.originBoardDomain,
       t.category,
       t.author,
       t.title,
@@ -97,7 +96,6 @@ module.exports.notices = async domain => {
     `SELECT
       t.id,
       t.userId,
-      t.originBoardDomain,
       t.category,
       t.author,
       t.title,
@@ -155,7 +153,6 @@ module.exports.topics = async (columns, searches, page, limit) => {
         t.id,
         t.userId,
         t.boardDomain,
-        t.originBoardDomain,
         t.category,
         t.author,
         t.title,
