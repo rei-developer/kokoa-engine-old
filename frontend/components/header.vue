@@ -74,9 +74,6 @@
       signOut() {
         if (!this.$store.state.user.isLogged) return
         this.$store.commit('user/signOut')
-      },
-      track () {
-      this.$ga.page('/')
       }
     }
   }
