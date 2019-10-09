@@ -47,10 +47,10 @@ module.exports.createInventoryItem = async ctx => {
   let date
   if (check) {
     const min = moment().diff(moment(check.regdate), 'minutes')
-    date = moment(min > 0 ? new Date() : check.regdate, 'R').add((sticker.days * buyNum), 'days').format('YYYY-MM-DD HH:mm:ss')
+    date = moment(min > 0 ? new Date() : check.regdate, 'R').add(sticker.days * buyNum, 'days').format('YYYY-MM-DD HH:mm:ss')
     await updateSticker.inventoryItem(user.id, id, date)
   } else {
-    date = moment(new Date(), 'R').add((sticker.days * buyNum), 'days').format('YYYY-MM-DD HH:mm:ss')
+    date = moment(new Date(), 'R').add(sticker.days * buyNum, 'days').format('YYYY-MM-DD HH:mm:ss')
     await createSticker.inventoryItem(user.id, id, date)
   }
   await User.setUpPoint(user, -(sticker.price * buyNum))
