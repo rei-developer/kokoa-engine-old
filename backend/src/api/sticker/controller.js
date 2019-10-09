@@ -53,6 +53,6 @@ module.exports.createInventoryItem = async ctx => {
     date = moment(new Date(), 'R').add(sticker.days * buyNum, 'days').format('YYYY-MM-DD HH:mm:ss')
     await createSticker.inventoryItem(user.id, id, date)
   }
-  await User.setUpPoint(user, -(sticker.price * buyNum))
+  await User.setUpPoint(user, -sticker.price * buyNum)
   ctx.body = { date, status: 'ok' }
 }
