@@ -28,7 +28,7 @@
           </el-button>
         </div>
         <div class='howMany'>
-          <el-input-number v-model="buyNum" :min="1" :max="20"></el-input-number>
+          <el-input-number v-model="buyNum" :min="1" :max="1"></el-input-number>
         </div>
         <div class='info'>
           <div>기간제 {{ sticker.days * buyNum }}일</div>
@@ -86,9 +86,8 @@
         this.loading = false
         if (data.status === 'fail') return this.$message.error(data.message)
         this.$message.success(`구매 완료 (${data.date})`)
-        this.$store.commit('user/setUpPoint', -(this.sticker.price * this.buyNum))
-        this.lastDays += ((this.sticker.days * this.buyNum) - 1)
-        console.log(this.buyNum * this.sticker.price)
+        this.$store.commit('user/setUpPoint', -this.sticker.price)
+        this.lastDays += (this.sticker.days - 1)
       },
       numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
