@@ -42,7 +42,7 @@ module.exports.createInventoryItem = async ctx => {
   if (!user) return
   const sticker = await readSticker(id)
   if (!sticker) return
-  if (user.point < (sticker.price * buyNum)) return ctx.body = { message: '포인트가 부족합니다.', status: 'fail' }
+  if (user.point < sticker.price ) return ctx.body = { message: '포인트가 부족합니다.', status: 'fail' }
   const check = await readSticker.check(user.id, id)
   let date
   if (check) {

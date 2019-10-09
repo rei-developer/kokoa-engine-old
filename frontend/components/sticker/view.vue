@@ -27,14 +27,14 @@
             </span>
           </el-button>
         </div>
-        <div class='howMany'>
+        <!-- <div class='howMany'>
           <el-input-number v-model="buyNum" :min="1" :max="1"></el-input-number>
-        </div>
+        </div> -->
         <div class='info'>
-          <div>기간제 {{ sticker.days * buyNum }}일</div>
+          <div>기간제 {{ sticker.days }}일</div>
           <div>
             <font-awesome-icon icon='gift' />
-            {{ numberWithCommas(sticker.price * buyNum) }}
+            {{ numberWithCommas(sticker.price) }}
           </div>
         </div>
       </div>
@@ -48,8 +48,7 @@
     data() {
       return {
         lastDays: 0,
-        loading: false,
-        buyNum: 1
+        loading: false
       }
     },
     watch: {
@@ -80,7 +79,7 @@
         this.loading = true
         const data = await this.$axios.$post(
           '/api/sticker/buy',
-          { id: this.id, buyNum: this.buyNum },
+          { id: this.id  },
           { headers: { 'x-access-token': token } }
         )
         this.loading = false
