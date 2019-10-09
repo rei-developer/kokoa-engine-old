@@ -27,9 +27,6 @@
             </span>
           </el-button>
         </div>
-        <!-- <div class='howMany'>
-          <el-input-number v-model="buyNum" :min="1" :max="1"></el-input-number>
-        </div> -->
         <div class='info'>
           <div>기간제 {{ sticker.days }}일</div>
           <div>
