@@ -59,6 +59,7 @@
 </script>
 
 <style>
+@media(max-width:1024px) {
   .StickerInventory {
     position: fixed;
     left: 50%;
@@ -71,6 +72,21 @@
     background: #FFF;
     z-index: 10000;
   }
+}
+@media(min-width:1024px) {
+  .StickerInventory {
+    position: fixed;
+    left: 35%;
+    top: 6em;
+    width: 670px;
+    height: 423px;
+    margin: 0 0 0 -180px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #FFF;
+    z-index: 10000;
+  }
+} 
   .StickerInventory > .title {
     margin: 0;
     padding: 6px;

@@ -27,11 +27,14 @@
             </span>
           </el-button>
         </div>
+        <div class='howMany'>
+          <el-input-number v-model="buyNum" :min="1" :max="20"></el-input-number>
+        </div>
         <div class='info'>
-          <div>기간제 {{ sticker.days }}일</div>
+          <div>기간제 {{ sticker.days * buyNum }}일</div>
           <div>
             <font-awesome-icon icon='gift' />
-            {{ numberWithCommas(sticker.price) }}
+            {{ numberWithCommas(sticker.price * buyNum) }}
           </div>
         </div>
       </div>
@@ -45,7 +48,8 @@
     data() {
       return {
         lastDays: 0,
-        loading: false
+        loading: false,
+        buyNum: 1
       }
     },
     watch: {
@@ -76,14 +80,15 @@
         this.loading = true
         const data = await this.$axios.$post(
           '/api/sticker/buy',
-          { id: this.id },
+          { id: this.id, buyNum: this.buyNum },
           { headers: { 'x-access-token': token } }
         )
         this.loading = false
         if (data.status === 'fail') return this.$message.error(data.message)
         this.$message.success(`구매 완료 (${data.date})`)
-        this.$store.commit('user/setUpPoint', -(this.sticker.price))
-        this.lastDays += (this.sticker.days - 1)
+        this.$store.commit('user/setUpPoint', -(this.sticker.price * this.buyNum))
+        this.lastDays += ((this.sticker.days * this.buyNum) - 1)
+        console.log(this.buyNum * this.sticker.price)
       },
       numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -93,6 +98,7 @@
 </script>
 
 <style>
+@media(max-width:1024px) {
   .StickerView {
     position: fixed;
     left: 50%;
@@ -106,6 +112,22 @@
     font-size: .9rem;
     z-index: 10000;
   }
+}
+@media(min-width:1024px) {
+  .StickerView {
+    position: fixed;
+    left: 40%;
+    top: 6em;
+    width: 670px;
+    height: 495px;
+    margin: 0 0 0 -180px;
+    border: 1px solid #333;
+    border-radius: .5rem;
+    background-color: #FFF;
+    font-size: .9rem;
+    z-index: 10000;
+  }
+}
   .StickerView > .title {
     margin: 0;
     padding: 6px;
@@ -181,6 +203,9 @@
     float: left;
     font-size: 13px;
     padding: 1px 3px;
+  }
+  .StickerView .footer .howMany {
+    float: left;
   }
   .StickerView .footer .info {
     display: inline-block;
