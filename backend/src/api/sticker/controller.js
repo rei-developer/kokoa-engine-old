@@ -36,23 +36,23 @@ module.exports.getStickers = async ctx => {
 }
 
 module.exports.createInventoryItem = async ctx => {
-  const { id } = ctx.request.body
+  const { id, buyNum } = ctx.request.body
   if (id < 1) return
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
   const sticker = await readSticker(id)
   if (!sticker) return
-  if (user.point < sticker.price ) return ctx.body = { message: '포인트가 부족합니다.', status: 'fail' }
+  if (user.point < (sticker.price * buyNum)) return ctx.body = { message: '포인트가 부족합니다.', status: 'fail' }
   const check = await readSticker.check(user.id, id)
   let date
   if (check) {
     const min = moment().diff(moment(check.regdate), 'minutes')
-    date = moment(min > 0 ? new Date() : check.regdate, 'R').add(sticker.days, 'days').format('YYYY-MM-DD HH:mm:ss')
+    date = moment(min > 0 ? new Date() : check.regdate, 'R').add((sticker.days * buyNum), 'days').format('YYYY-MM-DD HH:mm:ss')
     await updateSticker.inventoryItem(user.id, id, date)
   } else {
-    date = moment(new Date(), 'R').add(sticker.days , 'days').format('YYYY-MM-DD HH:mm:ss')
+    date = moment(new Date(), 'R').add((sticker.days * buyNum), 'days').format('YYYY-MM-DD HH:mm:ss')
     await createSticker.inventoryItem(user.id, id, date)
   }
-  await User.setUpPoint(user, -sticker.price)
+  await User.setUpPoint(user, -(sticker.price * buyNum))
   ctx.body = { date, status: 'ok' }
 }

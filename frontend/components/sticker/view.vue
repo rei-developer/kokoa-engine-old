@@ -27,11 +27,14 @@
             </span>
           </el-button>
         </div>
+        <div class='howMany'>
+          <el-input-number v-model="buyNum" :min="1" :max="20"></el-input-number>
+        </div>
         <div class='info'>
-          <div>기간제 {{ sticker.days }}일</div>
+          <div>기간제 {{ sticker.days * buyNum }}일</div>
           <div>
             <font-awesome-icon icon='gift' />
-            {{ numberWithCommas(sticker.price) }}
+            {{ numberWithCommas(sticker.price * buyNum) }}
           </div>
         </div>
       </div>
@@ -45,7 +48,8 @@
     data() {
       return {
         lastDays: 0,
-        loading: false
+        loading: false,
+        buyNum: 1
       }
     },
     watch: {
@@ -76,14 +80,14 @@
         this.loading = true
         const data = await this.$axios.$post(
           '/api/sticker/buy',
-          { id: this.id  },
+          { id: this.id, buyNum: this.buyNum },
           { headers: { 'x-access-token': token } }
         )
         this.loading = false
         if (data.status === 'fail') return this.$message.error(data.message)
         this.$message.success(`구매 완료 (${data.date})`)
-        this.$store.commit('user/setUpPoint', -this.sticker.price)
-        this.lastDays += (this.sticker.days - 1)
+        this.$store.commit('user/setUpPoint', -(this.sticker.price * this.buyNum))
+        this.lastDays += ((this.sticker.days * this.buyNum) - 1)
       },
       numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
