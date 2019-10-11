@@ -134,7 +134,7 @@
       },
       votes: async function(id) {
         const cr = await this.checkRecaptcha() 
-        if (cr) this.$message.error('리캡챠 오류') 
+        if (cr) this.$message.error('recaptcha fail') 
         else if (process.browser) {
           if (id < 1) return
           this.$store.commit('setLoading', true)
@@ -152,7 +152,6 @@
       },
       async checkRecaptcha() {
          const token = await this.$recaptcha.execute('login')
-         console.log('ReCaptcha token:', token)
          if (!token) return false
          const r = await this.$axios.post('/api/pick/recaptcha', { token })
     },

@@ -149,13 +149,9 @@ module.exports.deletePickPost = async ctx => {
 }
 
 module.exports.showRecaptcha = async ctx => { 
-  console.log('토큰 받음')
   let { token } = ctx.request.body 
   const ip = ctx.get('x-real-ip')
-  console.log(token)
-  console.log('ip',ip)
   if(!token)  return ctx.body = { status: 'fail' }
-  console.log('토큰확인') 
   const c = await Recaptcha.authRecaptcha(token, ip)
   if(c) {
     ctx.body = { status: 'ok'}

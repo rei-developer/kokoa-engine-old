@@ -22,8 +22,6 @@ const { RECAPTCHA_KEY } = process.env
     ) .then( function(a) {
       res.success = a.data.success
       res.score = a.data.score
-      console.log(res.success)
-      console.log(res.score)
       if(!res.success || res.score < 0.9) {
       return false } 
       else { return true }
