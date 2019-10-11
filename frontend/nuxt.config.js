@@ -58,8 +58,12 @@ module.exports = {
   modules: [
     '@nuxtjs/proxy',
     '@nuxtjs/axios',
-    '@nuxtjs/bulma',
-    '@nuxtjs/recaptcha',
+    '@nuxtjs/bulma',  
+    ['@nuxtjs/recaptcha',{
+      hideBadge: true,
+      siteKey: '6LfBJb0UAAAAALwYlKcwBwVK2kvCm-sY5shrYI1I',
+      version: 3
+    }],
     ['@nuxtjs/google-adsense'],
     ['@nuxtjs/moment', ['ko']],
     'nuxt-fontawesome',
@@ -67,11 +71,6 @@ module.exports = {
   ],
   'google-adsense': {
     id: 'ca-pub-5633529273423665'
-  },
-  recaptcha: {
-    hideBadge: true,
-    siteKey: '6LfBJb0UAAAAALwYlKcwBwVK2kvCm-sY5shrYI1I',
-    version: 3
   },
   fontawesome: {
     imports: [
