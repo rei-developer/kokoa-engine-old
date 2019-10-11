@@ -46,6 +46,7 @@ module.exports = {
   plugins: [
     '~/plugins/element-ui.js',
     '~/plugins/socket.io.js',
+    '~/plugins/vueAnalytics.js',
     { src: '~/plugins/chart.js', ssr: false },
     { src: '~/plugins/quill.js', ssr: false },
     { src: '~/plugins/vue-masonry-css.js', ssr: false }
@@ -63,8 +64,8 @@ module.exports = {
       hideBadge: true,
       siteKey: '6LfBJb0UAAAAALwYlKcwBwVK2kvCm-sY5shrYI1I',
       version: 3 }],
-    ['@nuxtjs/google-analytics',{
-      id: 'UA-127341158-2'}],
+    //['@nuxtjs/google-analytics',{
+     // id: 'UA-127341158-2'}],
     ['@nuxtjs/google-adsense'],
     ['@nuxtjs/moment', ['ko']],
     'nuxt-fontawesome',
