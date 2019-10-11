@@ -13,7 +13,7 @@ module.exports = {
     ],
     script: [
       {
-        src: 'https://www.google.com/recaptcha/api.js?render=6Lei67wUAAAAAO4tRQNrHteMLSWMjZFE0LoCEcia'
+        src: 'https://www.google.com/recaptcha/api.js?render=6LfBJb0UAAAAALwYlKcwBwVK2kvCm-sY5shrYI1I'
       }
     ],
     link: [
@@ -70,7 +70,7 @@ module.exports = {
   },
   recaptcha: {
     hideBadge: true,
-    siteKey: '6Lei67wUAAAAAO4tRQNrHteMLSWMjZFE0LoCEcia',
+    siteKey: '6LfBJb0UAAAAALwYlKcwBwVK2kvCm-sY5shrYI1I',
     version: 3
   },
   fontawesome: {
