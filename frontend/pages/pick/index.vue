@@ -96,13 +96,14 @@
         if (bottom) this.getData()
       }
     },
-    mounted() {
+    async mounted() {
       if (process.browser) {
         window.addEventListener('scroll', () => {
           this.bottom = this.bottomVisible()
         })
       }
       this.getData()
+      await this.$recaptcha.init()
     },
     methods: {
       getData: async function(forceUpdate = false) {
@@ -132,7 +133,9 @@
         return data
       },
       votes: async function(id) {
-        if (process.browser) {
+        const cr = await this.checkRecaptcha() 
+        if (cr) this.$message.error('리캡챠 오류') 
+        else if (process.browser) {
           if (id < 1) return
           this.$store.commit('setLoading', true)
           const data = await this.$axios.$post(
@@ -147,6 +150,12 @@
           this.$store.commit('setLoading')
         }
       },
+      async checkRecaptcha() {
+         const token = await this.$recaptcha.execute('login')
+         console.log('ReCaptcha token:', token)
+         if (!token) return false
+         const r = await this.$axios.post('/api/pick/recaptcha', { token })
+    },
       search: async function() {
         if (this.searches.text === '') return this.$message.error('검색어를 입력하세요.')
         if (this.searches.text.length < 2) return this.$message.error('검색어는 두 글자 이상 입력하세요.')

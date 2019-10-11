@@ -11,6 +11,11 @@ module.exports = {
       { name: 'google-site-verification', content: 'BxPxwI8rlJTdR-pDX9EMgegVSy0dNLjXvgQLuRk8D5I' },
       { hid: 'description', name: 'description', content: '아이돌보드 - K-POP, ITZY, 트와이스, 프로듀스48, 프로듀스101, 프로미스나인, 아이즈원, 버스터즈' }
     ],
+    script: [
+      {
+        src: 'https://www.google.com/recaptcha/api.js?render=6Lei67wUAAAAAO4tRQNrHteMLSWMjZFE0LoCEcia'
+      }
+    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ]
@@ -54,6 +59,7 @@ module.exports = {
     '@nuxtjs/proxy',
     '@nuxtjs/axios',
     '@nuxtjs/bulma',
+    '@nuxtjs/recaptcha',
     ['@nuxtjs/google-adsense'],
     ['@nuxtjs/moment', ['ko']],
     'nuxt-fontawesome',
@@ -61,6 +67,11 @@ module.exports = {
   ],
   'google-adsense': {
     id: 'ca-pub-5633529273423665'
+  },
+  recaptcha: {
+    hideBadge: true,
+    siteKey: '6Lei67wUAAAAAO4tRQNrHteMLSWMjZFE0LoCEcia',
+    version: 3
   },
   fontawesome: {
     imports: [

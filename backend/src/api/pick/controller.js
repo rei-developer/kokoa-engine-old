@@ -1,5 +1,6 @@
 const Filter = require('../../lib/filter')
 const User = require('../../lib/user')
+const Recaptcha = require('../../lib/recaptcha')
 const createPick = require('../../database/pick/createPick')
 const createPickPost = require('../../database/pickPost/createPickPost')
 const deletePickPost = require('../../database/pickPost/deletePickPost')
@@ -145,4 +146,18 @@ module.exports.deletePickPost = async ctx => {
   if (user.isAdmin < 1 && userId !== user.id) return
   await deletePickPost(id)
   ctx.body = { status: 'ok' }
+}
+
+module.exports.showRecaptcha = async ctx => { 
+  console.log('토큰 받음')
+  let { token } = ctx.request.body 
+  const ip = ctx.get('x-real-ip')
+  console.log(token)
+  console.log('ip',ip)
+  if(!token)  return ctx.body = { status: 'fail' }
+  console.log('토큰확인') 
+  const c = await Recaptcha.authRecaptcha(token, ip)
+  if(c) {
+    ctx.body = { status: 'ok'}
+  } else { ctx.body = { status: 'fail'} }
 }
