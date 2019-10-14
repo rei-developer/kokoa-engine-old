@@ -398,4 +398,17 @@
     background: #FAFAFA;
     cursor: pointer;
   }
+  .hitomiReader {
+    padding: 2px 4px;
+    background: #29313D;
+    color: #FFF;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    }
+  .hitomiReader:hover {
+    color: #FFF;
+    opacity: 0.8;
+    }
 </style>
