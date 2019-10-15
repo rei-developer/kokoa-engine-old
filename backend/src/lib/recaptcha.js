@@ -4,11 +4,7 @@ const qs            = require('qs')
 
 
 dotenv.config()
-/* 
-   로컬 테스트키 
-   프론트 6Lei67wUAAAAAO4tRQNrHteMLSWMjZFE0LoCEcia
-   백엔드 6Lei67wUAAAAACpmWy5hP9kcEql65sG8wSq_oC2G
-*/
+
 const { RECAPTCHA_KEY } = process.env
 
 

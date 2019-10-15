@@ -69,7 +69,7 @@
         localStorage.setItem('token', data.token)
         location.href = '/'
       },
-      signUp() {
+      async signUp() {
         const success = await this.checkRecaptcha() 
         if (!success) return this.$message.error('recaptcha fail') 
         this.$router.push({ path: '/signup' })
