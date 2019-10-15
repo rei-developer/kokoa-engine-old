@@ -133,9 +133,9 @@
         return data
       },
       votes: async function(id) {
-        const cr = await this.checkRecaptcha() 
-        if (cr) this.$message.error('recaptcha fail') 
-        else if (process.browser) {
+        const success = await this.checkRecaptcha() 
+        if (!success) return this.$message.error('recaptcha fail') 
+          if (process.browser) {
           if (id < 1) return
           this.$store.commit('setLoading', true)
           const data = await this.$axios.$post(
@@ -153,7 +153,12 @@
       async checkRecaptcha() {
          const token = await this.$recaptcha.execute('login')
          if (!token) return false
-         const r = await this.$axios.post('/api/pick/recaptcha', { token })
+         const res = await this.$axios.post(
+           '/api/pick/recaptcha',
+            { token }
+         )
+         if( res.data.status === 'fail')  return false
+         else return true
     },
       search: async function() {
         if (this.searches.text === '') return this.$message.error('검색어를 입력하세요.')

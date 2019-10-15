@@ -8,7 +8,7 @@ export default (ctx, inject) => {
     debug: {
       enabled: false,
       trace: false,
-      sendHitTask: process.env.NODE_ENV === 'production'
+      //sendHitTask: process.env.NODE_ENV === 'production'
     },
     router: ctx.app.router
   })

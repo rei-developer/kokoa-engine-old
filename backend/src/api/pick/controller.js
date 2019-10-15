@@ -149,11 +149,10 @@ module.exports.deletePickPost = async ctx => {
 }
 
 module.exports.showRecaptcha = async ctx => { 
-  let { token } = ctx.request.body 
-  const ip = ctx.get('x-real-ip')
-  if(!token)  return ctx.body = { status: 'fail' }
-  const c = await Recaptcha.authRecaptcha(token, ip)
-  if(c) {
-    ctx.body = { status: 'ok'}
-  } else { ctx.body = { status: 'fail'} }
+  let { token } = await ctx.request.body 
+  const ip = await ctx.get('x-real-ip')
+  if(!token)  return
+  const res = await Recaptcha.authRecaptcha(token, ip)
+  if(!res) return ctx.body = { status: 'fail'}
+  else ctx.body = { status: 'ok'}
 }

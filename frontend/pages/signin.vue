@@ -37,6 +37,9 @@
         save: false
       }
     },
+    async mounted() {
+       await this.$recaptcha.init()
+    },
     created() {
       if (process.browser) {
         this.save = (localStorage.save === 'true') || false
@@ -67,9 +70,21 @@
         location.href = '/'
       },
       signUp() {
+        const success = await this.checkRecaptcha() 
+        if (!success) return this.$message.error('recaptcha fail') 
         this.$router.push({ path: '/signup' })
-      }
+      },
+      async checkRecaptcha() {
+         const token = await this.$recaptcha.execute('login')
+         if (!token) return false
+         const res = await this.$axios.post(
+           '/api/pick/recaptcha',
+            { token }
+         )
+         if( res.data.status === 'fail')  return false
+         else return true
     }
+   }
   }
 </script>
 

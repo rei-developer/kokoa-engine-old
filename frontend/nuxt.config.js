@@ -13,7 +13,7 @@ module.exports = {
     ],
     script: [
       {
-        src: 'https://www.google.com/recaptcha/api.js?render=6LfBJb0UAAAAALwYlKcwBwVK2kvCm-sY5shrYI1I'
+        src: 'https://www.google.com/recaptcha/api.js?render=6LfHQ70UAAAAAGSDxOcdcP0eAJLpelwsdMvgZPke'
       }
     ],
     link: [
@@ -62,7 +62,7 @@ module.exports = {
     '@nuxtjs/bulma',  
     ['@nuxtjs/recaptcha',{
       hideBadge: true,
-      siteKey: '6LfBJb0UAAAAALwYlKcwBwVK2kvCm-sY5shrYI1I',
+      siteKey: '6LfHQ70UAAAAAGSDxOcdcP0eAJLpelwsdMvgZPke',
       version: 3 }],
     //['@nuxtjs/google-analytics',{
      // id: 'UA-127341158-2'}],

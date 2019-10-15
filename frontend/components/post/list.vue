@@ -411,5 +411,4 @@
     color: #FFF;
     opacity: 0.8;
     }
-   a { overflow:hidden;word-break:break-all };
 </style>
