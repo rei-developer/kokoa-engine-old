@@ -18,7 +18,6 @@ const { RECAPTCHA_KEY } = process.env
       }
     try{
         const res = await axios.post(url, qs.stringify(opt))
-        console.log(res.data)
         return res.data
       } catch(e) {
         return e
