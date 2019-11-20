@@ -56,6 +56,9 @@
             <font-awesome-icon icon='envelope' />
             <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
           </el-menu-item>
+          <el-menu-item class='point' v-if='$store.state.user.isLogged'>
+            <font-awesome-icon icon ='gem' /> {{$store.state.user.point}}
+          </el-menu-item>
         </el-menu>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down>
@@ -145,5 +148,11 @@
   .rightMenu .el-submenu__title {
     padding-right: 0 !important;
     font-weight: bold;
+  }
+  .point {
+    float: right !important;
+    font-weight: bold;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 </style>
