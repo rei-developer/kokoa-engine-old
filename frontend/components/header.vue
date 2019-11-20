@@ -149,10 +149,17 @@
     padding-right: 0 !important;
     font-weight: bold;
   }
+  @media(max-width:1140px) {
   .point {
+    display:none;
+  }
+  }
+  @media(min-width:1140px) {
+    .point {
     float: right !important;
     font-weight: bold;
     cursor: not-allowed;
     pointer-events: none;
+  }
   }
 </style>
