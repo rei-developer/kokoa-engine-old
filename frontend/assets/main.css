@@ -189,6 +189,7 @@ ul.el-menu--horizontal .el-submenu__title,
   width: 250px;
   height: 250px;
   margin: 0 auto;
+  margin-bottom: 1rem;
 }
 
 .grecaptcha-logo {

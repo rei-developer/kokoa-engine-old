@@ -274,7 +274,7 @@
         this.page = page
         this.getData()
         this.getCount()
-        this.scrollTo()
+        // this.scrollTo()
       },
       forceUpdate() {
         this.$store.commit('forceUpdate')
