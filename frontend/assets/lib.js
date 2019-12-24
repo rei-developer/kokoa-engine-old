@@ -7,8 +7,8 @@ module.exports.getBoardName = domain => {
     case 'all':
       name = '전체'
       break
-    case 'photo':
-      name = '짤방'
+    case 'broadcast':
+      name = '인방'
       break
     case 'girl':
       name = '연예'

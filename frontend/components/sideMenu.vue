@@ -16,8 +16,8 @@
         <font-awesome-icon icon='star' />
         <span>인기</span>
       </el-menu-item>
-      <el-menu-item index='5' @click='move("/b/photo")'>
-        <span>짤방</span>
+      <el-menu-item index='5' @click='move("/b/broadcast")'>
+        <span>인방</span>
       </el-menu-item>
       <el-menu-item index='6' @click='move("/b/girl")'>
         <span>연예</span>
