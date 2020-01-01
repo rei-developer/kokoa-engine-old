@@ -25,13 +25,16 @@
       <el-menu-item index='7' @click='move("/b/anime")'>
         <span>애니</span>
       </el-menu-item>
-      <el-menu-item index='8' @click='move("/b/notice")'>
-        <span>공지사항</span>
+      <el-menu-item index='8' @click='move("/b/chorea")'>
+        <span>초레아</span>
       </el-menu-item>
-      <el-submenu index='9'>
+      <el-menu-item index='9' @click='move("/b/notice")'>
+        <span>공지</span>
+      </el-menu-item>
+      <el-submenu index='10'>
         <template slot='title'>포인트</template>
-        <el-menu-item index='9-1' @click='move("/iconshop")'>아이콘샵</el-menu-item>
-        <el-menu-item index='9-2' @click='move("/sticker")'>스티커샵</el-menu-item>
+        <el-menu-item index='10-1' @click='move("/iconshop")'>아이콘샵</el-menu-item>
+        <el-menu-item index='10-2' @click='move("/sticker")'>스티커샵</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>

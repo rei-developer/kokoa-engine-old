@@ -28,13 +28,14 @@
           <el-menu-item index='5' route='/b/broadcast' class='hidden-mobile' @click='forceUpdate'>인방</el-menu-item>
           <el-menu-item index='6' route='/b/girl' class='hidden-mobile' @click='forceUpdate'>연예</el-menu-item>
           <el-menu-item index='7' route='/b/anime' class='hidden-mobile' @click='forceUpdate'>애니</el-menu-item>
-          <el-menu-item index='8' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지사항</el-menu-item>
-          <el-submenu index='9' class='hidden-mobile'>
+          <el-menu-item index='8' route='/b/chorea' class='hidden-mobile' @click='forceUpdate'>초레아</el-menu-item>
+          <el-menu-item index='9' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>
+          <el-submenu index='10' class='hidden-mobile'>
             <template slot='title'>포인트</template>
-            <el-menu-item index='9-1' route='/iconshop'>아이콘샵</el-menu-item>
-            <el-menu-item index='9-2' route='/sticker'>스티커샵</el-menu-item>
+            <el-menu-item index='10-1' route='/iconshop'>아이콘샵</el-menu-item>
+            <el-menu-item index='10-2' route='/sticker'>스티커샵</el-menu-item>
           </el-submenu>
-          <el-submenu index='10' class='rightMenu' v-if='$store.state.user.isLogged'>
+          <el-submenu index='11' class='rightMenu' v-if='$store.state.user.isLogged'>
             <template slot='title'>
               <div class='Avatar'>
                 <img :src='$store.state.user.profileImageUrl'>
@@ -43,16 +44,16 @@
               <img class='Icon' :src='`https://idolboard.com/icon/${$store.state.user.icon}`' v-if='$store.state.user.icon !== ""'>
               {{ $store.state.user.nickname }}
             </template>
-            <el-menu-item index='10-1' route='/edit'>프로필 편집</el-menu-item>
-            <el-menu-item index='10-2' route='/edit/topic'>내 작성글</el-menu-item>
-            <el-menu-item index='10-3' route='/edit/post'>내 작성 댓글</el-menu-item>
-            <el-menu-item index='10-4' route='/' @click='signOut'>로그아웃</el-menu-item>
+            <el-menu-item index='11-1' route='/edit'>프로필 편집</el-menu-item>
+            <el-menu-item index='11-2' route='/edit/topic'>내 작성글</el-menu-item>
+            <el-menu-item index='11-3' route='/edit/post'>내 작성 댓글</el-menu-item>
+            <el-menu-item index='11-4' route='/' @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
-          <el-menu-item index='10' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
+          <el-menu-item index='11' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
             <font-awesome-icon icon='sign-in-alt' />
             로그인
           </el-menu-item>
-          <el-menu-item index='11' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
+          <el-menu-item index='12' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
             <font-awesome-icon icon='envelope' />
             <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
           </el-menu-item>

@@ -15,6 +15,7 @@
                   <el-button type='info' size='small' @click='getData("broadcast", true)' round>인방</el-button>
                   <el-button type='info' size='small' @click='getData("girl", true)' round>연예</el-button>
                   <el-button type='info' size='small' @click='getData("anime", true)' round>애니</el-button>
+                  <el-button type='info' size='small' @click='getData("chorea", true)' round>초레아</el-button>
                 </el-button-group>
               </div>
               <div class='containerSubject'>
