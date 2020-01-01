@@ -16,6 +16,9 @@ module.exports.getBoardName = domain => {
     case 'anime':
       name = '애니'
       break
+    case 'chorea':
+      name = '초레아'
+      break
     case 'notice':
       name = '공지사항'
       break
