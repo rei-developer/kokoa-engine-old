@@ -8,7 +8,7 @@ const pick = require('./pick')
 const sticker = require('./sticker')
 const topic = require('./topic')
 
-const VERSION = 84
+const VERSION = 85
 
 const app = new Router()
 
@@ -21,5 +21,4 @@ app.use('/notice', notice.routes())
 app.use('/pick', pick.routes())
 app.use('/sticker', sticker.routes())
 app.use('/topic', topic.routes())
-
 module.exports = app
