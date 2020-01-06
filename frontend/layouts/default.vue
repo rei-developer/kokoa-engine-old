@@ -41,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 85
+        frontendVersion: 86
       }
     },
     beforeMount() {
