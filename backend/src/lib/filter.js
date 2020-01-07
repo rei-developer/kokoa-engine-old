@@ -29,8 +29,8 @@ module.exports.post = text => {
   text = text.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ``)
   text = text.replace(/\n/g, ` <br>`)
   text = filter(text, `<p><pre><q><br><a><b><h1><h2><h3><h4><h5><h6><hr><span><strong><em><u><s><sub><sup><address><ol><ul><li><blockquote><img><iframe><embed><object><param><table><tbody><tr><td><code><audio><source>`)
-  text = text.replace(/((http(s)?:\/\/)?(www.)?twitter(\.[^(\n|\t|\s,)]+)+)+$/gi, `<p><a href="$&" target='_blank'>$&</a></p><p><blockquote class='twitter-tweet' data-lang='ko'><a href="$&"></a></blockquote><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script></p>`)
-  text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<p><a href="https://히요비.asia/reader/$1" target='_blank' class='hitomiReader'>hiyobi:$1</a></p>`) 
+  //text = text.replace(/((http(s)?:\/\/)?(www.)?twitter(\.[^(\n|\t|\s,)]+)+)+$/gi, `<p><a href="$&" target='_blank'>$&</a></p><p><blockquote class='twitter-tweet' data-lang='ko'><a href="$&"></a></blockquote><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script></p>`)
+  //text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<p><a href="https://히요비.asia/reader/$1" target='_blank'>hiyobi:$1</a></p>`) 
   //text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<span onclick="location.href="https://히요비.asia/reader/$1" target='_blank' class='hitomiReader' style="cursor:pointer;">hiyobi:$1</span>`)
   return text
 }
