@@ -160,10 +160,10 @@
         this.newPostsCount = 0
         this.tempPostReplyId = 0
         this.tempPostUpdateId = 0
-        const regex = /(((http(s)?:\/\/)\S+(\.[^(\n|\t|\s,)]+)+)|((http(s)?:\/\/)?(([a-zA-z\-_]+[0-9]*)|([0-9]*[a-zA-z\-_]+)){2,}(\.[^(\n|\t|\s,)]+)+))+/gi
+        //const regex = /(((http(s)?:\/\/)\S+(\.[^(\n|\t|\s,)]+)+)|((http(s)?:\/\/)?(([a-zA-z\-_]+[0-9]*)|([0-9]*[a-zA-z\-_]+)){2,}(\.[^(\n|\t|\s,)]+)+))+/gi
         if (data.posts) {
           this.posts = data.posts.map(item => {
-            item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')
+            // item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')
             return item
           })
         }
