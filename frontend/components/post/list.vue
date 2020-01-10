@@ -163,11 +163,8 @@
         const regex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
         if (data.posts) {
           this.posts = data.posts.map(item => {
-               if(item.content.search(/((http(s)?)(:\/\/)?)/g) == -1) {
-                item.content = item.content.replace(regex, '<a href="https://$&" target="_blank">$&</a>') 
-               } else {
-               item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>') }
-               return item
+              item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')   
+              return item
           })
         }
         if (this.viewPostId > 0) this.scrollTo()
