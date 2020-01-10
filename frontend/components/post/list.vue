@@ -161,9 +161,6 @@
         this.tempPostReplyId = 0
         this.tempPostUpdateId = 0
         const regex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
-        const regex2 = /((http(s)?|www)(:\/\/)?)/g
-        const regex3 = /((\.\.\.)?)/g
-        const regexp = new RegExp(regex2)
         if (data.posts) {
           this.posts = data.posts.map(item => {
             if(item.content.search(/((\.\.\.))/g) == -1) {
