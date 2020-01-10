@@ -84,10 +84,16 @@
           this.loading = false
           return this.$message.error(data.message || '오류가 발생했습니다.')
         }
-        const regex = /(((http(s)?:\/\/)\S+(\.[^(\n|\t|\s,)]+)+)|((http(s)?:\/\/)?(([a-zA-z\-_]+[0-9]*)|([0-9]*[a-zA-z\-_]+)){2,}(\.[^(\n|\t|\s,)]+)+))+/gi
+        const regex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
         if (data.posts) {
           this.posts = data.posts.map(item => {
-            item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')
+            if(item.content.search(/((\.\.\.))/g) == -1) {
+               if(item.content.search(/((http(s)?)(:\/\/)?)/g) == -1) {
+                item.content = item.content.replace(regex, '<a href="https://$&" target="_blank">$&</a>') 
+               } else {
+                  item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')   
+               }
+            }
             return item
           })
         }
