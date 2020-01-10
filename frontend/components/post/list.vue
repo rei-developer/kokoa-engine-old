@@ -161,9 +161,18 @@
         this.tempPostReplyId = 0
         this.tempPostUpdateId = 0
         const regex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
+        const regex2 = /((http(s)?|www)(:\/\/)?)/g
+        const regex3 = /((\.\.\.)?)/g
+        const regexp = new RegExp(regex2)
         if (data.posts) {
           this.posts = data.posts.map(item => {
-             item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')
+            if(item.content.search(/((\.\.\.))/g) == -1) {
+               if(item.content.search(/((http(s)?)(:\/\/)?)/g) == -1) {
+                item.content = item.content.replace(regex, '<a href="https://$&" target="_blank">$&</a>') 
+               } else {
+                  item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')   
+               }
+            }
             return item
           })
         }
