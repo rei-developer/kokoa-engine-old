@@ -25,9 +25,6 @@
       <el-menu-item index='7' @click='move("/b/anime")'>
         <span>애니</span>
       </el-menu-item>
-      <el-menu-item index='8' @click='move("/b/chorea")'>
-        <span>초레아</span>
-      </el-menu-item>
       <el-menu-item index='9' @click='move("/b/notice")'>
         <span>공지</span>
       </el-menu-item>

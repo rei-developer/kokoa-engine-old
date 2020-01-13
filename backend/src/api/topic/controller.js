@@ -122,8 +122,10 @@ module.exports.getCategories = async ctx => {
 module.exports.getContent = async ctx => {
   const { id } = ctx.params
   const user = await User.getUser(ctx.get('x-access-token'))
-  const topic = await readTopic(id)
+  let topic = await readTopic(id)
   if (!topic || topic.isAllowed < 1) return ctx.body = { status: 'fail' }
+  topic.ip = ""
+  topic.header = ""
   const charts = topic.isChart > 0
     ? await readChart(id)
     : []

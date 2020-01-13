@@ -28,7 +28,6 @@
           <el-menu-item index='5' route='/b/broadcast' class='hidden-mobile' @click='forceUpdate'>인방</el-menu-item>
           <el-menu-item index='6' route='/b/girl' class='hidden-mobile' @click='forceUpdate'>연예</el-menu-item>
           <el-menu-item index='7' route='/b/anime' class='hidden-mobile' @click='forceUpdate'>애니</el-menu-item>
-          <el-menu-item index='8' route='/b/chorea' class='hidden-mobile' @click='forceUpdate'>초레아</el-menu-item>
           <el-menu-item index='9' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>
           <el-submenu index='10' class='hidden-mobile'>
             <template slot='title'>포인트</template>
