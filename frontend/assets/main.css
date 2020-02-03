@@ -215,23 +215,25 @@ ul.el-menu--horizontal .el-submenu__title,
     width: 100%;
     height: 100%;
   }
-  }
-@media (min-width: 1001px) and (max-width: 1350px) {
-.embed-youtube {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 56.25%;
 }
 
-.embed-youtube iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 85%;
-  height: 85%;
+@media (min-width: 1001px) and (max-width: 1350px) {
+  .embed-youtube {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+  }
+
+  .embed-youtube iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 85%;
+    height: 85%;
+  }
 }
-}
+
 @media (min-width: 1351px) {
   .embed-youtube {
     position: relative;
@@ -247,5 +249,4 @@ ul.el-menu--horizontal .el-submenu__title,
     width: 80%;
     height: 80%;
   }
-
 }
