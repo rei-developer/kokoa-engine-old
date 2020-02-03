@@ -25,7 +25,7 @@
             <font-awesome-icon icon='star' />
             인기
           </el-menu-item>
-          <el-menu-item index='5' route='/b/broadcast' class='hidden-mobile' @click='forceUpdate'>인방</el-menu-item>
+          <el-menu-item index='5' route='/b/talk' class='hidden-mobile' @click='forceUpdate'>TALK</el-menu-item>
           <el-menu-item index='6' route='/b/girl' class='hidden-mobile' @click='forceUpdate'>연예</el-menu-item>
           <el-menu-item index='7' route='/b/anime' class='hidden-mobile' @click='forceUpdate'>애니</el-menu-item>
           <el-menu-item index='9' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>

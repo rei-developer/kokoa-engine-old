@@ -8,6 +8,12 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
+              <div class='AD hidden-mobile'>
+                <iframe src='/header-ad.html' frameborder='0' marginwidth='0' marginheight='0'/>
+              </div>
+              <div class='AD hidden-desktop'>
+                <iframe src='/header-mobile-ad.html' frameborder='0' marginwidth='0' marginheight='0'/>
+              </div>
               <div v-for='(item, index) in links' :key='index'>
                 <nuxt-link :to='`/b/girl/${item.id}`'></nuxt-link>
               </div>
@@ -15,7 +21,7 @@
                 <el-button-group>
                   <el-button type='info' size='small' @click='getData("all", true)' round>전체</el-button>
                   <el-button type='info' size='small' @click='getData("best", true)' round>인기</el-button>
-                  <el-button type='info' size='small' @click='getData("broadcast", true)' round>인방</el-button>
+                  <el-button type='info' size='small' @click='getData("talk", true)' round>TALK</el-button>
                   <el-button type='primary' size='small' @click='getData("girl", true)' round>연예</el-button>
                   <el-button type='info' size='small' @click='getData("anime", true)' round>애니</el-button>
                 </el-button-group>

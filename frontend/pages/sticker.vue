@@ -8,6 +8,12 @@
         <div class='Container'>
           <div class='item'>
             <div class='content'>
+              <div class='AD hidden-mobile'>
+                <iframe src='/header-ad.html' frameborder='0' marginwidth='0' marginheight='0'/>
+              </div>
+              <div class='AD hidden-desktop'>
+                <iframe src='/header-mobile-ad.html' frameborder='0' marginwidth='0' marginheight='0'/>
+              </div>
               <StickerList />
             </div>
             <div class='sidebar'>
