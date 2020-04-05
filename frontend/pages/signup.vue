@@ -11,10 +11,10 @@
         <el-input class='marginBottom' placeholder='ID' v-model='username' autofocus />
         <el-input class='marginBottom' placeholder='비밀번호' v-model='password' show-password />
         <el-input class='marginBottom' placeholder='닉네임' v-model='nickname' />
-        <el-input class='marginBottom input-with-select' placeholder='이메일 주소' v-model='email'>
-          <el-button slot='append' @click='accept'>전송</el-button>
+        <el-input class='marginBottom' placeholder='이메일 주소' v-model='email'> <!-- input-with-select -->
+        <!--  <el-button slot='append' @click='accept'>전송</el-button>
         </el-input>
-        <el-input class='marginBottom' placeholder='인증 코드' v-model='authCode' />
+        <el-input class='marginBottom' placeholder='인증 코드' v-model='authCode' />-->
         <el-button class='widthAll' type='primary' @click='signUp'>다음</el-button>
       </div>
     </div>
@@ -42,7 +42,7 @@
         if (this.nickname === '') return this.$message.error('닉네임을 입력하세요.')
         if (this.email === '') return this.$message.error('이메일 주소를 입력하세요.')
         if (this.authCode === '') return this.$message.error('ID를 입력하세요.')
-        if (this.password === '') return this.$message.error('인증 코드를 입력하세요.')
+        //if (this.password === '') return this.$message.error('인증 코드를 입력하세요.')
         this.$store.commit('setLoading', true)
         const data = await this.$axios.$post('/api/auth/signup', { username: this.username, nickname: this.nickname, email: this.email, authCode: this.authCode, password: this.password })
         if (data.status === 'fail') {

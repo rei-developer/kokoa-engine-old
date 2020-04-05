@@ -20,7 +20,7 @@ exports.getAuth = async ctx => {
       hasher({ password, salt: user.salt }, (err, pass, salt, hash) => {
         if (err) return reject({ message: err, status: 'fail' })
         if (user.password !== hash) return reject({ message: '비밀번호가 올바르지 않습니다.', status: 'fail' })
-        if (user.isVerified < 1) return reject({ redirect: 'accept', message: '이메일을 인증하지 않았습니다.', status: 'fail' })
+        //if (user.isVerified < 1) return reject({ redirect: 'accept', message: '이메일을 인증하지 않았습니다.', status: 'fail' })
         const token = jwt.sign(
           { jti: user.id },
           process.env.JWT_SECRET,
@@ -44,11 +44,11 @@ exports.createUser = async ctx => {
   if (getNickname) return ctx.body = { message: '이미 존재하는 닉네임입니다.', status: 'fail' }
   const getEmail = await readUser.email(email)
   if (getEmail) return ctx.body = { message: '이미 존재하는 이메일입니다.', status: 'fail' }
-  try {
+  /*try {
     if (email !== Crypto.decrypt(authCode)) return ctx.body = { message: '인증코드가 올바르지 않습니다.', status: 'fail' }
   } catch (e) {
     return ctx.body = { message: '인증코드가 올바르지 않습니다.', status: 'fail' }
-  }
+  }*/
   try {
     const result = await new Promise((resolve, reject) => {
       hasher({ password }, async (err, pass, salt, hash) => {
