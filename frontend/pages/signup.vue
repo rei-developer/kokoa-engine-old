@@ -11,7 +11,7 @@
         <el-input class='marginBottom' placeholder='ID' v-model='username' autofocus />
         <el-input class='marginBottom' placeholder='비밀번호' v-model='password' show-password />
         <el-input class='marginBottom' placeholder='닉네임' v-model='nickname' />
-        <el-input class='marginBottom' placeholder='이메일 주소' v-model='email'> <!-- input-with-select -->
+        <el-input class='marginBottom' placeholder='이메일 주소' v-model='email' /> <!-- input-with-select -->
         <!--  <el-button slot='append' @click='accept'>전송</el-button>
         </el-input>
         <el-input class='marginBottom' placeholder='인증 코드' v-model='authCode' />-->
