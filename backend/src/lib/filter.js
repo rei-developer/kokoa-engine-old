@@ -19,7 +19,8 @@ module.exports.topic = text => {
   //text = text.replace(/((http(s)?:\/\/)?(www.)?instagram(\.[^(\n|\t|\s,)]+)+)+$/gi, `<p><a href="$&" target='_blank'>$&</a></p><p><blockquote class='instagram-media' data-instgrm-permalink='$&' data-instgrm-version='12' style=' max-width:540px; min-width:326px; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);'></blockquote><script async defer src='//platform.instagram.com/en_US/embeds.js'></script></p>`)
   //text = text.replace(/(http(s)?:\/\/)?(thumbs.)?gfycat.com\/(ko\/)?([a-zA-Z0-9\_]+)(-mobile.mp4)?/gi, `<div style='position:relative; padding-bottom:100%'><iframe src='https://gfycat.com/ifr/$5' scrolling='no' style='position:absolute;top:0;left:0;display:block; width:100vw; height: 50vh' allowfullscreen></iframe></div>`);
   text = text.replace(/(http(s)?:\/\/)?(thumbs.)?gfycat.com\/(ko\/)?([a-zA-Z0-9\_]+)(-mobile.mp4)?/gi, `<iframe src='https://gfycat.com/ifr/$5' frameborder='0' scrolling='no' allowfullscreen width='560' height='400'></iframe>`)
-  text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<a href="https://히요비.asia/reader/$1" target='_blank' class='hitomiReader'>hiyobi:$1</a>`)
+  text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<a href="https://hiyobi.me/reader/$1" target='_blank' class='hitomiReader'>hiyobi:$1</a>`)
+  text = text.replace(/\{\{\s*(\d+)\}\}/gi, `<a href="https://hitomi.la/reader/$1.html" target='_blank' class='hitomiReader'>hitomi:$1</a>`)
   text = text.replace(/^\s+|\s+$/g, ``)
   return text
 }
