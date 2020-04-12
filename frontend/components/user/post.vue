@@ -92,7 +92,9 @@
                 item.content = item.content.replace(regex, '<a href="https://$&" target="_blank">$&</a>') 
                } else {
                   item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')   
-               }
+               }  
+               item.content = item.content.replace(regex2, '<a href="https://hiyobi.me/reader/$1" target="_blank" class="hitomiReader">hiyobi:$1</a>') 
+               item.content = item.content.replace(regex3, '<a href="https://hitomi.la/reader/$1.html" target="_blank" class="hitomiReader">hitomi:$1</a>')
             }
             return item
           })
@@ -213,4 +215,17 @@
     opacity: .8;
     cursor: pointer;
   }
+  .hitomiReader {
+    padding: 2px 4px;
+    background: #29313D;
+    color: #FFF;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    }
+  .hitomiReader:hover {
+    color: #FFF;
+    opacity: 0.8;
+    }
 </style>

@@ -160,16 +160,20 @@
         this.newPostsCount = 0
         this.tempPostReplyId = 0
         this.tempPostUpdateId = 0
-        const regex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
+        const regex1 = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
+        const regex2 = /\[\[\s*(\d+)\]\]/gi
+        const regex3 = /\{\{\s*(\d+)\}\}/gi
         if (data.posts) {
           this.posts = data.posts.map(item => {
             if(item.content.search(/((\.\.\.))/g) == -1) {
                if(item.content.search(/((http(s)?)(:\/\/)?)/g) == -1) {
-                item.content = item.content.replace(regex, '<a href="https://$&" target="_blank">$&</a>') 
+                item.content = item.content.replace(regex1, '<a href="https://$&" target="_blank">$&</a>') 
                } else {
-                  item.content = item.content.replace(regex, '<a href="$&" target="_blank">$&</a>')   
+                  item.content = item.content.replace(regex1, '<a href="$&" target="_blank">$&</a>')   
                }
-            }
+            } 
+              item.content = item.content.replace(regex2, '<a href="https://hiyobi.me/reader/$1" target="_blank" class="hitomiReader">hiyobi:$1</a>') 
+              item.content = item.content.replace(regex3, '<a href="https://hitomi.la/reader/$1.html" target="_blank" class="hitomiReader">hitomi:$1</a>')     
             return item
           })
         }
