@@ -151,7 +151,7 @@
         </el-button>
       </nuxt-link>
     </div>
-    <input type="hidden" @keyup.alt.67='hotReplace(item)' />
+    <input type="hidden" @keyup.alt='hotReplace(item)' />
   </div>
 </template>
 
