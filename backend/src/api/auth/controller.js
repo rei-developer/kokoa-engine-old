@@ -37,7 +37,7 @@ exports.getAuth = async ctx => {
 
 exports.createUser = async ctx => {
   const { username, nickname, email, authCode, password } = ctx.request.body
-  if (username === '' || nickname === '' || email === '' || authCode === '' || password === '') return
+  if (username === '' || nickname === '' || email === '' || password === '') return  //auth 제거
   const getUsername = await readUser.username(username)
   if (getUsername) return ctx.body = { message: '이미 존재하는 아이디입니다.', status: 'fail' }
   const getNickname = await readUser.nickname(nickname)
