@@ -151,7 +151,6 @@
         </el-button>
       </nuxt-link>
     </div>
-    <input type="hidden" @keyup.alt='hotReplace(item)' />
   </div>
 </template>
 
@@ -282,11 +281,8 @@
       },
       numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      },
-      hotReplace(item) {
-      this.$router.push({ path: `/b/${this.domain}`})
       }
-    }
+    } 
   }
 </script>
 
