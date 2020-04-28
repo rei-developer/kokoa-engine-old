@@ -41,8 +41,8 @@
         if (this.username === '') return this.$message.error('ID를 입력하세요.')
         if (this.nickname === '') return this.$message.error('닉네임을 입력하세요.')
         if (this.email === '') return this.$message.error('이메일 주소를 입력하세요.')
-        if (this.authCode === '') return this.$message.error('ID를 입력하세요.')
-        //if (this.password === '') return this.$message.error('인증 코드를 입력하세요.')
+        //if (this.authCode === '') return this.$message.error('인증번호를 입력하세요.')
+        if (this.password === '') return this.$message.error('비밀번호를 입력하세요.')
         this.$store.commit('setLoading', true)
         const data = await this.$axios.$post('/api/auth/signup', { username: this.username, nickname: this.nickname, email: this.email, authCode: this.authCode, password: this.password })
         if (data.status === 'fail') {
