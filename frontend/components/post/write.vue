@@ -26,6 +26,7 @@
           <div class='send'>
             <div class='sticker' @click='stickers.hide = false'>스티커</div>
             <div class='submit' @click='submit'>
+            <input type="hidden"  @keyup.alt='submit'> 
               <span v-if='loading'>
                 <font-awesome-icon class='fa-spin' icon='circle-notch' />
               </span>
