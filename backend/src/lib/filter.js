@@ -21,7 +21,7 @@ module.exports.topic = text => {
   text = text.replace(/(http(s)?:\/\/)?(thumbs.)?gfycat.com\/(ko\/)?([a-zA-Z0-9\_]+)(-mobile.mp4)?/gi, `<iframe src='https://gfycat.com/ifr/$5' frameborder='0' scrolling='no' allowfullscreen width='560' height='400'></iframe>`)
   text = text.replace(/\[\[\s*hy(\d+)\]\]/gi, `<a href="https://hiyobi.me/reader/$1" target='_blank' class='hitomiReader'>hiyobi:$1</a>`)
   text = text.replace(/\[\[\s*ht(\d+)\]\]/gi, `<a href="https://hitomi.la/reader/$1.html" target='_blank' class='hitomiReader'>hitomi:$1</a>`)
-  text = text.replace(/\[\[\s*av([a-zA-Z0-9\_-]+(\d+))\]\]/gi, `<a href="https://www.avdbs.com/menu/dvd_list.php?_kwd=$1" target='_blank' class='hitomiReader'>av정보:$1</a>`)
+  text = text.replace(/\[\[\s*av([a-zA-Z0-9\_-]+(\d+))\]\]/gi, `<a href="https://www.avdbs.com/menu/dvd_list.php?_kwd=$1" target='_blank' class='hitomiReader'>av:$1</a>`)
   text = text.replace(/^\s+|\s+$/g, ``)
   return text
 }
