@@ -19,8 +19,9 @@ module.exports.topic = text => {
   //text = text.replace(/((http(s)?:\/\/)?(www.)?instagram(\.[^(\n|\t|\s,)]+)+)+$/gi, `<p><a href="$&" target='_blank'>$&</a></p><p><blockquote class='instagram-media' data-instgrm-permalink='$&' data-instgrm-version='12' style=' max-width:540px; min-width:326px; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);'></blockquote><script async defer src='//platform.instagram.com/en_US/embeds.js'></script></p>`)
   //text = text.replace(/(http(s)?:\/\/)?(thumbs.)?gfycat.com\/(ko\/)?([a-zA-Z0-9\_]+)(-mobile.mp4)?/gi, `<div style='position:relative; padding-bottom:100%'><iframe src='https://gfycat.com/ifr/$5' scrolling='no' style='position:absolute;top:0;left:0;display:block; width:100vw; height: 50vh' allowfullscreen></iframe></div>`);
   text = text.replace(/(http(s)?:\/\/)?(thumbs.)?gfycat.com\/(ko\/)?([a-zA-Z0-9\_]+)(-mobile.mp4)?/gi, `<iframe src='https://gfycat.com/ifr/$5' frameborder='0' scrolling='no' allowfullscreen width='560' height='400'></iframe>`)
-  text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<a href="https://hiyobi.me/reader/$1" target='_blank' class='hitomiReader'>hiyobi:$1</a>`)
-  text = text.replace(/\{\{\s*(\d+)\}\}/gi, `<a href="https://hitomi.la/reader/$1.html" target='_blank' class='hitomiReader'>hitomi:$1</a>`)
+  text = text.replace(/\[\[\s*hy(\d+)\]\]/gi, `<a href="https://hiyobi.me/reader/$1" target='_blank' class='hitomiReader'>hiyobi:$1</a>`)
+  text = text.replace(/\[\[\s*ht(\d+)\]\]/gi, `<a href="https://hitomi.la/reader/$1.html" target='_blank' class='hitomiReader'>hitomi:$1</a>`)
+  text = text.replace(/\[\[\s*av([a-zA-Z0-9\_-]+(\d+))\]\]/gi, `<a href="https://www.avdbs.com/menu/dvd_list.php?_kwd=$1" target='_blank' class='hitomiReader'>av정보:$1</a>`)
   text = text.replace(/^\s+|\s+$/g, ``)
   return text
 }
@@ -31,7 +32,5 @@ module.exports.post = text => {
   text = text.replace(/\n/g, ` <br>`)
   text = filter(text, `<p><pre><q><br><a><b><h1><h2><h3><h4><h5><h6><hr><span><strong><em><u><s><sub><sup><address><ol><ul><li><blockquote><img><iframe><embed><object><param><table><tbody><tr><td><code><audio><source>`)
   //text = text.replace(/((http(s)?:\/\/)?(www.)?twitter(\.[^(\n|\t|\s,)]+)+)+$/gi, `<p><a href="$&" target='_blank'>$&</a></p><p><blockquote class='twitter-tweet' data-lang='ko'><a href="$&"></a></blockquote><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script></p>`)
-  //text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<p><a href="https://히요비.asia/reader/$1" target='_blank'>hiyobi:$1</a></p>`) 
-  //text = text.replace(/\[\[\s*(\d+)\]\]/gi, `<span onclick="location.href="https://히요비.asia/reader/$1" target='_blank' class='hitomiReader' style="cursor:pointer;">hiyobi:$1</span>`)
   return text
 }

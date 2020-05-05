@@ -161,8 +161,9 @@
         this.tempPostReplyId = 0
         this.tempPostUpdateId = 0
         const regex1 = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
-        const regex2 = /\[\[\s*(\d+)\]\]/gi
-        const regex3 = /\{\{\s*(\d+)\}\}/gi
+        const regexHiyobi = /\[\[\s*hy(\d+)\]\]/gi
+        const regexHitomi = /\[\[\s*ht(\d+)\]\]/gi
+        const regexAv = /\[\[\s*av([a-zA-Z0-9\_-]+(\d+))\]\]/gi
         if (data.posts) {
           this.posts = data.posts.map(item => {
             if(item.content.search(/((\.\.\.))/g) == -1) {
@@ -172,9 +173,10 @@
                   item.content = item.content.replace(regex1, '<a href="$&" target="_blank">$&</a>')   
                }
             } 
-              item.content = item.content.replace(regex2, '<a href="https://hiyobi.me/reader/$1" target="_blank" class="hitomiReader">hiyobi:$1</a>') 
-              item.content = item.content.replace(regex3, '<a href="https://hitomi.la/reader/$1.html" target="_blank" class="hitomiReader">hitomi:$1</a>')     
-            return item
+              item.content = item.content.replace(regexHiyobi, '<a href="https://hiyobi.me/reader/$1" target="_blank" class="hitomiReader">hiyobi:$1</a>') 
+              item.content = item.content.replace(regexHitomi, '<a href="https://hitomi.la/reader/$1.html" target="_blank" class="hitomiReader">hitomi:$1</a>')     
+              item.content = item.content.replace(regexAv, '<a href="https://www.avdbs.com/menu/dvd_list.php?_kwd=$1" target="_blank" class="hitomiReader">av정보:$1</a>') 
+           return item
           })
         }
         if (this.viewPostId > 0) this.scrollTo()

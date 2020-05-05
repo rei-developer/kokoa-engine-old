@@ -200,7 +200,7 @@ ul.el-menu--horizontal .el-submenu__title,
   visibility: hidden;
 }
 
-@media (min-width: 350px) and (max-width: 500px) {
+@media (min-width: 350px) and (max-width: 1000px) {
   .embed-youtube {
     position: relative;
     width: 100%;
