@@ -28,6 +28,7 @@ module.exports.createImage = type => async ctx => {
   const checker = /(.gif|.png|.jpg|.jpeg|.webp)/i.test(ctx.req.file.originalname)
   const checkerByGIF = /.gif/i.test(ctx.req.file.originalname)
   const filename = ctx.req.file.filename
+  // ex).webp.mp4 형식 수정 
   try {
     if (checker) {
       fs.readFile(`./img/${filename}`, (err, data) => {
@@ -42,6 +43,8 @@ module.exports.createImage = type => async ctx => {
           if (type === 'topic') {
             image.metadata()
               .then((metadata) => image.resize(Math.min(metadata.width, 960))
+                .withMetadata()
+                .rotate()
                 .jpeg(80)
                 .toBuffer()
               )
