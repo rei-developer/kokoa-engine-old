@@ -13,7 +13,7 @@ module.exports.disable = text => {
 
 module.exports.topic = text => {
   text = filter(text, `<video><p><pre><q><br><a><b><h1><h2><h3><h4><h5><h6><hr><span><strong><em><u><s><sub><sup><address><ol><ul><li><blockquote><img><iframe><embed><object><param><table><tbody><tr><td><code><audio><source>`)
-  text = text.replace(/(http(s)?:\/\/)?(www.)?youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)(\&)?(list=[a-zA-Z0-9\-_]+)?(\&index=(\d+))?(\&t=(\d+))?/gi, `<p class='embed-youtube'><iframe src='//www.youtube.com/embed/$4?$6$9' allowfullscreen='allowfullscreen'></iframe></p>`) 
+  text = text.replace(/(http(s)?:\/\/)?(www.)?youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)(\&feature=youtu.be)?(\&)?(list=[a-zA-Z0-9\-_]+)?(\&index=(\d+))?(\&t=(\d+))?/gi, `<p class='embed-youtube'><iframe src='//www.youtube.com/embed/$4?$7$10' allowfullscreen='allowfullscreen'></iframe></p>`) 
   text = text.replace(/(http(s)?:\/\/)?(www.)?youtu.be\/([a-zA-Z0-9\-_]+)(\?list=[a-zA-Z0-9\-_]+)?(\&t=(\d+))?/gi, `<p class='embed-youtube'><iframe src='//www.youtube.com/embed/$4$5$6' allowfullscreen='allowfullscreen'></iframe></p>`)
   text = text.replace(/src="https:\/\/www.youtube.com\/embed\/([a-zA-Z0-9\-_]+)(\?list=[a-zA-Z0-9\-_]+)?(\&t=(\d+))?"/gi, `<p class='embed-youtube'><iframe src='//www.youtube.com/embed/$1$2$3' allowfullscreen='allowfullscreen'></iframe></p>`)
   text = text.replace(/((http(s)?:\/\/)?(www.)?twitter(\.[^(\n|\t|\s,)]+)+)+$/gi, `<p><a href="$&" target='_blank'>$&</a></p><p><blockquote class='twitter-tweet' data-lang='ko'><a href="$&"></a></blockquote><script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script></p><br><br>`)
