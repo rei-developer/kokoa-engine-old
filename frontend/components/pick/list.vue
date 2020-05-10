@@ -323,7 +323,7 @@
     border-radius: .25rem;
   }
   .pickPostList .item .info .desciption span.writer {
-    color: #25c6ff;
+    color: #2D99E1;
     font-weight: bold;
   }
   .pickPostList .item .info .desciption span.tagUser {

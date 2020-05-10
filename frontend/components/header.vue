@@ -90,7 +90,7 @@
     margin-bottom: 1rem;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, .25);
     /* background-image: url(/header.png); */
-    background: #25c6ff;
+    background: #2D99E1;
     overflow: visible;
     z-index: 1;
   }

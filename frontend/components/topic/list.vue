@@ -316,7 +316,7 @@
   }
   .topicList .item.odd,
   .topicList .item.view { background: #FBFBFB }
-  .topicList .item.view { border-left: .3rem solid #25c6ff }
+  .topicList .item.view { border-left: .3rem solid #2D99E1 }
   .topicList .item:hover,
   .topicList .item.view:hover {
     background: #F0F0F0;
@@ -370,11 +370,11 @@
     background: #EAEAEA;
     color: #29313D;
   }
-  .topicList .item .info .subject span.newest { background: #25c6ff }
+  .topicList .item .info .subject span.newest { background: #2D99E1 }
   .topicList .item .info .subject span.posts { background: #999 }
-  .topicList .item .info .subject span.image { color: #25c6ff }
+  .topicList .item .info .subject span.image { color: #2D99E1 }
   .topicList .item .info .subject span.view {
-    color: #25c6ff;
+    color: #2D99E1;
     font-weight: bold;
   }
   .topicList .item .info .author {

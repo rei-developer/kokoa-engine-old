@@ -168,7 +168,7 @@
     cursor: pointer;
   }
   .notify.best {
-    background: #25c6ff;
+    background: #2D99E1;
   }
   .notify.best .el-notification__title,
   .notify.best .el-notification__content,

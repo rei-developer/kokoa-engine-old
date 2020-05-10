@@ -423,7 +423,7 @@
   }
   .topicArticle .info .item:last-child { border: 0 }
   .topicArticle .info .item span.link:hover {
-    color: #25c6ff;
+    color: #2D99E1;
     text-decoration: underline;
     cursor: pointer;
   }

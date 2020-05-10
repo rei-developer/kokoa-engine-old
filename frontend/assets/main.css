@@ -100,8 +100,8 @@ ul.el-menu--horizontal .el-submenu__title,
   background-color: #6d7084 !important;
 }
 .el-button--primary {
-  border-color: #25c6ff !important;
-  background-color: #25c6ff !important;
+  border-color: #2D99E1 !important;
+  background-color: #2D99E1 !important;
 }
 .el-button--warning {
   border-color: #FFC90E !important;
@@ -115,7 +115,7 @@ ul.el-menu--horizontal .el-submenu__title,
 .el-button--primary:hover,
 .el-button--warning:hover,
 .el-button--danger:hover { opacity: .8 }
-.el-radio-button span:hover { color: #25c6ff !important }
+.el-radio-button span:hover { color: #2D99E1 !important }
 .el-radio-button.is-active span {
   background-color: #29313D !important;
   border-color: #29313D !important;
