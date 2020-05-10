@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class='ADSidebar'>
+    <!-- <div class='ADSidebar'>
       <iframe src='/sidebar-ad.html' frameborder='0' marginwidth='0' marginheight='0'/>
-    </div>
+    </div> -->
     <div class='recentList'>
       <div
         :class='item.isBest > 1 ? "item best" : "item"'
