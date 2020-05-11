@@ -293,7 +293,7 @@
     padding: .1rem .5rem;
     border-radius: 500rem;
     background: #EAEAEA;
-    color: #29313D;
+    color: #FF509F;
     font-size: .75rem;
     float: right;
   }
@@ -316,7 +316,7 @@
   }
   .topicList .item.odd,
   .topicList .item.view { background: #FBFBFB }
-  .topicList .item.view { border-left: .3rem solid #2D99E1 }
+  .topicList .item.view { border-left: .3rem solid #ffd1dc }
   .topicList .item:hover,
   .topicList .item.view:hover {
     background: #F0F0F0;
@@ -347,7 +347,7 @@
   .topicList .item .info .subject span.board {
     padding: 0 .5rem;
     border-radius: 500rem;
-    background: #29313D;
+    background: #FF509F;
     color: #FFF;
     font-weight: bold;
   }
@@ -368,13 +368,13 @@
   }
   .topicList .item .info .subject span.category {
     background: #EAEAEA;
-    color: #29313D;
+    color: #FF509F;
   }
-  .topicList .item .info .subject span.newest { background: #2D99E1 }
+  .topicList .item .info .subject span.newest { background: #ffd1dc }
   .topicList .item .info .subject span.posts { background: #999 }
-  .topicList .item .info .subject span.image { color: #2D99E1 }
+  .topicList .item .info .subject span.image { color: #ffd1dc }
   .topicList .item .info .subject span.view {
-    color: #2D99E1;
+    color: #FF509F;
     font-weight: bold;
   }
   .topicList .item .info .author {
@@ -389,7 +389,7 @@
   }
   .topicList .item .info .author span.userTitle {
     padding: 0 .25rem;
-    background: #29313D;
+    background: #FF509F;
     border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
@@ -404,7 +404,7 @@
     display: flex;
     flex-direction: column;
     width: 3rem;
-    background: #29313D;
+    background: #FF509F;
     color: #FFF;
     font-size: 1rem;
     justify-content: center;

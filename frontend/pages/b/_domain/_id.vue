@@ -348,7 +348,7 @@
     padding-left: 0;
   }
   .topicArticle .header .info .subject {
-    color: #29313D;
+    color: #FF509F;
     font-size: 1rem;
     font-weight: bold;
   }
@@ -365,7 +365,7 @@
     color: #FFF;
     font-size: .8rem;
   }
-  .topicArticle .header .info .subject span.category { background: #29313D }
+  .topicArticle .header .info .subject span.category { background: #FF509F }
   .topicArticle .header .info .author {
     color: #333;
     font-size: .8rem;
@@ -378,14 +378,14 @@
   }
   .topicArticle .header .info .author span.userTitle {
     padding: 0 .25rem;
-    background: #29313D;
+    background: #FF509F;
     border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
   }
   .topicArticle .header .info .detail span {
     margin-right: .25rem;
-    color: #29313D;
+    color: #FF509F;
     font-size: .7rem;
     font-weight: normal;
   }
@@ -414,7 +414,7 @@
     text-align: center;
   }
   .topicArticle .info {
-    color: #29313D;
+    color: #FF509F;
     font-size: .8rem;
   }
   .topicArticle .info .item {
@@ -423,7 +423,7 @@
   }
   .topicArticle .info .item:last-child { border: 0 }
   .topicArticle .info .item span.link:hover {
-    color: #2D99E1;
+    color: #ffd1dc;
     text-decoration: underline;
     cursor: pointer;
   }

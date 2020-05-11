@@ -245,7 +245,7 @@
     background: #FFF;
   }
   .pickPostList .item.view {
-    border-left: .25rem solid #29313D;
+    border-left: .25rem solid #FF509F;
   }
   .pickPostList .item.view,
   .pickPostList .item.reply {
@@ -302,7 +302,7 @@
   }
   .pickPostList .item .info .author span.userTitle {
     padding: 0 .25rem;
-    background: #29313D;
+    background: #FF509F;
     border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
@@ -323,13 +323,13 @@
     border-radius: .25rem;
   }
   .pickPostList .item .info .desciption span.writer {
-    color: #2D99E1;
+    color: #ffd1dc;
     font-weight: bold;
   }
   .pickPostList .item .info .desciption span.tagUser {
     margin-right: .25rem;
     padding: 0 .5rem;
-    background: #29313D;
+    background: #FF509F;
     border-radius: 500rem;
     color: #FFF;
     font-size: .75rem;

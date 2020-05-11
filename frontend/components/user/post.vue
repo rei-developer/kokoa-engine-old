@@ -196,7 +196,7 @@
   .myPostList .item .info .desciption span.tagUser {
     margin-right: .25rem;
     padding: 0 .5rem;
-    background: #29313D;
+    background: #FF509F;
     border-radius: 500rem;
     color: #FFF;
     font-size: .75rem;
@@ -217,7 +217,7 @@
   }
   .hitomiReader {
     padding: 2px 4px;
-    background: #29313D;
+    background: #FF509F;
     color: #FFF;
     font-size: 11px;
     font-weight: bold;

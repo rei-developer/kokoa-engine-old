@@ -41,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 96
+        frontendVersion: 97
       }
     },
     beforeMount() {
@@ -130,7 +130,7 @@
     width: 100%;
     padding: .5rem 0;
     border-top: 1px solid rgba(0, 0, 0, .1);
-    background: #29313D;
+    background: #FF509F;
     color: yellow;
     font-size: .8rem;
     text-align: center;
@@ -146,7 +146,7 @@
     height: 4rem;
     line-height: 3.9rem;
     border-radius: 500rem;
-    background: #29313D;
+    background: #FF509F;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
     color: #FFF;
     font-size: 1.5rem;
@@ -168,7 +168,7 @@
     cursor: pointer;
   }
   .notify.best {
-    background: #2D99E1;
+    background: #ffd1dc;
   }
   .notify.best .el-notification__title,
   .notify.best .el-notification__content,

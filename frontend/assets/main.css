@@ -57,7 +57,7 @@ hr {
   border: 0 !important;
   background-color: transparent !important;
 }
-li.is-active { background-color: #29313D !important }
+li.is-active { background-color: #FF509F !important }
 li.Logo.is-active { background-color: transparent !important }
 ul.el-menu li,
 ul.el-menu .el-submenu__title { color: #333 !important }
@@ -69,7 +69,7 @@ ul.el-menu--horizontal .el-submenu__title,
 .el-menu--popup li.el-menu-item {
   height: 40px !important;
   line-height: 40px !important;
-  color: #29313D !important;
+  color: #FF509F !important;
 }
 .el-menu--popup li.el-menu-item.is-active { color: #FFF !important }
 .el-menu-item,
@@ -80,7 +80,7 @@ ul.el-menu--horizontal .el-submenu__title,
   color: #FFF !important;
 }
 .el-menu-item:hover,
-.el-submenu__title:hover { background: #29313D !important }
+.el-submenu__title:hover { background: #FF509F !important }
 .el-menu-item.is-active { color: #FFF !important }
 .el-menu-item svg { margin-bottom: 5px !important }
 .el-menu--horizontal > .el-submenu .el-submenu__title,
@@ -100,8 +100,8 @@ ul.el-menu--horizontal .el-submenu__title,
   background-color: #6d7084 !important;
 }
 .el-button--primary {
-  border-color: #2D99E1 !important;
-  background-color: #2D99E1 !important;
+  border-color: #ffd1dc !important;
+  background-color: #ffd1dc !important;
 }
 .el-button--warning {
   border-color: #FFC90E !important;
@@ -115,11 +115,11 @@ ul.el-menu--horizontal .el-submenu__title,
 .el-button--primary:hover,
 .el-button--warning:hover,
 .el-button--danger:hover { opacity: .8 }
-.el-radio-button span:hover { color: #2D99E1 !important }
+.el-radio-button span:hover { color: #ffd1dc !important }
 .el-radio-button.is-active span {
-  background-color: #29313D !important;
-  border-color: #29313D !important;
-  box-shadow: -1px 0 0 0 #29313D !important;
+  background-color: #FF509F !important;
+  border-color: #FF509F !important;
+  box-shadow: -1px 0 0 0 #FF509F !important;
 }
 .el-radio-button.is-active span:hover { color: #FFF !important }
 .el-select { min-width: 6rem !important }

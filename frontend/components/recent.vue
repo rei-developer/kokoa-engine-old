@@ -93,7 +93,7 @@
   .recentList .item:hover .info .subject,
   .recentList .item:hover .info .author span.event { color: #FFF }
   .recentList .item:hover {
-    background: #2D99E1;
+    background: #ffd1dc;
     cursor: pointer;
   }
   .recentList .item:first-child {
@@ -122,7 +122,7 @@
     flex-direction: column;
   }
   .recentList .item .info .subject {
-    color: #2D99E1;
+    color: #ffd1dc;
     font-size: .8rem;
     font-weight: bold;
   }

@@ -9,7 +9,7 @@
           class='el-menu'
           mode='horizontal'
           :router='true'
-          active-text-color='#29313D'>
+          active-text-color='#FF509F'>
           <el-menu-item index='1' route='/' class='Logo' @click='forceUpdate'>
             <img src='/favicon.png'>
           </el-menu-item>
@@ -90,7 +90,7 @@
     margin-bottom: 1rem;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, .25);
     /* background-image: url(/header.png); */
-    background: #2D99E1;
+    background: #ffd1dc;
     overflow: visible;
     z-index: 1;
   }

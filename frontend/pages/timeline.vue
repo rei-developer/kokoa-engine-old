@@ -190,7 +190,7 @@
     text-align: center;
   }
   .indexTopicList .item .grade span.likes {
-    color: #29313D;
+    color: #FF509F;
   }
   .indexTopicList .item .image {
     display: flex;
@@ -212,13 +212,13 @@
     padding-left: 0;
   }
   .indexTopicList .item .info .subject {
-    color: #2D99E1;
+    color: #ffd1dc;
     font-size: .8rem;
     font-weight: bold;
   }
   .indexTopicList .item .info .subject span.board {
     padding: 0 .5rem;
-    background: #29313D;
+    background: #FF509F;
     border-radius: 500rem;
     color: #FFF;
   }
@@ -231,7 +231,7 @@
   .indexTopicList .item .info .subject span.posts {
     margin-left: .1rem;
     padding: 0 .25rem;
-    background: #2D99E1;
+    background: #ffd1dc;
     border-radius: .1rem;
     color: #FFF;
     font-size: .7rem;
@@ -240,7 +240,7 @@
   .indexTopicList .item .info .subject span.category {
     margin-left: 0;
     margin-right: .1rem;
-    background: #29313D;
+    background: #FF509F;
   }
   .indexTopicList .item .info .subject span.posts { background: #999 }
   .indexTopicList .item .info .regdate {

@@ -154,14 +154,14 @@
     width: fit-content;
     margin-bottom: .5rem;
     padding: 0 .5rem;
-    background: #29313D;
+    background: #FF509F;
     border-radius: 500rem;
     color: #FFF;
     font-size: .75rem;
   }
   .postHeader > .label {
     display: inline-block;
-    color: #29313D;
+    color: #FF509F;
     font-size: .75rem;
     font-weight: normal;
   }
@@ -179,7 +179,7 @@
     padding-right: .5rem;
     border-radius: 500rem;
     background: #EAEAEA;
-    color: #29313D;
+    color: #FF509F;
     font-size: .7rem;
     justify-content: center;
     align-items: center;
@@ -255,7 +255,7 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     background: #EAEAEA;
-    color: #29313D;
+    color: #FF509F;
     font-size: .8rem;
   }
   .postWrite .item .send .submit {
@@ -265,7 +265,7 @@
     border-radius: .25rem;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background: #29313D;
+    background: #FF509F;
     color: #FFF;
     font-size: 1.5rem;
   }

@@ -131,7 +131,7 @@
     margin: 0;
     padding: 6px;
     height: 29px;
-    background-color: #29313D;
+    background-color: #FF509F;
     color: #FFF;
     font-size: .9rem;
     font-weight: bold;
@@ -161,7 +161,7 @@
     float: left;
     margin-bottom: 6px;
     font-weight: bold;
-    color: #29313D;
+    color: #FF509F;
   }
   .StickerView .left {
     float: right;
@@ -170,7 +170,7 @@
   }
   .StickerView .left strong {
     padding: 0 3px;
-    color: #29313D;
+    color: #FF509F;
   }
   .StickerView .comment {
     clear: both;

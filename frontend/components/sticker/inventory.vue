@@ -91,7 +91,7 @@
     margin: 0;
     padding: 6px;
     height: 29px;
-    background-color: #29313D;
+    background-color: #FF509F;
     color: #FFF;
     font-size: .9rem;
     font-weight: bold;

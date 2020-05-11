@@ -19,7 +19,7 @@
         <el-tooltip class='item' effect='dark' content='로그인 ID를 저장합니다.' placement='top'>
           <el-switch
             v-model='save'
-            active-color='#29313D' />
+            active-color='#FF509F' />
         </el-tooltip>
         ID 저장
       </div>
