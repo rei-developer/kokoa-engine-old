@@ -10,7 +10,7 @@
         </div>
         <div class='topicWrite'>
           <div class='marginBottom' v-if='$store.state.user.isLogged && $store.state.user.isAdmin > 0'>
-            <el-switch v-model='form.isNotice' active-color='#FF509F'></el-switch>
+            <el-switch v-model='form.isNotice' active-color='#3D5AFE'></el-switch>
             공지사항
           </div>
           <div class='marginBottom' v-if='categories.length > 0'>
@@ -203,7 +203,7 @@
     margin-bottom: .5rem;
     padding: .25rem .5rem;
     border-radius: .25rem;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-size: .7rem;
     text-align: center;

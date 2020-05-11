@@ -9,9 +9,9 @@
           class='el-menu'
           mode='horizontal'
           :router='true'
-          active-text-color='#FF509F'>
+          active-text-color='#3D5AFE'>
           <el-menu-item index='1' route='/' class='Logo' @click='forceUpdate'>
-            <img src='/favicon.png'>
+            <img src='/icon.png'>
           </el-menu-item>
           <el-menu-item index='2' route='/pick' class='hidden-mobile' @click='forceUpdate'>
             <font-awesome-icon icon='chart-line' />
@@ -90,7 +90,7 @@
     margin-bottom: 1rem;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, .25);
     /* background-image: url(/header.png); */
-    background: #ffd1dc;
+    background: rgba(61, 90, 254, .5);
     overflow: visible;
     z-index: 1;
   }

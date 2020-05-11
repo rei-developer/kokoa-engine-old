@@ -287,7 +287,7 @@
     display: flex;
     flex-direction: column;
     width: 3rem;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-size: 1rem;
     justify-content: center;

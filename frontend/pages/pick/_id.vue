@@ -126,7 +126,7 @@
     line-height: 2rem;
     padding: 0 1rem;
     border-radius: 500rem;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-size: 1.2rem;
     text-align: center;

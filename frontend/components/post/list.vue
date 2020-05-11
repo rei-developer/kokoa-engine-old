@@ -308,7 +308,7 @@
     background: #FFF;
   }
   .postList .item.view {
-    border-left: .25rem solid #FF509F;
+    border-left: .25rem solid #3D5AFE;
   }
   .postList .item.view,
   .postList .item.reply {
@@ -365,7 +365,7 @@
   }
   .postList .item .info .author span.userTitle {
     padding: 0 .25rem;
-    background: #FF509F;
+    background: #3D5AFE;
     border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
@@ -387,13 +387,13 @@
     border-radius: .25rem;
   }
   .postList .item .info .desciption span.writer {
-    color: #ffd1dc;
+    color: #3D5AFE;
     font-weight: bold;
   }
   .postList .item .info .desciption span.tagUser {
     margin-right: .25rem;
     padding: 0 .5rem;
-    background: #FF509F;
+    background: rgba(61, 90, 254, .5);
     border-radius: 500rem;
     color: #FFF;
     font-size: .75rem;
@@ -412,7 +412,7 @@
   }
   .hitomiReader {
     padding: 2px 4px;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-size: 11px;
     font-weight: bold;

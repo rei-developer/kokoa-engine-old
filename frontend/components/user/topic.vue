@@ -116,7 +116,7 @@
   }
   .myTopicList .item.odd,
   .myTopicList .item.view { background: rgba(245, 245, 245, .5) }
-  .myTopicList .item.view { border-left: .25rem solid #FF509F }
+  .myTopicList .item.view { border-left: .25rem solid #3D5AFE }
   .myTopicList .item .image {
     display: flex;
     flex-direction: column;
@@ -144,7 +144,7 @@
   .myTopicList .item .info .subject span.board {
     padding: 0 .5rem;
     border-radius: 500rem;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-weight: bold;
   }
@@ -163,7 +163,7 @@
     color: #FFF;
     font-size: .7rem;
   }
-  .myTopicList .item .info .subject span.category { background: #FF509F }
+  .myTopicList .item .info .subject span.category { background: #3D5AFE }
   .myTopicList .item .info .subject span.newest { background: #409EFF }
   .myTopicList .item .info .subject span.posts { background: #999 }
   .myTopicList .item .info .subject span.image { color: #409EFF }

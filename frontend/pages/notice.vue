@@ -216,7 +216,7 @@
   }
   .noticeList .item.view {
     background: #FAFAFA;
-    border-left: .5rem solid #ffd1dc;
+    border-left: .5rem solid rgba(61, 90, 254, .5);
   }
   .noticeList .item .image {
     display: flex;
@@ -261,7 +261,7 @@
   }
   .noticeList .item .info .author span.userTitle {
     padding: 0 .25rem;
-    background: #FF509F;
+    background: #3D5AFE;
     border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
@@ -284,7 +284,7 @@
   .noticeList .item .info .desciption span.tagUser {
     margin-right: .1rem;
     padding: 0 .5rem;
-    background: #FF509F;
+    background: #3D5AFE;
     border-radius: 500rem;
     color: #FFF;
     font-size: .75rem;
@@ -294,7 +294,7 @@
     display: flex;
     flex-direction: column;
     width: 3rem;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-size: 1rem;
     justify-content: center;

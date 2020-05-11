@@ -79,7 +79,7 @@
         <el-input class='marginBottom input-with-select' size='small' :value='`${numberWithCommas(exp)} / ${numberWithCommas(maxExp)} (${per}%)`' readonly>
           <el-button class='editPrepend' slot='prepend'>경험치</el-button>
         </el-input>
-        <el-progress class='marginBottom' :text-inside='true' :stroke-width='20' :percentage='per' color='#ffd1dc'></el-progress>
+        <el-progress class='marginBottom' :text-inside='true' :stroke-width='20' :percentage='per' color='rgba(61, 90, 254, .5)'></el-progress>
         <el-button class='widthAll' type='primary' size='small' @click='edit'>편집</el-button>
       </div>
     </div>
@@ -243,7 +243,7 @@
   }
   .accountBox .header {
     margin: 1rem auto;
-    color: #FF509F;
+    color: #3D5AFE;
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
@@ -279,7 +279,7 @@
     height: 2.2rem;
     line-height: 2rem;
     border-radius: 500rem;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-size: 1.2rem;
     text-align: center;
@@ -331,7 +331,7 @@
   }
   .accountBox .article .title {
     margin-bottom: .5rem;
-    color: #FF509F;
+    color: #3D5AFE;
     font-size: .9rem;
   }
 

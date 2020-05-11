@@ -88,12 +88,12 @@
     border: 1px solid rgba(0, 0, 0, .05);
     border-top: 0;
     border-bottom: 1px dashed rgba(0, 0, 0, .1);
-    background: #EEF6F9;
+    background: rgba(61, 90, 254, .05);
   }
   .recentList .item:hover .info .subject,
   .recentList .item:hover .info .author span.event { color: #FFF }
   .recentList .item:hover {
-    background: #ffd1dc;
+    background: rgba(61, 90, 254, .5);
     cursor: pointer;
   }
   .recentList .item:first-child {
@@ -122,7 +122,7 @@
     flex-direction: column;
   }
   .recentList .item .info .subject {
-    color: #ffd1dc;
+    color: #3D5AFE;
     font-size: .8rem;
     font-weight: bold;
   }

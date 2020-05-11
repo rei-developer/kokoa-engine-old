@@ -115,7 +115,7 @@
     padding: .1rem .5rem;
     border-radius: 500rem;
     background: #EAEAEA;
-    color: #FF509F;
+    color: #3D5AFE;
     font-size: .75rem;
     float: right;
   }
@@ -152,7 +152,7 @@
     margin: 0 auto;
     padding: 0 .5rem .1rem .5rem;
     border-radius: 500rem;
-    background: #FF509F;
+    background: #3D5AFE;
     color: #FFF;
     font-size: .8rem;
     text-align: center;
