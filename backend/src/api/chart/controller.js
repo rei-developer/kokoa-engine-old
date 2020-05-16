@@ -13,8 +13,10 @@ module.exports.votes = async ctx => {
   if (id < 1) return
   const ip = ctx.get('x-real-ip')
   const date = await readChart.voted(user.id, id, ip)
-  if(user.id > 1550) {
-    return ctx.body = { message: `한시적으로 신규가입자의 투표를 제한하고있습니다.`, status: 'fail' }
+  const days = moment().diff(moment(user.registerDate),'days')
+  if(days < 0) return
+  if(days < 7) {
+    return ctx.body = { message: `가입일로부터 7일미만의 유저는 투표가 불가능합니다. 현재 가입 후 ${days}일째입니다. `, status: 'fail' }
   }
   if (date) {
     const created = moment(date).format('YYYY/MM/DD HH:mm:ss')

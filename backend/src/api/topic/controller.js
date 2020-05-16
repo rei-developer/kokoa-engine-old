@@ -263,7 +263,7 @@ module.exports.createTopicVotes = async ctx => {
   if (!topic) return ctx.body = { status: 'fail' }
   const targetUser = await readUser(topic.userId)
   const ip = ctx.get('x-real-ip')
-  if (targetUser === user.id || topic.ip === ip) return ctx.body = { message: '본인에게 투표할 수 없습니다.', status: 'fail' }
+  if (targetUser.id === user.id || topic.ip === ip) return ctx.body = { message: '본인에게 투표할 수 없습니다.', status: 'fail' }
   const duration = moment.duration(moment().diff(topic.created))
   const hours = duration.asHours()
   if (hours > 72) return ctx.body = { message: '3일이 지난 게시물은 투표할 수 없습니다.', status: 'fail' }
@@ -322,7 +322,7 @@ module.exports.createPostVotes = async ctx => {
   if (!post) return ctx.body = { status: 'fail' }
   const targetUser = await readUser(post.userId)
   const ip = ctx.get('x-real-ip')
-  if (targetUser === user.id || post.ip === ip) return ctx.body = { message: '본인에게 투표할 수 없습니다.', status: 'fail' }
+  if ( targetUser.id === user.id || post.ip === ip) return ctx.body = { message: '본인에게 투표할 수 없습니다.', status: 'fail' }
   const duration = moment.duration(moment().diff(post.created))
   const hours = duration.asHours()
   if (hours > 72) return ctx.body = { message: '3일이 지난 게시물은 투표할 수 없습니다.', status: 'fail' }
